@@ -16,8 +16,8 @@ routerAdminProdutos.post('/nova', (req, res) => {
   if (!stock) return res.status(400).json({ success: false, message: 'O stock do produto é obrigatório.' });
   
 
-  db.query('INSERT INTO produtos (sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, especificacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
-  [sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, especificacoesFinal], (err, results) => {
+  db.query('INSERT INTO produtos (sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, especificacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+  [sku, nome, descricao || null, preco, stock, id_categoria, id_marca, imagem_url || null, especificacoesFinal], (err, results) => {
     if (err) {
       console.error(err);
       return res.status(500).send({ success: false, message: 'Erro interno do servidor' });

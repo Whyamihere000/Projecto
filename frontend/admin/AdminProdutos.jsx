@@ -6,6 +6,7 @@ import styles from "../css/Global.module.css";
 import stylesProdutos from "../css/Produtos.module.css";
 
 function Produtos() {
+  const [produtoSku, setProdutoSku] = useState('');
   const [produtoNome, setProdutoNome] = useState('');
   const [produtoDescricao, setProdutoDescricao] = useState('');
   const [produtoPreco, setProdutoPreco] = useState('');
@@ -85,6 +86,7 @@ function Produtos() {
 
     try {
       const res = await axios.post('http://localhost:3001/api/produtos/nova', {
+        sku: produtoSku,
         nome: produtoNome,
         descricao: produtoDescricao,
         preco: produtoPreco,
@@ -98,6 +100,7 @@ function Produtos() {
       if (res.data.success) {
         setMensagem('Produto adicionado com sucesso.');
         setMensagemTipo('success');
+        setProdutoSku('');
         setProdutoNome('');
         setProdutoDescricao('');
         setProdutoPreco('');
@@ -123,6 +126,7 @@ function Produtos() {
   const atualizarProduto = async (produto) => {
     try {
       const res = await axios.put(`http://localhost:3001/api/produtos/atualizar/${produto.id}`, {
+        sku: produto.sku,
         nome: produto.nome,
         descricao: produto.descricao,
         preco: produto.preco,
@@ -170,6 +174,7 @@ function Produtos() {
 
   const colunas = [
     { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'sku', headerName: 'SKU', width: 130, editable: true },
     { field: 'nome', headerName: 'Nome', width: 130, editable: true },
     { field: 'descricao', headerName: 'Descrição', width: 130, editable: true },
     { field: 'preco', headerName: 'Preço', width: 130, editable: true },
@@ -213,6 +218,12 @@ function Produtos() {
 
       <div className={stylesProdutos.container}>
         <h1>Adicionar Produto</h1>
+        <input
+          type="text"
+          placeholder="SKU do produto"
+          value={produtoSku}
+          onChange={(e) => setProdutoSku(e.target.value)}
+        />
         <input
           type="text"
           placeholder="Nome do produto"

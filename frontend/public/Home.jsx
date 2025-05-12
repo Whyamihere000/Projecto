@@ -41,6 +41,7 @@ function Home() {
                     <>
                         <Link to="/login" className={styles.navLogin}>Login</Link>
                         <Link to="/registo" className={styles.navRegisto}>Registar</Link>
+                        <Link to="/produtos" className={styles.navProdutos}>Produtos</Link>
                     </>
                 )}
             </nav>   
