@@ -1,0 +1,42 @@
+body.bodyHome {
+    background-color: #682f2f;
+}
+
+.navegacao_admin {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #8f6464;
+    color: #ffffff;
+    padding: 20px;
+    width: fit-content;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0
+}
+
+.link {
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.logout {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.logout:hover {
+    background-color: #c0392b;
+}
