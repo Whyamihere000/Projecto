@@ -19,4 +19,5 @@ app.use('/api/utilizadores', routerAdminUtilizadores);
 
 app.listen(3001, () => {
     console.log('Servidor a correr na porta 3001');
-});
+}); 
+//Github Text
