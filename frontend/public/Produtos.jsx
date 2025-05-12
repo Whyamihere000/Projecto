@@ -1,11 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+import stylesProdutos from "../css/Produtos.module.css";
+
 function Produtos() {
+    const [user, setUser] = useState(null);
     const [produtos, setProdutos] = useState([]);
     const [mensagem, setMensagem] = useState('');
+
     const navigate = useNavigate();
+
+    useEffect(() => {
+            const storedUser = localStorage.getItem('user')
+            if (storedUser && storedUser !== 'undefined') {
+                const user = JSON.parse(storedUser);
+                if (user.tipo_utilizador === 'cliente') {
+                    setUser(user)
+                }
+            }
+        }, [])
 
     useEffect(() => {
         const fetchProdutos = async () => {
@@ -21,32 +36,23 @@ function Produtos() {
         fetchProdutos();
     }, []);
 
-    const adicionarAoCarrinho = async (produtoID, quantidade = 1) => {
-        try {
-            await axios.post('http://localhost:3001/api/carrinho/adicionar', {
-                produtoID,
-                quantidade
-            });
-            setMensagem('Produto adicionado ao carrinho.');
-            navigate('/carrinho');
-        } catch (error) {
-            console.error('Erro ao adicionar ao carrinho', error);
-            setMensagem('Erro ao adicionar ao carrinho.');
-        }
+    const handleAdicionarAoCarrinho = async (produtoID, quantidade = 1) => {
+        adicionarAoCarrinho(produtoID, quantidade);
+        setMensagem('Produto adicionado ao carrinho.');
     }
 
     return (
-        <div>
+        <div>            
+            <div className={stylesProdutos.produtos}>     
             <h1>Produtos</h1>
             {mensagem && <p>{mensagem}</p>}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
                 {produtos.length > 0 ? (
                     produtos.map((produto) => (
                         <div key={produto.id} style={{ border: '1px solid #ccc', padding: '10px', width: '200px' }}>
                             <h3>{produto.nome}</h3>
                             <p>{produto.descricao}</p>
                             <p>{produto.preco}€</p>
-                            <button onClick={() => adicionarAoCarrinho(produto.id)}>Adicionar ao carrinho</button>
+                            <button onClick={() => handleAdicionarAoCarrinho(produto.id)}>Adicionar ao carrinho</button>
                         </div>
                     ))
                 ) : (
