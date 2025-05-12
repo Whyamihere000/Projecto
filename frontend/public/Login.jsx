@@ -64,6 +64,7 @@ function Login() {
         className={Styles.input}
       />
       <button type='button' onClick={handleLogin}>Login</button>
+      <button type='button' onClick={() => window.location.href = '/registo'}>Registo</button>
 
       {message && (
         <p className={messageType === 'success' ? Styles.success : Styles.error}>

@@ -1,5 +1,9 @@
 .bodyHome {
-    background-color: #b9b9b9;
+    background-color: #8d6262;
+}
+
+.bodyHomePublic {
+    background-color: #312525;
 }
 
 .container{
@@ -12,4 +16,66 @@
     gap: 20px;
     padding: 20px;
     margin-left: 100px;
+}
+
+.mainPublic {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    margin-left: 100px;
+    margin-top: 60px;
+}
+
+.produtosPublic {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.produtosPublic h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.produtosPublic p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.produtosPublic > div {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.produtosPublic > div:hover {
+    transform: translateY(-5px);
+}
+
+.produtosPublic h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.produtosPublic button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.produtosPublic button:hover {
+    background-color: #0056b3;
 }
