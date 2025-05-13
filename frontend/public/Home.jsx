@@ -61,7 +61,7 @@ function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <p>&copy; 2023 PCGalaxy. Todos os direitos reservados.</p>
+        <p>&copy; 2025 PCGalaxy. Todos os direitos reservados.</p>
       </footer>
     </div>
   )
