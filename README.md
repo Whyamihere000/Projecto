@@ -1,8 +1,9 @@
+# Isaque Encarnação | Miguel Palma
+
+
 # React + Vite (PCG alaxy)
 
 Projeto Final do curso do IEFP
-
-# Isaque Encarnação | Miguel Palma
 
 
 Currently, two official plugins are available:
