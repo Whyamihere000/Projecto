@@ -3,7 +3,7 @@
 }
 
 .bodyHomePublic {
-    background-color: #312525;
+    background-color: #8b6868;
 }
 
 .container{
@@ -20,10 +20,8 @@
 
 .mainPublic {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start; /* Alinhado à esquerda */
     gap: 20px;
     padding: 20px;
     margin-left: 100px;
@@ -31,33 +29,31 @@
 }
 
 .produtosPublic {
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.produtosPublic h1 {
-    font-size: 2rem;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.produtosPublic p {
-    font-size: 1rem;
-    color: #666;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
 }
 
 .produtosPublic > div {
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin-bottom: 20px;
+    padding: 10px;
+    width: calc(25% - 20px); /* 25% para 4 por linha, menos o gap */
     transition: transform 0.3s;
+    box-sizing: border-box;
 }
 
 .produtosPublic > div:hover {
     transform: translateY(-5px);
+}
+
+.produtosPublic h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    width: 100%; /* Título ocupa toda a linha */
 }
 
 .produtosPublic h3 {
