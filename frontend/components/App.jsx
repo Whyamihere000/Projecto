@@ -3,6 +3,7 @@ import Home from '../public/Home.jsx';
 import Login from '../public/Login.jsx';
 import Registo from '../public/Registo.jsx';
 import Produtos from '../public/Produtos.jsx';
+import Carrinho from '../public/Carrinho.jsx';
 import AdminHome from '../admin/AdminHome.jsx';
 // import RotaPrivadaAdmin from '../admin/RotaPrivadaAdmin.jsx';
 import AdminCategorias from '../admin/Categorias.jsx';
@@ -17,6 +18,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/registo" element={<Registo />} />
             <Route path="/produtos" element={<Produtos />} />
+            <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/admin" element={<AdminHome />} />
             {/* <Route path="/admin/*" element={<RotaPrivadaAdmin />} /> */}
             <Route path="/admin/categorias" element={<AdminCategorias />} />

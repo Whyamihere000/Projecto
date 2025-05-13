@@ -1,0 +1,45 @@
+.mainCarrinho {
+    padding: 20px;
+    text-align: center
+}
+
+.itemCarrinho {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    display: inline-block;
+    width: 250px;
+}
+
+.itemCarrinho h3 {
+    font-size: 18px;
+}
+
+.itemCarrinho button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding : 5px 10px;
+    cursor: pointer;
+}
+
+.itemCarrinho button:hover {
+    background-color: #ff3333;
+}
+
+.total {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer; 
+}
+
+button:hover {
+    background-color: #45a049;
+}

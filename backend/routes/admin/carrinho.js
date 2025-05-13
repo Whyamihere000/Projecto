@@ -10,11 +10,22 @@ routerCarrinho.get('/:id_utilizador', (req, res) => {
         if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
 
         if (results.length > 0) {
-            res.json(results[0]);
+            const carrinho = results[0];
+
+            db.query(
+                'SELECT items_carrinhos.*, produtos.nome FROM items_carrinhos JOIN produtos ON items_carrinhos.id_produto = produtos.id WHERE items_carrinhos.id_carrinho = ?',
+                [carrinho.id],
+                (err, items) => {
+                    if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar items do carrinho' });
+
+                    carrinho.items = items || [];
+                    res.json(carrinho);
+                }
+            );
         } else {
             db.query('INSERT INTO carrinhos (id_utilizador) VALUES (?)', [id_utilizador], (err, results) => {
                 if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
-                res.json({id: results.insertId, id_utilizador, total: 0});
+                res.json({id: results.insertId, id_utilizador, total: 0, items: []});
             })
         }
     });

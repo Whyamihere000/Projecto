@@ -3,12 +3,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import stylesProdutos from "../css/Produtos.module.css";
 import styles from "../css/Global.module.css";
+import ModalErro from "../components/ModalErro";
 
 function Produtos() {
   const [user, setUser] = useState(null);
   const [produtos, setProdutos] = useState([]);
   const [mensagem, setMensagem] = useState('');
   const [carrinho, setCarrinho] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
@@ -28,6 +30,7 @@ function Produtos() {
       } catch (error) {
         console.error('Erro ao carregar produtos', error);
         setMensagem('Erro ao carregar produtos.');
+        setOpenModal(true);
       }
     }
 
@@ -41,19 +44,28 @@ function Produtos() {
       .catch((error) => {
         console.log(error);
         setMensagem('Erro ao carregar carrinho.');
+        setOpenModal(true);
       })
     }
   }, [user]);
 
   const handleAdicionarAoCarrinho = async (produtoID, quantidade = 1) => {
+    if (!user) {
+      setMensagem('Faça login para adicionar ao carrinho.');
+      setOpenModal(true);
+      return;
+    }
+
     if (!carrinho) {
       setMensagem('Carrinho não encontrado.');
+      setOpenModal(true);
       return;
     }
 
     const preco = produtos.find(produto => produto.id === produtoID)?.preco;
     if (!preco) {
       setMensagem('Produto não encontrado.');
+      setOpenModal(true);
       return;
     }
 
@@ -66,15 +78,22 @@ function Produtos() {
       });
 
 
-      setMensagem(response.data.message);
+      setMensagem('Produto adicionado ao carrinho.');
+      setOpenModal(true);
 
       setCarrinho((prevCarrinho) => ({
         ...prevCarrinho,
         total: prevCarrinho.total + (quantidade * preco)
       }));
+
+      setTimeout(() => {
+        setOpenModal(false);
+      }, 1000);
+
     } catch (error) {
       console.error('Erro ao adicionar ao carrinho', error);
       setMensagem('Erro ao adicionar ao carrinho.');
+      setOpenModal(true);
     }
   }
 
@@ -90,6 +109,10 @@ function Produtos() {
     }
   }, [])
 
+  const closeModal = () => {
+    setOpenModal(false);
+  };
+
   return (
     <>
       <nav className={styles.nav}>
@@ -100,10 +123,9 @@ function Produtos() {
         <div className={styles.navRight}>
           {user ? (
             <>
-              <p>{user ? `${user.primeiro_nome}` : ''}</p>
-              <p>
-                <button onClick={handleLogout}>Logout</button>
-              </p>
+              <Link to="/carrinho" className={styles.navCarrinho}>Carrinho</Link>
+              <h4>{user ? `${user.primeiro_nome}` : ''}</h4>
+              <button onClick={handleLogout}>Logout</button>
             </>
           ) : (
             <>
@@ -115,7 +137,6 @@ function Produtos() {
       <main className={stylesProdutos.mainPublic}>
         <div className={stylesProdutos.produtosPublic}>
           <h1>Produtos</h1>
-          {mensagem && <p>{mensagem}</p>}
           {produtos.length > 0 ? (
             produtos.map((produto) => (
               <div key={produto.id} style={{ border: '1px solid #ccc', padding: '10px', width: '200px' }}>
@@ -130,6 +151,10 @@ function Produtos() {
           )}
         </div>
       </main>
+
+      {openModal && (
+        <ModalErro mensagem={mensagem} onClose={closeModal} />
+      )}
     </>
   )
 }
