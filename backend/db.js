@@ -5,7 +5,6 @@ const db = mysql.createConnection({
     user: 'root',
     password: '12345',
     database: 'SitePAP',
-    multipleStatements: true
 });
 
 db.connect((err) => {

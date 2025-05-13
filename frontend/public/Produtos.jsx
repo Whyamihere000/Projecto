@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import stylesProdutos from "../css/Produtos.module.css";
 import styles from "../css/Global.module.css";
 
@@ -9,8 +8,7 @@ function Produtos() {
   const [user, setUser] = useState(null);
   const [produtos, setProdutos] = useState([]);
   const [mensagem, setMensagem] = useState('');
-
-  const navigate = useNavigate();
+  const [carrinho, setCarrinho] = useState([]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
@@ -34,11 +32,50 @@ function Produtos() {
     }
 
     fetchProdutos();
-  }, []);
+
+    if (user) {
+      axios.get(`http://localhost:3001/api/carrinhos/${user.id}`)
+      .then((response) => {
+        setCarrinho(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setMensagem('Erro ao carregar carrinho.');
+      })
+    }
+  }, [user]);
 
   const handleAdicionarAoCarrinho = async (produtoID, quantidade = 1) => {
-    adicionarAoCarrinho(produtoID, quantidade);
-    setMensagem('Produto adicionado ao carrinho.');
+    if (!carrinho) {
+      setMensagem('Carrinho não encontrado.');
+      return;
+    }
+
+    const preco = produtos.find(produto => produto.id === produtoID)?.preco;
+    if (!preco) {
+      setMensagem('Produto não encontrado.');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3001/api/carrinhos/adicionar', {
+        id_carrinho: carrinho.id,
+        id_produto: produtoID,
+        quantidade,
+        preco
+      });
+
+
+      setMensagem(response.data.message);
+
+      setCarrinho((prevCarrinho) => ({
+        ...prevCarrinho,
+        total: prevCarrinho.total + (quantidade * preco)
+      }));
+    } catch (error) {
+      console.error('Erro ao adicionar ao carrinho', error);
+      setMensagem('Erro ao adicionar ao carrinho.');
+    }
   }
 
   const handleLogout = () => {

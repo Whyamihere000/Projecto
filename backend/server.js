@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import authRoutes from './routes/public/auth.js';
+import routerCarrinho from './routes/admin/carrinho.js';
 import routerAdminCategorias from './routes/admin/gestao-categorias.js';
 import routerAdminMarcas from './routes/admin/gestao-marcas.js';
 import routerAdminProdutos from './routes/admin/gestao-produtos.js';
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/carrinhos', routerCarrinho);
 app.use('/api/categorias', routerAdminCategorias);
 app.use('/api/marcas', routerAdminMarcas);
 app.use('/api/produtos', routerAdminProdutos);

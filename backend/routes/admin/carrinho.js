@@ -6,13 +6,13 @@ const routerCarrinho = express.Router();
 routerCarrinho.get('/:id_utilizador', (req, res) => {
     const { id_utilizador } = req.params;
 
-    db.query('SELECT * FROM carrinho WHERE id_utilizador = ?', [id_utilizador], (err, results) => {
+    db.query('SELECT * FROM carrinhos WHERE id_utilizador = ?', [id_utilizador], (err, results) => {
         if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
 
         if (results.length > 0) {
             res.json(results[0]);
         } else {
-            db.query('INSERT INTO carrinhos (id_utilzador) VALUES (?)', [id_utilizador], (err, results) => {
+            db.query('INSERT INTO carrinhos (id_utilizador) VALUES (?)', [id_utilizador], (err, results) => {
                 if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
                 res.json({id: results.insertId, id_utilizador, total: 0});
             })
@@ -24,14 +24,14 @@ routerCarrinho.post('/adicionar', (req, res) => {
     const { id_carrinho, id_produto, quantidade, preco } = req.body;
 
     db.query(
-        'SELECT * FROM carrinho_produtos WHERE id_carrinho = ? AND id_produto = ?',
+        'SELECT * FROM items_carrinhos WHERE id_carrinho = ? AND id_produto = ?',
         [id_carrinho, id_produto],
         (err, results) => {
             if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
 
             if (results.length > 0) {
                 db.query(
-                    'UPDATE carrinho_produtos SET quantidade = quantidade + ? WHERE id_carrinho = ? AND id_produto = ?',
+                    'UPDATE items_carrinhos SET quantidade = quantidade + ? WHERE id_carrinho = ? AND id_produto = ?',
                     [quantidade, id_carrinho, id_produto],
                     (err) => {
                         if (err) return res.status(500).json({ success: false, message: 'Erro ao atualizar o produto' });
@@ -40,7 +40,7 @@ routerCarrinho.post('/adicionar', (req, res) => {
                 );
             } else {
                 db.query(
-                    'Insert INTO carrinho_produtos (id_carrinho, id_produto, quantidade, preco) VALUES (?, ?, ?, ?)',
+                    'INSERT INTO items_carrinhos (id_carrinho, id_produto, quantidade, preco) VALUES (?, ?, ?, ?)',
                     [id_carrinho, id_produto, quantidade, preco],
                     (err) => {
                         if (err) return res.status(500).json({ success: false, message: 'Erro ao adicionar o produto ao carrinho' });
@@ -56,7 +56,7 @@ routerCarrinho.post('/finalizar', (req, res) => {
     const { id_carrinho } = req.body;
 
     db.query(
-        'SELECT * FROM carrinho_produtos WHERE id_carrinho = ?',
+        'SELECT * FROM items_carrinhos WHERE id_carrinho = ?',
         [id_carrinho],
         (err, results) => {
             if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
