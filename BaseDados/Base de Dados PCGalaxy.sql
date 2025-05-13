@@ -1,6 +1,7 @@
 -- Base de Dados atualizada com melhorias e validações
 
-DROP DATABASE IF EXISTS SitePAP;
+--DROP DATABASE IF EXISTS SitePAP;
+
 CREATE DATABASE IF NOT EXISTS SitePAP;
 USE SitePAP;
 
