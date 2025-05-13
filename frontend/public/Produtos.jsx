@@ -115,25 +115,53 @@ function Produtos() {
 
   return (
     <>
-      <nav className={styles.nav}>
-        <div className={styles.navLeft}>
-          <Link to="/" className={styles.navHome}>Home</Link>
-          <Link to="/produtos" className={styles.navProdutos}>Produtos</Link>
-        </div>
-        <div className={styles.navRight}>
-          {user ? (
-            <>
-              <Link to="/carrinho" className={styles.navCarrinho}>Carrinho</Link>
-              <h4>{user ? `${user.primeiro_nome}` : ''}</h4>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className={styles.navLogin}>Login</Link>
-            </>
-          )}
-        </div>
-      </nav>
+  <nav className={styles.nav}>
+  {/* ESQUERDA: Ícone + Links */}
+  <div className={styles.navLeft}>
+    <img src="../icons/logo.png" alt="Logo" className={styles.logoIcon} />
+    <Link to="/" className={styles.navHome}>Home</Link>
+    <Link to="/produtos" className={styles.navProdutos}>Produtos</Link>
+
+    {/* Submenu Componentes */}
+    <div className={styles.dropdown}>
+      <button className={styles.dropbtn}>Componentes ▾</button>
+      <div className={styles.dropdownContent}>
+        <Link to="/produtos?categoria=Memória">Memória</Link>
+        <Link to="/produtos?categoria=Processador">Processador</Link>
+        <Link to="/produtos?categoria=Placa Gráfica">Placa Gráfica</Link>
+        <Link to="/produtos?categoria=MotherBoard">MotherBoard</Link>
+        <Link to="/produtos?categoria=Armazenamento">Armazenamento</Link>
+        <Link to="/produtos?categoria=Fonte de Alimentação">Fonte de Alimentação</Link>
+        <Link to="/produtos?categoria=Caixas">Caixas</Link>
+        <Link to="/produtos?categoria=Monitor">Monitor</Link>
+        <Link to="/produtos?categoria=Periféricos">Periféricos</Link>
+      </div>
+    </div>
+  </div>
+
+  {/* CENTRO: Barra de Pesquisa */}
+  <div className={styles.navCenter}>
+
+  </div>
+
+  {/* DIREITA: Carrinho + Utilizador */}
+  <div className={styles.navRight}>
+
+    {user ? (
+      <>
+
+        <h4>{user.primeiro_nome}</h4>
+        <button onClick={handleLogout}>Logout</button>
+      </>
+    ) : (
+      <Link to="/login" className={styles.navLogin}>Login</Link>
+    )}
+  </div>
+  <Link to="/carrinho" className={styles.navCarrinho}>Carrinho</Link>
+</nav>
+
+
+
       <main className={stylesProdutos.mainPublic}>
         <div className={stylesProdutos.produtosPublic}>
   <h1>Produtos</h1>
