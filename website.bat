@@ -3,8 +3,8 @@
 REM === Iniciar backend ===
 if exist "C:\Users\Isaque\Desktop\PAP\Projecto\backend" (
     start "Backend" cmd /K "cd /d C:\Users\Isaque\Desktop\PAP\Projecto\backend && node server.js"
-) else if exist "C:\Users\migue\Documents\GitHub\Projecto" (
-    start "Backend" cmd /K "cd /d C:\Users\migue\Documents\GitHub\Projecto && node server.js"
+) else if exist "C:\Users\migue\Documents\GitHub\Projecto\backend" (
+    start "Backend" cmd /K "cd /d C:\Users\migue\Documents\GitHub\Projecto\backend && node server.js"
 )
 
 REM === Iniciar frontend ===
