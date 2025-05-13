@@ -1,12 +1,35 @@
 import express from 'express';
 import db from '../../db.js';
+import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import fs from 'fs';
 
 const routerAdminProdutos = express.Router();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+//Configuração Multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.resolve(__dirname, '../../uploads/produtos');
+    if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath, { recursive: true });
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
+})
+
+const upload = multer({ storage });
 
 // Cria um novo produto
-routerAdminProdutos.post('/nova', (req, res) => {
+routerAdminProdutos.post('/nova', upload.single('imagem'), (req, res) => {
   console.log('Produto POST /nova foi chamada');
-  const { sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, especificacoes } = req.body;
+  const { sku, nome, descricao, preco, stock, id_categoria, id_marca, tipo_produto, especificacoes } = req.body;
+  const imagem_url = req.file ? `/uploads/produtos/${req.file.filename}` : null;
 
   const especificacoesFinal = especificacoes.trim() === '' ? null : especificacoes;
 
@@ -16,8 +39,8 @@ routerAdminProdutos.post('/nova', (req, res) => {
   if (!stock) return res.status(400).json({ success: false, message: 'O stock do produto é obrigatório.' });
   
 
-  db.query('INSERT INTO produtos (sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, especificacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-  [sku, nome, descricao || null, preco, stock, id_categoria, id_marca, imagem_url || null, especificacoesFinal], (err, results) => {
+  db.query('INSERT INTO produtos (sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, tipo_produto, especificacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+  [sku, nome, descricao || null, preco, stock, id_categoria, id_marca, imagem_url || null, tipo_produto || null, especificacoesFinal], (err, results) => {
     if (err) {
       console.error(err);
       return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
@@ -29,7 +52,8 @@ routerAdminProdutos.post('/nova', (req, res) => {
 // Atualiza um produto
 routerAdminProdutos.put('/atualizar/:id', (req, res) => {
   console.log('Produto PUT /atualizar foi chamada');
-  const { sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, especificacoes } = req.body;
+  const { sku, nome, descricao, preco, stock, id_categoria, id_marca, tipo_produto, especificacoes } = req.body;
+  const imagem_url = req.file ? `/uploads/produtos/${req.file.filename}` : req.body.imagem_url;
 
   console.log("Dados Recebidos:", req.body);
 
@@ -38,8 +62,10 @@ routerAdminProdutos.put('/atualizar/:id', (req, res) => {
   if (!preco) return res.status(400).json({ success: false, message: 'O preço do produto é obrigatório.' });
   if (!stock) return res.status(400).json({ success: false, message: 'O stock do produto é obrigatório.' });
 
-  db.query('UPDATE produtos SET sku = ?, nome = ?, descricao = ?, preco = ?, stock = ?, id_categoria = ?, id_marca = ?, imagem_url = ?, especificacoes = ? WHERE id = ?', 
-  [sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, especificacoes, req.params.id], (err, results) => {
+  const especificacoesFinal = especificacoes ? JSON.parse(especificacoes) : null;
+
+  db.query('UPDATE produtos SET sku = ?, nome = ?, descricao = ?, preco = ?, stock = ?, id_categoria = ?, id_marca = ?, imagem_url = ?, tipo_produto = ?, especificacoes = ? WHERE id = ?', 
+  [sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, tipo_produto, JSON.stringify(especificacoesFinal), req.params.id], (err, results) => {
     if (err) {
       console.error(err);
       return res.status(500).send({ success: false, message: 'Erro interno do servidor' });

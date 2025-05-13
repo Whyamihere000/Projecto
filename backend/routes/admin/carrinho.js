@@ -63,6 +63,25 @@ routerCarrinho.post('/adicionar', (req, res) => {
     )
 })
 
+routerCarrinho.post('/remover', (req, res) => {
+    const { id_carrinho, id_produto } = req.body;
+    console.log("Dados recebidos para remover:", { id_carrinho, id_produto });
+
+    db.query(
+        'DELETE FROM items_carrinhos WHERE id_carrinho = ? AND id_produto = ?',
+        [id_carrinho, id_produto],
+        (err, results) => {
+            if (err) {
+                console.error("Erro ao remover produto:", err);
+                return res.status(500).json({ success: false, message: 'Erro ao remover o produto do carrinho' });
+            }
+
+            console.log("Resultado da query:", results);
+            res.json({ success: true, message: 'Produto removido do carrinho' });
+        }
+    )
+})
+
 routerCarrinho.post('/finalizar', (req, res) => {
     const { id_carrinho } = req.body;
 

@@ -47,28 +47,34 @@ function Carrinho() {
       );
       setCarrinho({ ...carrinho, items: updateCarrinho });
 
-      await axios.delete(
+      console.log("Remover item:", {
+        id_carrinho: carrinho.id,
+        id_produto,
+      });
+
+      const resposta = await axios.post(
         `http://localhost:3001/api/carrinhos/remover`,
         {
-          data: {
-            id_carrinho: carrinho.id,
-            id_produto,
-          },
+          id_carrinho: carrinho.id,
+          id_produto,
         }
       );
+
+      console.log("Resposta do servidor:", resposta.data);
 
       const total = updateCarrinho.reduce(
         (acc, item) => acc + item.quantidade * item.preco,
         0
       );
+
       await axios.put(`http://localhost:3001/api/carrinhos/${carrinho.id}`, {
         total,
       });
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao remover item do carrinho:", error);
       setMensagem("Erro ao remover item do carrinho.");
     }
-  };
+};
 
   const handleFinalizarCompra = async () => {
     if (!carrinho || carrinho.items.length === 0) {

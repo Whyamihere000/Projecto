@@ -136,20 +136,41 @@ function Produtos() {
       </nav>
       <main className={stylesProdutos.mainPublic}>
         <div className={stylesProdutos.produtosPublic}>
-          <h1>Produtos</h1>
-          {produtos.length > 0 ? (
-            produtos.map((produto) => (
-              <div key={produto.id} style={{ border: '1px solid #ccc', padding: '10px', width: '200px' }}>
-                <h3>{produto.nome}</h3>
-                <p>{produto.descricao}</p>
-                <p>{produto.preco}€</p>
-                <button onClick={() => handleAdicionarAoCarrinho(produto.id)}>Adicionar ao carrinho</button>
-              </div>
-            ))
-          ) : (
-            <p>Nenhum produto disponível.</p>
-          )}
-        </div>
+  <h1>Produtos</h1>
+  {produtos.length > 0 ? (
+    produtos.map((produto) => (
+      <div key={produto.id} style={{ border: '1px solid #ccc', padding: '10px', width: '250px', margin: '10px' }}>
+        <h3>{produto.nome}</h3>
+        {produto.imagem_url && (
+          <img 
+            src={`http://localhost:3001${produto.imagem_url}`} 
+            alt={produto.nome} 
+            style={{ width: '100%', height: 'auto', marginBottom: '10px' }} 
+          />
+        )}
+        <p>{produto.descricao}</p>
+        <p><strong>Preço:</strong> {produto.preco}€</p>
+        <p><strong>Tipo de Produto:</strong> {produto.tipo_produto}</p>
+
+        {produto.especificacoes && (
+          <div>
+            <h4>Especificações:</h4>
+            <ul>
+              {Object.keys(produto.especificacoes).map(key => (
+                <li key={key}><strong>{key}:</strong> {produto.especificacoes[key]}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <button onClick={() => handleAdicionarAoCarrinho(produto.id)}>Adicionar ao carrinho</button>
+      </div>
+    ))
+  ) : (
+    <p>Nenhum produto disponível.</p>
+  )}
+</div>
+
       </main>
 
       {openModal && (
