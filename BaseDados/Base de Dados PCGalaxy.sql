@@ -1,5 +1,3 @@
--- Base de Dados atualizada com melhorias e validações
-
 --DROP DATABASE IF EXISTS SitePAP;
 
 CREATE DATABASE IF NOT EXISTS SitePAP;
@@ -94,19 +92,18 @@ CREATE TABLE `items_encomendas` (
 CREATE TABLE `pagamentos` (
   `id` INT PRIMARY KEY AUTO_INCREMENT,
   `id_encomenda` INT NOT NULL,
-  `metodo` ENUM('mbway', 'paypal', 'cartao', 'referencia', 'simulado') NOT NULL,  -- Métodos de pagamento
+  `metodo` ENUM('mbway', 'paypal', 'cartao', 'referencia', 'simulado') NOT NULL,
   `estado` ENUM('pendente', 'pago', 'falhado', 'em_analise', 'reembolsado', 'simulado') DEFAULT 'pendente',
-  `referencia` VARCHAR(100),  -- Referência de pagamento, se aplicável (pode ser uma chave de transação ou ID gerado)
-  `data_pagamento` DATETIME,  -- Data real de pagamento (se aplicável)
-  `informacoes_adicionais` TEXT,  -- Informações adicionais sobre a simulação (erro, motivo, etc.)
-  
-  -- Dados simulados de pagamento com Cartão de Crédito/Débito
-  `nome_cartao` VARCHAR(100),  -- Nome do titular do cartão (ex: "J. Smith")
-  `cartao_tipo` ENUM('visa', 'mastercard', 'maestro') DEFAULT NULL,  -- Tipo de cartão (Visa, Mastercard, Maestro)
-  `cartao_numero` VARCHAR(16),  -- Número do cartão (apenas os primeiros 12-14 números, no caso de simulação)
-  `cartao_validade` DATE,  -- Data de validade do cartão (MM/AA)
-  `cartao_codigo_seguranca` VARCHAR(4),  -- Código de segurança (CVV) - importante, mas em um sistema real, deve ser tratado com segurança
-  `cartao_token` VARCHAR(255),  -- Token de pagamento gerado (simulado) em vez de armazenar o número do cartão
+  `referencia` VARCHAR(100),
+  `data_pagamento` DATETIME,
+  `informacoes_adicionais` TEXT,
+
+  `nome_cartao` VARCHAR(100),
+  `cartao_tipo` ENUM('visa', 'mastercard', 'maestro') DEFAULT NULL,
+  `cartao_numero` VARCHAR(16),
+  `cartao_validade` DATE,
+  `cartao_codigo_seguranca` VARCHAR(4),
+  `cartao_token` VARCHAR(255),
 
   FOREIGN KEY (`id_encomenda`) REFERENCES `encomendas` (`id`)
 );
