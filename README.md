@@ -1,6 +1,9 @@
-# React + Vite
+# React + Vite (PCG alaxy)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto Final do curso do IEFP
+
+# Isaque Encarnação | Miguel Palma
+
 
 Currently, two official plugins are available:
 
