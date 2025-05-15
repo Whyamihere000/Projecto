@@ -3,158 +3,366 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
-import stylesUtilizadores from "../css/Utilizadores.module.css";
+import stylesProdutos from "../css/Produtos.module.css";
 
-function Utilizadores() {
-  const [utilizadores, setUtilizadores] = useState([]);
+function Produtos() {
+    const [produtoSku, setProdutoSku] = useState('');
+    const [produtoNome, setProdutoNome] = useState('');
+    const [produtoDescricao, setProdutoDescricao] = useState('');
+    const [produtoPreco, setProdutoPreco] = useState('');
+    const [produtoStock, setProdutoStock] = useState('');
+    const [produtoCategoria, setProdutoCategoria] = useState('');
+    const [categorias, setCategorias] = useState([]);
+    const [produtoMarca, setProdutoMarca] = useState('');  
+    const [marcas, setMarcas] = useState([]);  
+    const [produtoTipo, setProdutoTipo] = useState('');
+    const tiposProduto = [
+        "Memória", "Processador", "Placa Gráfica", 
+        "Motherboard", "Armazenamento", "Fonte de Alimentação", 
+        "Caixa", "Monitor", "Periféricos"
+    ];
+    const [produtoImagem, setProdutoImagem] = useState('');
+    const [produtoEspecificacoes, setProdutoEspecificacoes] = useState({});
+    const [camposEspecificacoes, setCamposEspecificacoes] = useState([]);
+    const [produtos, setProdutos] = useState([]);
+    const [mensagem, setMensagem] = useState('');
+    const [mensagemTipo, setMensagemTipo] = useState('');
 
-  const [mensagem, setMensagem] = useState("");
-  const [mensagemTipo, setMensagemTipo] = useState("");
+    useEffect(() => {
+        const fetchCategorias = async () => {
+            try {
+                const res = await axios.get('http://localhost:3001/api/categorias/buscar');
+                setCategorias(res.data);
+            } catch (error) {
+                console.error('Erro ao carregar categorias', error);
+            }
+        };
 
-  useEffect(() => {
-    const fetchUtilizadores = async () => {
-      try {
-        const res = await axios.get("http://localhost:3001/api/utilizadores/buscar");
-        setUtilizadores(res.data);
-      } catch (error) {
-        console.error("Erro ao carregar utilizadores", error);
-      }
+        const fetchMarcas = async () => {
+            try {
+                const res = await axios.get('http://localhost:3001/api/marcas/buscar');
+                setMarcas(res.data);
+            } catch (error) {
+                console.error('Erro ao carregar marcas', error);
+            }
+        };
+
+        const fetchProdutos = async () => {
+            try {
+                const res = await axios.get('http://localhost:3001/api/produtos/buscar');        
+                setProdutos(res.data);
+            } catch (error) {
+                console.error('Erro ao carregar produtos', error);
+            }
+        };
+
+        fetchCategorias();
+        fetchMarcas();
+        fetchProdutos();
+    }, []);
+
+    const adicionarProduto = async () => {
+        if (!produtoNome.trim()) {
+            setMensagem('O nome do produto é obrigatório.');
+            setMensagemTipo('error');
+            return;
+        }
+        if (!produtoPreco) {
+            setMensagem('O preço do produto é obrigatório.');
+            setMensagemTipo('error');
+            return;
+        }
+        if (!produtoStock) {
+            setMensagem('O stock do produto é obrigatório.');
+            setMensagemTipo('error');
+            return;
+        }
+        if (!produtoCategoria) {
+            setMensagem('A categoria do produto é obrigatória.');
+            setMensagemTipo('error');
+            return;
+        }
+        if (!produtoMarca) {
+            setMensagem('A marca do produto é obrigatória.');
+            setMensagemTipo('error');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('sku', produtoSku);
+        formData.append('nome', produtoNome);
+        formData.append('descricao', produtoDescricao);
+        formData.append('preco', produtoPreco);
+        formData.append('stock', produtoStock);
+        formData.append('id_categoria', produtoCategoria);
+        formData.append('id_marca', produtoMarca);
+        formData.append('imagem', produtoImagem);
+        formData.append("tipo_produto", produtoTipo);
+        formData.append('especificacoes', JSON.stringify(produtoEspecificacoes));
+
+        try {
+            const res = await axios.post('http://localhost:3001/api/produtos/nova', formData);
+
+            if (res.data.success) {
+                setMensagem('Produto adicionado com sucesso.');
+                setMensagemTipo('success');
+                setProdutoSku('');
+                setProdutoNome('');
+                setProdutoDescricao('');
+                setProdutoPreco('');
+                setProdutoStock('');
+                setProdutoCategoria('');
+                setProdutoMarca('');
+                setProdutoImagem('');
+                setProdutoTipo('');
+                setProdutoEspecificacoes({});
+
+                const produtosAtualizados = await axios.get('http://localhost:3001/api/produtos/buscar');
+                setProdutos(produtosAtualizados.data);
+            } else {
+                setMensagem('Erro ao adicionar o produto.');
+                setMensagemTipo('error');
+            }
+        } catch (error) {
+            console.error(error);
+            setMensagem('Erro ao comunicar com o servidor.');
+            setMensagemTipo('error');
+        }
+    }
+
+    const atualizarProduto = async (produto) => {
+        try {
+            const res = await axios.put(`http://localhost:3001/api/produtos/atualizar/${produto.id}`, {
+                sku: produto.sku,
+                nome: produto.nome,
+                descricao: produto.descricao,
+                preco: produto.preco,
+                stock: produto.stock,
+                id_categoria: produto.id_categoria,
+                id_marca: produto.id_marca,
+                imagem_url: produto.imagem_url,
+                especificacoes: produto.especificacoes
+            });
+
+            if (res.data.success) {
+                setProdutos(produtos.map(p => p.id === produto.id ? { ...p, ...produto } : p));
+                setMensagem('Produto atualizado com sucesso.');
+                setMensagemTipo('success');
+            } else {
+                setMensagem('Erro ao atualizar o produto.');
+                setMensagemTipo('error');
+            }
+        } catch (error) {
+            console.error(error);
+            setMensagem('Erro ao comunicar com o servidor.');
+            setMensagemTipo('error');
+        }
+    }
+
+    const eliminarProduto = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:3001/api/produtos/eliminar/${id}`);
+            
+            if (response.status === 200) {
+                setProdutos(produtos.filter(produto => produto.id !== id));
+                setMensagem('Produto eliminado com sucesso.');
+                setMensagemTipo('success');
+            } else {
+                setMensagem('Erro ao eliminar produto.');
+                setMensagemTipo('error');
+            }
+        } catch (error) {
+            console.error('Erro na requisição Axios:', error);
+            setMensagem('Erro ao comunicar com o servidor.');
+            setMensagemTipo('error');
+        }
     };
 
-    fetchUtilizadores();
-  }, []);
-
-  const atualizarUtilizador = async (utilizador) => {
-    try {
-      const res = await axios.put(
-        `http://localhost:3001/api/utilizadores/atualizar/${utilizador.id}`,
-        {
-          primeiro_nome: utilizador.primeiro_nome,
-          ultimo_nome: utilizador.ultimo_nome,
-          email: utilizador.email,
-          password_hash: utilizador.password_hash,
-          telefone: utilizador.telefone,
-          //data_registo: utilizador.data_registo,
-          //data_atualizacao: utilizador.data_atualizacao,
-          tipo_utilizador: utilizador.tipo_utilizador,
-          rua: utilizador.rua,
-          cidade: utilizador.cidade,
-          codigo_postal: utilizador.codigo_postal,
-          pais: utilizador.pais,
+    const colunas = [
+        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'sku', headerName: 'SKU', width: 130, editable: true },
+        { field: 'nome', headerName: 'Nome', width: 130, editable: true },
+        { field: 'imagem_url', headerName: 'Imagem', width: 130, 
+            renderCell: (params) => (
+                <img
+                    src={`http://localhost:3001/${params.row.imagem_url}`}
+                    alt="Imagem Produto"
+                    style={{ width: '50px', height: '50px' }}
+                />
+            )
+        },
+        { field: 'tipo_produto', headerName: 'Tipo de Produto', width: 150 },
+        { field: 'especificacoes', headerName: 'Especificações', width: 200, 
+    renderCell: (params) => {
+        try {
+            const especificacoes = JSON.parse(params.row.especificacoes);
+            return (
+                <div>
+                    {Object.keys(especificacoes).map((key, index) => (
+                        <div key={index}>{key}: {especificacoes[key]}</div>
+                    ))}
+                </div>
+            );
+        } catch (e) {
+            return <div>Erro nas especificações</div>;
         }
-      );
-
-      if (res.data.success) {
-        setUtilizadores((prevUtilizadores) =>
-          prevUtilizadores.map((u) =>
-            u.id === utilizador.id ? res.data.utilizador : u
-          )
-        );
-        setMensagem(res.data.message);
-        setMensagemTipo("success");
-      } else {
-        console.error("Erro ao atualizar utilizador");
-        setMensagem(res.data.message);
-        setMensagemTipo("error");
-      }
-    } catch (error) {
-      console.error(error);
-      setMensagem("Erro ao comunicar com o servidor");
-      setMensagemTipo("error");
     }
-  };
-
-  const eliminarUtilizador = async (id) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:3001/api/utilizadores/eliminar/${id}`
-      );
-
-      if (response.status === 200) {
-        setUtilizadores(
-          utilizadores.filter((utilizador) => utilizador.id !== id)
-        );
-        setMensagem("Utilizador eliminado com sucesso");
-        setMensagemTipo("success");
-      } else {
-        setMensagem("Erro ao eliminar utilizador");
-        setMensagemTipo("error");
-      }
-    } catch (error) {
-      console.error("Erro na requisição Axios:", error);
-      setMensagem("Erro ao comunicar com o servidor");
-      setMensagemTipo("error");
-    }
-  };
-
-  const colunas = [
-  { field: "id", headerName: "ID", minWidth: 70 },
-  { field: "primeiro_nome", headerName: "Primeiro Nome", minWidth: 150, editable: true },
-  { field: "ultimo_nome", headerName: "Ultimo Nome", minWidth: 150 },
-  { field: "email", headerName: "Email", minWidth: 200 },
-  { field: "password_hash", headerName: "Password", minWidth: 200, },
-  { field: "telefone", headerName: "Telefone", minWidth: 150 },
-  { field: "data_registo", headerName: "Data Registo", minWidth: 150 },
-  { field: "data_atualizacao", headerName: "Data Atualizacao", minWidth: 150 },
-  { field: "tipo_utilizador", headerName: "Tipo", minWidth: 100 },
-  { field: "rua", headerName: "Rua", minWidth: 200, flex: 1 },
-  { field: "cidade", headerName: "Cidade", minWidth: 150 },
-  { field: "codigo_postal", headerName: "Codigo Postal", minWidth: 150 },
-  { field: "pais", headerName: "Pais", minWidth: 150 },
-  {
-    field: "ações",
-    headerName: "Ações",
-    minWidth: 220,
-    renderCell: (params) => (
-      <>
-        <button onClick={() => eliminarUtilizador(params.row.id)}>Eliminar</button>
-        <button onClick={() => atualizarUtilizador(params.row)}>Atualizar</button>
-      </>
-    ),
-  },
-];
-
-  return (
-    <>
-      <nav className={styles.navegacao_admin}>
-        <Link to="/admin/categorias" className={styles.link}>
-          Categorias
-        </Link>
-        <Link to="/admin/marcas" className={styles.link}>
-          Marcas
-        </Link>
-        <Link to="/admin/produtos" className={styles.link}>
-          Produtos
-        </Link>
-        <Link to="/admin/utilizadores" className={styles.link}>
-          Utilizadores
-        </Link>
-        <button className={styles.logout}>Logout</button>
-      </nav>
-
-      <div className={stylesUtilizadores.container}>
-        <div style={{ height: 400, width: "100%" }}>
-          <DataGrid
-            rows={utilizadores}
-            columns={colunas}
-            pageSize={5}
-            getRowId={(row) => row.id}
-          />
-        </div>
-        {mensagem && (
-          <p
-            className={
-              mensagemTipo === "success"
-                ? stylesUtilizadores.success
-                : stylesUtilizadores.error
+},
+        { field: 'descricao', headerName: 'Descrição', width: 130, editable: true },
+        { field: 'preco', headerName: 'Preço', width: 130, editable: true },
+        { field: 'stock', headerName: 'Stock', width: 130, editable: true },
+        { field: 'id_categoria', headerName: 'Categoria', width: 130, editable: true, 
+            renderCell: (params) => {
+                const categoria = categorias.find(cat => cat.id === params.row.id_categoria);
+                return categoria ? categoria.nome : '';
             }
-          >
-            {mensagem}
-          </p>
-        )}
-      </div>
-    </>
-  );
+        },
+        { field: 'id_marca', headerName: 'Marca', width: 130, editable: true, 
+            renderCell: (params) => {
+                const marca = marcas.find(marca => marca.id === params.row.id_marca);
+                return marca ? marca.nome : '';
+            }
+        },    
+        { field: 'ações', headerName: 'Ações', width: 200, renderCell: (params) => (
+            <>
+                <button onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
+                <button onClick={() => atualizarProduto(params.row)}>Atualizar</button>
+            </>
+        )},
+    ]
+
+    useEffect(() => {
+        document.body.className = stylesProdutos.bodyHome;
+        return () => {
+            document.body.className = '';
+        };
+    }, []);
+
+    const handleTipoProdutoChange = (event) => {
+        setProdutoTipo(event.target.value);
+        switch (event.target.value) {
+          case 'Memória':
+            setCamposEspecificacoes([
+              { nome: 'Tipo', campo: 'tipo' },
+              { nome: 'Capacidade', campo: 'capacidade' },
+              { nome: 'Frequência', campo: 'frequencia' },
+            ])
+            break;
+          case 'Placa Gráfica':
+            setCamposEspecificacoes([
+              { nome: 'Memória', campo: 'memoria' },
+              { nome: 'GPU', campo: 'gpu' }
+            ])
+            break;
+          default:
+            setCamposEspecificacoes([])
+        }
+    };
+
+    return (
+        <>
+            <nav className={styles.navegacao_admin}>
+                <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
+                <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
+                <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
+                <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
+                <button className={styles.logout}>Logout</button>
+            </nav>
+
+            <div className={stylesProdutos.container}>
+                <h1>Adicionar Produto</h1>
+                <input
+                    type="text"
+                    placeholder="SKU do produto"
+                    value={produtoSku}
+                    onChange={(e) => setProdutoSku(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Nome do produto"
+                    value={produtoNome}
+                    onChange={(e) => setProdutoNome(e.target.value)}
+                />
+                <input
+                    type="text"
+                    placeholder="Descrição do produto"
+                    value={produtoDescricao}
+                    onChange={(e) => setProdutoDescricao(e.target.value)}
+                />
+                <input
+                    type="number"
+                    placeholder="Preço do produto"
+                    value={produtoPreco}
+                    onChange={(e) => setProdutoPreco(e.target.value)}
+                />
+                <input
+                    type="number"
+                    placeholder="Stock do produto"
+                    value={produtoStock}
+                    onChange={(e) => setProdutoStock(e.target.value)}
+                />
+                <select value={produtoCategoria} onChange={(e) => setProdutoCategoria(e.target.value)}>
+                    <option value="">Selecione uma categoria</option>
+                    {categorias.map((categoria) => (
+                        <option key={categoria.id} value={categoria.id}>
+                            {categoria.nome}
+                        </option>
+                    ))}
+                </select>
+                <select value={produtoMarca} onChange={(e) => setProdutoMarca(e.target.value)}>
+                    <option value="">Selecione uma marca</option>
+                    {marcas.map((marca) => (
+                        <option key={marca.id} value={marca.id}>
+                            {marca.nome}
+                        </option>
+                    ))}
+                </select>
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setProdutoImagem(e.target.files[0])}
+                />
+                <select value={produtoTipo} onChange={handleTipoProdutoChange}>
+                    <option value="">Selecione um tipo de produto</option>
+                    {tiposProduto.map((tipo) => (
+                        <option key={tipo} value={tipo}>
+                            {tipo}
+                        </option>
+                    ))}
+                </select>
+                {camposEspecificacoes.map((campo, index) => (
+    <input
+        key={index}
+        type="text"
+        placeholder={`Especificação: ${campo.nome}`}
+        value={produtoEspecificacoes[campo.campo] || ''}
+        onChange={(e) =>
+            setProdutoEspecificacoes((prev) => ({
+                ...prev,
+                [campo.campo]: e.target.value
+            }))
+        }
+    />
+))}
+                <button onClick={adicionarProduto}>Adicionar Produto</button>
+                {mensagem && <p className={mensagemTipo}>{mensagem}</p>}
+                <br />
+                <br />
+                <br />
+                <br />
+                <h2>Lista Produtos</h2>
+                <div style={{ height: 400, width: '100%' }}>
+                    <DataGrid
+                        rows={produtos}
+                        columns={colunas}
+                        pageSize={5}
+                        getRowId={(row) => row.id}
+                    />
+                </div>
+            </div>
+        </>
+    );
 }
 
-export default Utilizadores;
+export default Produtos;
+
