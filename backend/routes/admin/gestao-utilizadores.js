@@ -68,4 +68,3 @@ routerAdminUtilizadores.get('/eliminar/:id', (req, res) => {
 })
 
 export default routerAdminUtilizadores;
-
