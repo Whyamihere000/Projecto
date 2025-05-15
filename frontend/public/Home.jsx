@@ -31,21 +31,24 @@ function Home() {
   return (
     <div className={styles.home}>
      <nav className={stylesGlobal.nav}>
-  <div className={stylesGlobal.navLeft}>
-    <Link to="/produtos" className={stylesGlobal.navProdutos}>Produtos</Link>
+
+      <div className={stylesGlobal.navLeft}>
+            <img src="../icons/logo.png" alt="Logo" className={styles.logoIcon} />
+                <Link to="/" className={styles.navHome}>Home</Link>
+                <Link to="/produtos" className={styles.navProdutos}>Produtos</Link>
 
     <div className={stylesGlobal.dropdown}>
       <button className={stylesGlobal.dropbtn}>Componentes ▾</button>
       <div className={stylesGlobal.dropdownContent}>
-        <Link to="/produtos?categoria=Memória">Memória</Link>
-        <Link to="/produtos?categoria=Processador">Processador</Link>
-        <Link to="/produtos?categoria=Placa Gráfica">Placa Gráfica</Link>
-        <Link to="/produtos?categoria=MotherBoard">MotherBoard</Link>
-        <Link to="/produtos?categoria=Armazenamento">Armazenamento</Link>
-        <Link to="/produtos?categoria=Fonte de Alimentação">Fonte de Alimentação</Link>
-        <Link to="/produtos?categoria=Caixas">Caixas</Link>
-        <Link to="/produtos?categoria=Monitor">Monitor</Link>
-        <Link to="/produtos?categoria=Periféricos">Periféricos</Link>
+          <Link to="/produtos?tipo_produto=Memória">Memória</Link>
+          <Link to="/produtos?tipo_produto=Processador">Processador</Link>
+          <Link to="/produtos?tipo_produto=Placa Gráfica">Placa Gráfica</Link>
+          <Link to="/produtos?tipo_produto=MotherBoard">MotherBoard</Link>
+          <Link to="/produtos?tipo_produto=Armazenamento">Armazenamento</Link>
+          <Link to="/produtos?tipo_produto=Fonte de Alimentação">Fonte de Alimentação</Link>
+          <Link to="/produtos?tipo_produto=Caixas">Caixas</Link>
+          <Link to="/produtos?tipo_produto=Monitor">Monitor</Link>
+          <Link to="/produtos?tipo_produto=Periféricos">Periféricos</Link>
       </div>
     </div>
   </div>
