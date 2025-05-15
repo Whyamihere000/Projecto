@@ -90,17 +90,28 @@ function Utilizadores() {
   const colunas = [
   { field: "id", headerName: "ID", minWidth: 70 },
   { field: "primeiro_nome", headerName: "Primeiro Nome", minWidth: 150, editable: true },
-  { field: "ultimo_nome", headerName: "Ultimo Nome", minWidth: 150 },
-  { field: "email", headerName: "Email", minWidth: 200 },
+  { field: "ultimo_nome", headerName: "Ultimo Nome", minWidth: 150, editable: true },
+  { field: "email", headerName: "Email", minWidth: 200, editable: true },
   { field: "password_hash", headerName: "Password", minWidth: 200, },
-  { field: "telefone", headerName: "Telefone", minWidth: 150 },
+  { field: "telefone", headerName: "Telefone", minWidth: 150, editable: true,     
+    renderEditCell: (params) => (
+      <input
+        type="text"
+        value={params.value}
+        onChange={(e) => {
+          const newValue = e.target.value.slice(0, 9); // Limita diretamente a 9 caracteres
+          params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue });
+        }}
+      />
+    ),
+  },
   { field: "data_registo", headerName: "Data Registo", minWidth: 150 },
   { field: "data_atualizacao", headerName: "Data Atualizacao", minWidth: 150 },
-  { field: "tipo_utilizador", headerName: "Tipo", minWidth: 100 },
-  { field: "rua", headerName: "Rua", minWidth: 200, flex: 1 },
-  { field: "cidade", headerName: "Cidade", minWidth: 150 },
-  { field: "codigo_postal", headerName: "Codigo Postal", minWidth: 150 },
-  { field: "pais", headerName: "Pais", minWidth: 150 },
+  { field: "tipo_utilizador", headerName: "Tipo", minWidth: 100, editable: true },
+  { field: "rua", headerName: "Rua", minWidth: 200, flex: 1, editable: true },
+  { field: "cidade", headerName: "Cidade", minWidth: 150, editable: true },
+  { field: "codigo_postal", headerName: "Codigo Postal", minWidth: 150, editable: true },
+  { field: "pais", headerName: "Pais", minWidth: 150, editable: true },
   {
     field: "ações",
     headerName: "Ações",
