@@ -30,25 +30,38 @@ function Home() {
 
   return (
     <div className={styles.home}>
-      <nav className={stylesGlobal.nav}>
-        <div className={stylesGlobal.navLeft}>
-          <Link to="/produtos" className={stylesGlobal.navProdutos}>Produtos</Link>
-        </div>
-        <div className={stylesGlobal.navRight}>
-          {user ? (
-            <>
-              <p>{user ? `${user.primeiro_nome}` : ''}</p>
-              <p>
-                <button onClick={handleLogout}>Logout</button>
-              </p>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className={stylesGlobal.navLogin}>Login</Link>
-            </>
-          )}
-        </div>
-      </nav>
+     <nav className={stylesGlobal.nav}>
+  <div className={stylesGlobal.navLeft}>
+    <Link to="/produtos" className={stylesGlobal.navProdutos}>Produtos</Link>
+
+    <div className={stylesGlobal.dropdown}>
+      <button className={stylesGlobal.dropbtn}>Componentes ▾</button>
+      <div className={stylesGlobal.dropdownContent}>
+        <Link to="/produtos?categoria=Memória">Memória</Link>
+        <Link to="/produtos?categoria=Processador">Processador</Link>
+        <Link to="/produtos?categoria=Placa Gráfica">Placa Gráfica</Link>
+        <Link to="/produtos?categoria=MotherBoard">MotherBoard</Link>
+        <Link to="/produtos?categoria=Armazenamento">Armazenamento</Link>
+        <Link to="/produtos?categoria=Fonte de Alimentação">Fonte de Alimentação</Link>
+        <Link to="/produtos?categoria=Caixas">Caixas</Link>
+        <Link to="/produtos?categoria=Monitor">Monitor</Link>
+        <Link to="/produtos?categoria=Periféricos">Periféricos</Link>
+      </div>
+    </div>
+  </div>
+
+  <div className={stylesGlobal.navRight}>
+    {user ? (
+      <>
+        <p>{user.primeiro_nome}</p>
+        <button onClick={handleLogout}>Logout</button>
+      </>
+    ) : (
+      <Link to="/login" className={stylesGlobal.navLogin}>Login</Link>
+    )}
+  </div>
+</nav>
+
 
       <main className={styles.main}>
         <section className={styles.section}>
