@@ -117,6 +117,10 @@ function Produtos() {
     setOpenModal(false);
   };
 
+  function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
   return (
     <>
       <nav className={styles.nav}>
