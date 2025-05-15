@@ -36,6 +36,57 @@ function Utilizadores() {
         fetchUtilizadores();
     }, []);
 
+    const atualizarUtilizador = async (utilizador) => {
+        try {
+            const res = await axios.put(`http://localhost:3001/api/utilizadores/atualizar/${utilizador.id}`,{
+                primeiro_nome: utilizador.primeiro_nome,
+                ultimo_nome: utilizador.ultimo_nome,
+                email: utilizador.email,
+                password_hash: utilizador.password_hash,
+                telefone: utilizador.telefone,
+                data_registo: utilizador.data_registo,
+                tipo_utilizador: utilizador.tipo_utilizador,
+                rua: utilizador.rua,
+                cidade: utilizador.cidade,
+                codigo_postal: utilizador.codigo_postal,
+                pais: utilizador.pais
+            })
+            
+            if (res.data.success) {
+                setUtilizadores(res.data.utilizadores);
+                // setMensagem(res.data.message);
+                // setMensagemTipo('success');
+            } else {
+                console.error('Erro ao atualizar utilizador');
+                // setMensagem(res.data.message);
+                // setMensagemTipo('error');
+            } 
+        } catch (error) {
+            console.error(error);
+            // setMensagem('Erro ao comunicar com o servidor');
+            // setMensagemTipo('error');
+        }
+    }
+
+    const eliminarUtilizador = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost:3001/api/utilizadores/eliminar/${id}`);
+            
+            if (response.status === 200) {
+                setUtilizadores(utilizadores.filter(utilizador => utilizador.id !== id));
+                // setMensagem('Utilizador eliminado com sucesso');
+                // setMensagemTipo('success');
+            } else {
+                // setMensagem('Erro ao eliminar utilizador');
+                // setMensagemTipo('error');
+            }
+        } catch (error) {
+            console.error('Erro na requisição Axios:', error);
+            // setMensagem('Erro ao comunicar com o servidor');
+            // setMensagemTipo('error');
+        }
+    }
+
     const colunas = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'primeiro_nome', headerName: 'Primeiro Nome', width: 150 },
