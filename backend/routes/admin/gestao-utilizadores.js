@@ -9,15 +9,14 @@ routerAdminUtilizadores.get('/buscar', (req, res) => {
             console.error('Erro ao buscar utilizadores:', err);
             return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
         } else {
-            console.log('Utilizadores encontrados:', results);
             res.json(results);
         }
     });
 });
 
-routerAdminUtilizadores.get('/atualizar/:id', (req, res) => {
+routerAdminUtilizadores.put('/atualizar/:id', (req, res) => {
     console.log('Atualização na tabela utilizadores realizada na data:', new Date());   
-    const { primeiro_nome, ultimo_nome, email, password_hash, telefone, data_registo, tipo_utilizador, rua, cidade, codigo_postal, pais } = req.body;
+    const { primeiro_nome, ultimo_nome, email, password_hash, telefone, tipo_utilizador, data_atualizacao, rua, cidade, codigo_postal, pais } = req.body;
     console.log('Dados Recebidos:', req.body);
 
     if(!primeiro_nome) return res.status(400).json({ success: false, message: 'O primeiro nome do utilizador é obrigatório.' });
@@ -26,8 +25,8 @@ routerAdminUtilizadores.get('/atualizar/:id', (req, res) => {
     if(!password_hash) return res.status(400).json({ success: false, message: 'A password do utilizador é obrigatório.' });
 
     db.query(
-        'UPDATE utilizadores SET primeiro_nome = ?, ultimo_nome = ?, email = ?, password_hash = ?, telefone = ?, data_registo = ?, tipo_utilizador = ?, rua = ?, cidade = ?, codigo_postal = ?, pais = ?',
-        [primeiro_nome, ultimo_nome, email, password_hash, telefone, data_registo, tipo_utilizador, rua, cidade, codigo_postal, pais, req.params.id],
+        'UPDATE utilizadores SET primeiro_nome = ?, ultimo_nome = ?, email = ?, password_hash = ?, telefone = ?, tipo_utilizador = ?, rua = ?, cidade = ?, codigo_postal = ?, pais = ?, data_atualizacao = NOW() WHERE id = ?',
+        [primeiro_nome, ultimo_nome, email, password_hash, telefone, tipo_utilizador, rua, cidade, codigo_postal, pais, req.params.id],
         (err, results) => {
             if (err) {
                 console.error(err);
@@ -39,14 +38,14 @@ routerAdminUtilizadores.get('/atualizar/:id', (req, res) => {
                     primeiro_nome: primeiro_nome,
                     ultimo_nome: ultimo_nome,
                     email: email,
-                    password_hash: password_hash,
+                    password_hash: password_hash,                    
                     telefone: telefone,
-                    data_registo: data_registo,
                     tipo_utilizador: tipo_utilizador,
                     rua: rua,
                     cidade: cidade,
                     codigo_postal: codigo_postal,
-                    pais: pais
+                    pais: pais,
+                    data_atualizacao: new Date().toISOString().slice(0, 19).replace('T', ' '),
                 }
              })
         }
