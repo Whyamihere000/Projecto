@@ -101,9 +101,23 @@ function Produtos() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    window.location.reload();
+  const handleLogout = async () => {
+    const storedUser = localStorage.getItem("user");
+  
+  if (storedUser) {
+    const user = JSON.parse(storedUser);
+    
+    try {
+      await axios.post("http://localhost:3001/api/carrinhos/eliminar", {
+        id_utilizador: user.id,
+      });
+    } catch (error) {
+      console.error("Erro ao eliminar o carrinho:", error);
+    }
+  }
+
+  localStorage.removeItem("user");
+  window.location.reload();
   };
 
   useEffect(() => {

@@ -19,6 +19,17 @@ routerCarrinho.get('/:id_utilizador', (req, res) => {
                     if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar items do carrinho' });
 
                     carrinho.items = items || [];
+
+                    carrinho.total = carrinho.items.reduce((acc, item) => acc + item.quantidade * item.preco, 0);
+
+                    db.query(
+                        'UPDATE carrinhos SET total = ? WHERE id = ?',
+                        [carrinho.total, carrinho.id],
+                        (err) => {
+                            if (err) return res.status(500).json({ success: false, message: 'Erro ao atualizar o carrinho' });
+                        }
+                    );
+
                     res.json(carrinho);
                 }
             );
@@ -40,6 +51,24 @@ routerCarrinho.post('/adicionar', (req, res) => {
         (err, results) => {
             if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
 
+            const atualizarTotal = () => {
+                db.query(
+                    'SELECT SUM(quantidade * preco) AS total FROM items_carrinhos WHERE id_carrinho = ?',
+                    [id_carrinho],
+                    (err, results) => {
+                        if (err) return res.status(500).json({ success: false, message: 'Erro ao atualizar o carrinho' });
+                        const total = results[0].total || 0;
+                        db.query(
+                            'UPDATE carrinhos SET total = ? WHERE id = ?',
+                            [total, id_carrinho],
+                            (err) => {
+                                if (err) return res.status(500).json({ success: false, message: 'Erro ao atualizar o carrinho' });
+                            }
+                        );
+                    }
+                )
+            }
+
             if (results.length > 0) {
                 db.query(
                     'UPDATE items_carrinhos SET quantidade = quantidade + ? WHERE id_carrinho = ? AND id_produto = ?',
@@ -47,6 +76,7 @@ routerCarrinho.post('/adicionar', (req, res) => {
                     (err) => {
                         if (err) return res.status(500).json({ success: false, message: 'Erro ao atualizar o produto' });
                         res.json({ success: true, message: 'Produto atualizado ao carrinho' });
+                        atualizarTotal();
                     }
                 );
             } else {
@@ -56,6 +86,7 @@ routerCarrinho.post('/adicionar', (req, res) => {
                     (err) => {
                         if (err) return res.status(500).json({ success: false, message: 'Erro ao adicionar o produto ao carrinho' });
                         res.json({ success: true, message: 'Produto adicionado ao carrinho' });
+                        atualizarTotal();
                     }
                 )
             }
@@ -76,8 +107,28 @@ routerCarrinho.post('/remover', (req, res) => {
                 return res.status(500).json({ success: false, message: 'Erro ao remover o produto do carrinho' });
             }
 
-            console.log("Resultado da query:", results);
-            res.json({ success: true, message: 'Produto removido do carrinho' });
+            db.query(
+                'SELECT SUM(quantidade * preco) AS total FROM items_carrinhos WHERE id_carrinho = ?',
+                [id_carrinho],
+                (err, results) => {
+                    if (err) {
+                        console.error("Erro ao atualizar o carrinho:", err);
+                        return res.status(500).json({ success: false, message: 'Erro ao atualizar o carrinho' });
+                    }
+                    const total = results[0].total || 0;
+                    db.query(
+                        'UPDATE carrinhos SET total = ? WHERE id = ?',
+                        [total, id_carrinho],
+                        (err) => {
+                            if (err) {
+                                console.error("Erro ao atualizar o carrinho:", err);
+                                return res.status(500).json({ success: false, message: 'Erro ao atualizar o carrinho' });
+                            }
+                            res.json({ success: true, message: 'Produto removido do carrinho' });
+                        }
+                    );
+                }
+            );
         }
     )
 })
@@ -107,5 +158,28 @@ routerCarrinho.post('/finalizar', (req, res) => {
         }
     )
 })
+
+routerCarrinho.post('/eliminar', (req, res) => {
+    const { id_utilizador } = req.body;
+
+    db.query('SELECT id FROM carrinhos WHERE id_utilizador = ?', [id_utilizador], (err, results) => {
+        if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
+
+        if (results.length > 0) {
+            const carrinhoId = results[0].id;
+
+            db.query('DELETE FROM items_carrinhos WHERE id_carrinho = ?', [carrinhoId], (err) => {
+                if (err) return res.status(500).json({ success: false, message: 'Erro ao eliminar itens do carrinho' });
+
+                db.query('DELETE FROM carrinhos WHERE id = ?', [carrinhoId], (err) => {
+                    if (err) return res.status(500).json({ success: false, message: 'Erro ao eliminar o carrinho' });
+                    res.json({ success: true, message: 'Carrinho e itens eliminados com sucesso' });
+                });
+            });
+        } else {
+            res.status(404).json({ success: false, message: 'Carrinho não encontrado' });
+        }
+    });
+});
 
 export default routerCarrinho;

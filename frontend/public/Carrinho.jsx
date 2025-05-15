@@ -133,7 +133,7 @@ function Carrinho() {
                   </div>
                 ))}
                 <div className={stylesCarrinho.total}>
-                  <p><strong>Total: {carrinho.total}€</strong></p>
+                  <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
                   <button onClick={handleFinalizarCompra}>Finalizar Compra</button>
                 </div>
               </div>
