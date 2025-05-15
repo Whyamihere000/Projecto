@@ -8,8 +8,31 @@ import stylesUtilizadores from "../css/Utilizadores.module.css";
 function Utilizadores() {
   const [utilizadores, setUtilizadores] = useState([]);
 
+  const [primeiro_nome, setPrimeiroNome] = useState('')
+  const [ultimo_nome, setUltimoNome] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [password_confirmation, setPasswordConfirmation] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [rua, setRua] = useState('')
+  const [cidade, setCidade] = useState('')
+  const [codigo_postal, setCodigoPostal] = useState('')
+  const [pais, setPais] = useState('')
+
   const [mensagem, setMensagem] = useState("");
-  const [mensagemTipo, setMensagemTipo] = useState("");
+  const [mensagemTipo, setMensagemTipo] = useState("");  
+  const [errors, setErrors] = useState({})
+
+  // const validarEmail = (email) => {
+  //   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   return regex.test(email);
+  // };
+
+  // const validarPassword = (password) => {
+  //   // Pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial
+  //   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
+  //   return regex.test(password);
+  // };
 
   useEffect(() => {
     const fetchUtilizadores = async () => {
@@ -66,7 +89,7 @@ function Utilizadores() {
 
   const eliminarUtilizador = async (id) => {
     try {
-      const response = await axios.delete(
+      const response = await axios.get(
         `http://localhost:3001/api/utilizadores/eliminar/${id}`
       );
 
@@ -125,6 +148,107 @@ function Utilizadores() {
   },
 ];
 
+const handleRegisto = async () => {
+    const errors = {}
+
+    // if (!primeiro_nome) {
+    //   errors.primeiro_nome = 'O primeiro nome é obrigatório.'
+    // }
+
+    // if (!ultimo_nome) {
+    //   errors.ultimo_nome = 'O ultimo nome é obrigatório.'
+    // }
+
+    // if (!email) {
+    //   errors.email = 'O email é obrigatório.'
+    // } else if (!validarEmail(email)) {
+    //   errors.email = 'Formato de email inválido.'
+    // }
+
+    // if (!password) {
+    //   errors.password = 'A palavra-passe é obrigatória.'
+    // } else if (!validarPassword(password)) {
+    //   errors.password = 'A palavra-passe deve ter pelo menos 8 caracteres, uma maiúscula, uma minúscula, um número e um símbolo.'
+    // }
+
+    // if (password !== password_confirmation) {
+    //   errors.password_confirmation = 'A palavra-passe e a confirmação não coincidem.'
+    // }
+
+    // if (!telefone) {
+    //   errors.telefone = 'O telefone é obrigatório.'
+    // }
+
+    // if (!rua) {
+    //   errors.rua = 'A rua é obrigatória.'
+    // }
+
+    // if (!cidade) {
+    //   errors.cidade = 'A cidade é obrigatória.'
+    // }
+
+    // if (!codigo_postal) {
+    //   errors.codigo_postal = 'O codigo postal é obrigatório.'
+    // }
+
+    // if (!pais) {
+    //   errors.pais = 'O pais é obrigatório.'
+    // }
+
+    // if (Object.keys(errors).length > 0) {
+    //   setErrors(errors)
+    //   setMensagem('Verifique os erros.')
+    //   setMensagemTipo('error')
+    //   return
+    // }
+
+    try {
+      const response = await axios.post('http://localhost:3001/api/utilizadores/registo', {
+        primeiro_nome: primeiro_nome,
+        ultimo_nome: ultimo_nome,
+        email: email,
+        password: password,
+        telefone: telefone,
+        rua: rua,
+        cidade: cidade,
+        codigo_postal: codigo_postal,
+        pais: pais
+      })
+
+      if (response.data.success) {
+        setMensagem('Registo efetuado com sucesso.')
+        setMensagemTipo('success')
+        setPrimeiroNome('')
+        setUltimoNome('')
+        setEmail('')
+        setPassword('')
+        setPasswordConfirmation('')
+        setTelefone('')
+        setRua('')
+        setCidade('')
+        setCodigoPostal('')
+        setPais('')
+        
+        const atualizar = await axios.post('http://localhost:3001/api/utilizadores/buscar');
+        setUtilizadores(atualizar.data)
+      } else {
+        setMensagem(response.data.message)
+        setMensagemTipo('error')
+      }
+    } catch (error) {
+        console.error('Erro no registo:', error.response?.data || error.message)
+        setMensagem(error.response?.data?.message || 'Ocorreu um erro ao fazer o registo.')
+        setMensagemTipo('error')
+    }
+  }
+
+useEffect(() => {
+        document.body.className = stylesUtilizadores.bodyHome;
+        return () => {
+            document.body.className = '';
+        };
+    }, []);
+
   return (
     <>
       <nav className={styles.navegacao_admin}>
@@ -144,6 +268,40 @@ function Utilizadores() {
       </nav>
 
       <div className={stylesUtilizadores.container}>
+        <h1>Registo</h1>
+      <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} />
+      {errors.primeiro_nome && <p style={{ color: 'red' }}>{errors.primeiro_nome}</p>}
+
+      <input type="text" placeholder="Ultimo Nome" onChange={(e) => setUltimoNome(e.target.value)} />
+      {errors.ultimo_nome && <p style={{ color: 'red' }}>{errors.ultimo_nome}</p>}
+
+      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+      {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+
+      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+      {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
+
+      <input type="password" placeholder="Confirm Password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
+      {errors.password_confirmation && <p style={{ color: 'red' }}>{errors.password_confirmation}</p>}
+
+      <input type="text" placeholder="Telefone" onChange={(e) => setTelefone(e.target.value)} />
+      {errors.telefone && <p style={{ color: 'red' }}>{errors.telefone}</p>}
+
+      <input type="text" placeholder="Rua" onChange={(e) => setRua(e.target.value)} />
+      {errors.rua && <p style={{ color: 'red' }}>{errors.rua}</p>}
+
+      <input type="text" placeholder="Cidade" onChange={(e) => setCidade(e.target.value)} />
+      {errors.cidade && <p style={{ color: 'red' }}>{errors.cidade}</p>}
+
+      <input type="text" placeholder="Codigo Postal" onChange={(e) => setCodigoPostal(e.target.value)} />
+      {errors.codigo_postal && <p style={{ color: 'red' }}>{errors.codigo_postal}</p>}
+
+      <input type="text" placeholder="Pais" onChange={(e) => setPais(e.target.value)} />
+      {errors.pais && <p style={{ color: 'red' }}>{errors.pais}</p>}
+
+      <button onClick={handleRegisto}>Registar</button>
+      <br />
+
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={utilizadores}

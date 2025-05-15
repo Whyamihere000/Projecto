@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../../db.js';
+import bcrypt from 'bcrypt';
 
 const routerAdminUtilizadores = express.Router();
 
@@ -66,5 +67,40 @@ routerAdminUtilizadores.get('/eliminar/:id', (req, res) => {
         }
     )
 })
+
+routerAdminUtilizadores.post('/registo', async (req, res) => {
+  const { primeiro_nome, ultimo_nome, email, password, telefone, rua, cidade, codigo_postal, pais } = req.body;
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  db.query(
+ 'INSERT INTO utilizadores (primeiro_nome, ultimo_nome, email, password_hash, telefone, data_registo, tipo_utilizador, rua, cidade, codigo_postal, pais) VALUES (?, ?, ?, ?, ?, NOW(), "admin", ?, ?, ?, ?)',
+ [primeiro_nome, ultimo_nome, email, hashedPassword, telefone, rua, cidade, codigo_postal, pais],
+ (err, results) => {
+   if (err) {
+     console.error('Erro ao registar utilizador:', err);
+     return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
+   }
+
+      const userId = results.insertId;
+
+      // Buscar o utilizador recém-criado
+      db.query('SELECT id, primeiro_nome, ultimo_nome, email, tipo_utilizador FROM utilizadores WHERE id = ?', [userId], (err, rows) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send({ success: false, message: 'Erro ao buscar utilizador' });
+        }
+
+        const user = rows[0];
+
+        return res.status(201).send({
+          success: true,
+          message: 'Trabalhador registado com sucesso.',
+          user: user
+        });
+      });
+    }
+  );
+});
 
 export default routerAdminUtilizadores;
