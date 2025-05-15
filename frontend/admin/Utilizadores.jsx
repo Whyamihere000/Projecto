@@ -6,130 +6,155 @@ import styles from "../css/Global.module.css";
 import stylesUtilizadores from "../css/Utilizadores.module.css";
 
 function Utilizadores() {
-    // const [utilizadoresPrimeiroNome, setUtilizadoresPrimeiroNome] = useState('');
-    // const [utilizadoresUltimoNome, setUtilizadoresUltimoNome] = useState('');
-    // const [utilizadoresEmail, setUtilizadoresEmail] = useState('');
-    // const [utilizadoresPassword, setUtilizadoresPassword] = useState('');
-    // const [utilizadoresTelefone, setUtilizadoresTelefone] = useState('');
-    // const [utilizadoresDataRegisto, setUtilizadoresDataRegisto] = useState('');
-    // const [utilizadoresTipo, setUtilizadoresTipo] = useState('');
-    // const [utilizadoresRua, setUtilizadoresRua] = useState('');
-    // const [utilizadoresCidade, setUtilizadoresCidade] = useState('');
-    // const [utilizadoresCodigoPostal, setUtilizadoresCodigoPostal] = useState('');
-    // const [utilizadoresPais, setUtilizadoresPais] = useState('');
+  const [utilizadores, setUtilizadores] = useState([]);
 
-    const [utilizadores, setUtilizadores] = useState([]);
+  const [mensagem, setMensagem] = useState("");
+  const [mensagemTipo, setMensagemTipo] = useState("");
 
-    // const [mensagem, setMensagem] = useState('');
-    // const [mensagemTipo, setMensagemTipo] = useState('');
+  useEffect(() => {
+    const fetchUtilizadores = async () => {
+      try {
+        const res = await axios.get("http://localhost:3001/api/utilizadores/buscar");
+        setUtilizadores(res.data);
+      } catch (error) {
+        console.error("Erro ao carregar utilizadores", error);
+      }
+    };
 
-    useEffect(() => {
-        const fetchUtilizadores = async () => {
-            try {
-                const res = await axios.get('http://localhost:3001/api/utilizadores/buscar');
-                setUtilizadores(res.data);
-            } catch (error) {
-                console.error('Erro ao carregar utilizadores', error);
-            }
-        };
+    fetchUtilizadores();
+  }, []);
 
-        fetchUtilizadores();
-    }, []);
-
-    const atualizarUtilizador = async (utilizador) => {
-        try {
-            const res = await axios.put(`http://localhost:3001/api/utilizadores/atualizar/${utilizador.id}`,{
-                primeiro_nome: utilizador.primeiro_nome,
-                ultimo_nome: utilizador.ultimo_nome,
-                email: utilizador.email,
-                password_hash: utilizador.password_hash,
-                telefone: utilizador.telefone,
-                data_registo: utilizador.data_registo,
-                tipo_utilizador: utilizador.tipo_utilizador,
-                rua: utilizador.rua,
-                cidade: utilizador.cidade,
-                codigo_postal: utilizador.codigo_postal,
-                pais: utilizador.pais
-            })
-            
-            if (res.data.success) {
-                setUtilizadores(res.data.utilizadores);
-                // setMensagem(res.data.message);
-                // setMensagemTipo('success');
-            } else {
-                console.error('Erro ao atualizar utilizador');
-                // setMensagem(res.data.message);
-                // setMensagemTipo('error');
-            } 
-        } catch (error) {
-            console.error(error);
-            // setMensagem('Erro ao comunicar com o servidor');
-            // setMensagemTipo('error');
+  const atualizarUtilizador = async (utilizador) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:3001/api/utilizadores/atualizar/${utilizador.id}`,
+        {
+          primeiro_nome: utilizador.primeiro_nome,
+          ultimo_nome: utilizador.ultimo_nome,
+          email: utilizador.email,
+          password_hash: utilizador.password_hash,
+          telefone: utilizador.telefone,
+          //data_registo: utilizador.data_registo,
+          //data_atualizacao: utilizador.data_atualizacao,
+          tipo_utilizador: utilizador.tipo_utilizador,
+          rua: utilizador.rua,
+          cidade: utilizador.cidade,
+          codigo_postal: utilizador.codigo_postal,
+          pais: utilizador.pais,
         }
+      );
+
+      if (res.data.success) {
+        setUtilizadores((prevUtilizadores) =>
+          prevUtilizadores.map((u) =>
+            u.id === utilizador.id ? res.data.utilizador : u
+          )
+        );
+        setMensagem(res.data.message);
+        setMensagemTipo("success");
+      } else {
+        console.error("Erro ao atualizar utilizador");
+        setMensagem(res.data.message);
+        setMensagemTipo("error");
+      }
+    } catch (error) {
+      console.error(error);
+      setMensagem("Erro ao comunicar com o servidor");
+      setMensagemTipo("error");
     }
+  };
 
-    const eliminarUtilizador = async (id) => {
-        try {
-            const response = await axios.delete(`http://localhost:3001/api/utilizadores/eliminar/${id}`);
-            
-            if (response.status === 200) {
-                setUtilizadores(utilizadores.filter(utilizador => utilizador.id !== id));
-                // setMensagem('Utilizador eliminado com sucesso');
-                // setMensagemTipo('success');
-            } else {
-                // setMensagem('Erro ao eliminar utilizador');
-                // setMensagemTipo('error');
-            }
-        } catch (error) {
-            console.error('Erro na requisição Axios:', error);
-            // setMensagem('Erro ao comunicar com o servidor');
-            // setMensagemTipo('error');
-        }
+  const eliminarUtilizador = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/api/utilizadores/eliminar/${id}`
+      );
+
+      if (response.status === 200) {
+        setUtilizadores(
+          utilizadores.filter((utilizador) => utilizador.id !== id)
+        );
+        setMensagem("Utilizador eliminado com sucesso");
+        setMensagemTipo("success");
+      } else {
+        setMensagem("Erro ao eliminar utilizador");
+        setMensagemTipo("error");
+      }
+    } catch (error) {
+      console.error("Erro na requisição Axios:", error);
+      setMensagem("Erro ao comunicar com o servidor");
+      setMensagemTipo("error");
     }
+  };
 
-    const colunas = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'primeiro_nome', headerName: 'Primeiro Nome', width: 150 },
-        { field: 'ultimo_nome', headerName: 'Ultimo Nome', width: 150 },
-        { field: 'email', headerName: 'Email', width: 150 },
-        { field: 'password_hash', headerName: 'Password', width: 150 },
-        { field: 'telefone', headerName: 'Telefone', width: 150 },
-        { field: 'data_registo', headerName: 'Data Registo', width: 150 },
-        { field: 'tipo_utilizador', headerName: 'Tipo', width: 150 },
-        { field: 'rua', headerName: 'Rua', width: 150 },
-        { field: 'cidade', headerName: 'Cidade', width: 150 },
-        { field: 'codigo_postal', headerName: 'Codigo Postal', width: 150 },
-        { field: 'pais', headerName: 'Pais', width: 150 },
-        { field: 'ações', headerName: 'Ações', width: 200, renderCell: (params) => (
-            <>
-                <button onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
-                <button onClick={() => atualizarProduto(params.row)}>Atualizar</button>
-            </>
-        )},
-    ]
+  const colunas = [
+  { field: "id", headerName: "ID", minWidth: 70 },
+  { field: "primeiro_nome", headerName: "Primeiro Nome", minWidth: 150, editable: true },
+  { field: "ultimo_nome", headerName: "Ultimo Nome", minWidth: 150 },
+  { field: "email", headerName: "Email", minWidth: 200 },
+  { field: "password_hash", headerName: "Password", minWidth: 200, },
+  { field: "telefone", headerName: "Telefone", minWidth: 150 },
+  { field: "data_registo", headerName: "Data Registo", minWidth: 150 },
+  { field: "data_atualizacao", headerName: "Data Atualizacao", minWidth: 150 },
+  { field: "tipo_utilizador", headerName: "Tipo", minWidth: 100 },
+  { field: "rua", headerName: "Rua", minWidth: 200, flex: 1 },
+  { field: "cidade", headerName: "Cidade", minWidth: 150 },
+  { field: "codigo_postal", headerName: "Codigo Postal", minWidth: 150 },
+  { field: "pais", headerName: "Pais", minWidth: 150 },
+  {
+    field: "ações",
+    headerName: "Ações",
+    minWidth: 220,
+    renderCell: (params) => (
+      <>
+        <button onClick={() => eliminarUtilizador(params.row.id)}>Eliminar</button>
+        <button onClick={() => atualizarUtilizador(params.row)}>Atualizar</button>
+      </>
+    ),
+  },
+];
 
-    return (
-        <>
-        <nav className={styles.navegacao_admin}>
-            <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
-            <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
-            <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
-            <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
-            <button className={styles.logout}>Logout</button>
-        </nav>
+  return (
+    <>
+      <nav className={styles.navegacao_admin}>
+        <Link to="/admin/categorias" className={styles.link}>
+          Categorias
+        </Link>
+        <Link to="/admin/marcas" className={styles.link}>
+          Marcas
+        </Link>
+        <Link to="/admin/produtos" className={styles.link}>
+          Produtos
+        </Link>
+        <Link to="/admin/utilizadores" className={styles.link}>
+          Utilizadores
+        </Link>
+        <button className={styles.logout}>Logout</button>
+      </nav>
 
-        <div className={stylesUtilizadores.container}>
-            <div style={{ height: 400, width: '100%' }}>
-                <DataGrid
-                    rows={utilizadores}
-                    columns={colunas}
-                    pageSize={5}
-                    getRowId={(row) => row.id}
-                />
-            </div>
+      <div className={stylesUtilizadores.container}>
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={utilizadores}
+            columns={colunas}
+            pageSize={5}
+            getRowId={(row) => row.id}
+          />
         </div>
-        </>
-    );
+        {mensagem && (
+          <p
+            className={
+              mensagemTipo === "success"
+                ? stylesUtilizadores.success
+                : stylesUtilizadores.error
+            }
+          >
+            {mensagem}
+          </p>
+        )}
+      </div>
+    </>
+  );
 }
 
 export default Utilizadores;
