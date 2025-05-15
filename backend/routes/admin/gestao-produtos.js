@@ -129,6 +129,7 @@ routerAdminProdutos.delete('/eliminar/:id', (req, res) => {
   });
 });
 
+// Busca todos os produtos
 routerAdminProdutos.get('/buscar', (req, res) => {
   db.query('SELECT * FROM produtos', (err, results) => {
     if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });

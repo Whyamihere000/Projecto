@@ -10,7 +10,7 @@ if exist "C:\Users\Isaque\Desktop\PAP\Projecto\backend" (
 
 REM === Iniciar frontend ===
 if exist "C:\Users\Isaque\Desktop\PAP\Projecto" (
-    start "Frontend" cmd /K "C:\Users\Isaque\Documents\GitHub\Projecto && npm run dev"
+    start "Frontend" cmd /K "cd /d C:\Users\Isaque\Documents\GitHub\Projecto && npm run dev"
 ) else if exist "C:\Users\migue\Documents\GitHub\Projecto" (
     start "Frontend" cmd /K "cd /d C:\Users\migue\Documents\GitHub\Projecto && npm run dev"
 )
