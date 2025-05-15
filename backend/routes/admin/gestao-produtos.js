@@ -130,11 +130,33 @@ routerAdminProdutos.delete('/eliminar/:id', (req, res) => {
 });
 
 // Busca todos os produtos
+// Buscar produtos com ou sem filtro
 routerAdminProdutos.get('/buscar', (req, res) => {
-  db.query('SELECT * FROM produtos', (err, results) => {
-    if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
-    res.json(results);
+  const { categoria } = req.query;
+
+  let sql = 'SELECT * FROM produtos';
+  const params = [];
+
+  if (categoria) {
+    sql += ' WHERE tipo_produto = ?';
+    params.push(categoria);
+  }
+
+  db.query(sql, params, (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar produtos:', err);
+      return res.status(500).json({ error: 'Erro interno ao buscar produtos.' });
+    }
+
+    // Se tiver campo especificações em string, transforma em JSON
+    const produtosFormatados = results.map(produto => ({
+      ...produto,
+      especificacoes: produto.especificacoes ? JSON.parse(produto.especificacoes) : null
+    }));
+
+    return res.json(produtosFormatados);
   });
 });
+
 
 export default routerAdminProdutos;
