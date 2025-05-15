@@ -38,6 +38,14 @@ routerAdminProdutos.post('/nova', upload.single('imagem'), (req, res) => {
   if (!preco) return res.status(400).json({ success: false, message: 'O preço do produto é obrigatório.' });
   if (!stock) return res.status(400).json({ success: false, message: 'O stock do produto é obrigatório.' });
   
+  db.query('SELECT * FROM produtos WHERE sku = ?', [sku], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
+    }
+    if (results.length > 0) {
+      return res.status(400).send({ success: false, message: 'O sku do produto ja existe.' });
+    }
 
   db.query('INSERT INTO produtos (sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, tipo_produto, especificacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
   [sku, nome, descricao || null, preco, stock, id_categoria, id_marca, imagem_url || null, tipo_produto || null, especificacoesFinal], (err, results) => {
@@ -46,6 +54,7 @@ routerAdminProdutos.post('/nova', upload.single('imagem'), (req, res) => {
       return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
     }
     return res.status(201).send({ success: true, message: 'Produto adicionado com sucesso.' });
+  })
   })
 });
 

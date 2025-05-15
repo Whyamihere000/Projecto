@@ -61,6 +61,32 @@ function Produtos() {
         fetchProdutos();
     }, []);
 
+    // useEffect(() => {
+    //     const verificarSku = async () => {
+    //         if (!produtoSku.trim()) {
+    //             setMensagem('');
+    //             return;
+    //         }
+
+    //         try {
+    //             const res = await axios.get('http://localhost:3001/api/produtos/buscar');
+    //             const produtoExistente = res.data.some((produto) => produto.sku === produtoSku);
+    //             if (produtoExistente) {
+    //                 setMensagem('O SKU já existe. Por favor, escolha outro.');
+    //                 setMensagemTipo('error');
+    //             } else {
+    //                 setMensagem('');
+    //             }
+    //         } catch (error) {
+    //             console.error('Erro ao verificar SKU:', error);
+    //             setMensagem('Erro ao verificar SKU.');
+    //             setMensagemTipo('error');
+    //         }
+    //     };
+
+    //     verificarSku();
+    // }, [produtoSku]);
+
     const adicionarProduto = async () => {
         if (!produtoNome.trim()) {
             setMensagem('O nome do produto é obrigatório.');
@@ -88,22 +114,30 @@ function Produtos() {
             return;
         }
 
-        const formData = new FormData();
-        formData.append('sku', produtoSku);
-        formData.append('nome', produtoNome);
-        formData.append('descricao', produtoDescricao);
-        formData.append('preco', produtoPreco);
-        formData.append('stock', produtoStock);
-        formData.append('id_categoria', produtoCategoria);
-        formData.append('id_marca', produtoMarca);
-        formData.append('imagem', produtoImagem);
-        formData.append("tipo_produto", produtoTipo);
-        formData.append('especificacoes', JSON.stringify(produtoEspecificacoes));
-
         try {
-            const res = await axios.post('http://localhost:3001/api/produtos/nova', formData);
+            const res = await axios.get('http://localhost:3001/api/produtos/buscar');
+            const produtoExistente = res.data.some((produto) => produto.sku === produtoSku);
+            if (produtoExistente) {
+                setMensagem('O SKU já existe. Por favor, escolha outro.');
+                setMensagemTipo('error');
+                return;
+            }
 
-            if (res.data.success) {
+            const formData = new FormData();
+            formData.append('sku', produtoSku);
+            formData.append('nome', produtoNome);
+            formData.append('descricao', produtoDescricao);
+            formData.append('preco', produtoPreco);
+            formData.append('stock', produtoStock);
+            formData.append('id_categoria', produtoCategoria);
+            formData.append('id_marca', produtoMarca);
+            formData.append('imagem', produtoImagem);
+            formData.append("tipo_produto", produtoTipo);
+            formData.append('especificacoes', JSON.stringify(produtoEspecificacoes));
+
+            const resAdd = await axios.post('http://localhost:3001/api/produtos/nova', formData);
+
+            if (resAdd.data.success) {
                 setMensagem('Produto adicionado com sucesso.');
                 setMensagemTipo('success');
                 setProdutoSku('');
@@ -120,7 +154,7 @@ function Produtos() {
                 const produtosAtualizados = await axios.get('http://localhost:3001/api/produtos/buscar');
                 setProdutos(produtosAtualizados.data);
             } else {
-                setMensagem('Erro ao adicionar o produto.');
+                setMensagem(resAdd.data.message);
                 setMensagemTipo('error');
             }
         } catch (error) {
@@ -132,6 +166,10 @@ function Produtos() {
 
     const atualizarProduto = async (produto) => {
         try {
+            const especificacoesAtualizadas = typeof produto.especificacoes === 'string' 
+            ? produto.especificacoes 
+            : JSON.stringify(produto.especificacoes);
+
             const res = await axios.put(`http://localhost:3001/api/produtos/atualizar/${produto.id}`, {
                 sku: produto.sku,
                 nome: produto.nome,
@@ -141,7 +179,7 @@ function Produtos() {
                 id_categoria: produto.id_categoria,
                 id_marca: produto.id_marca,
                 imagem_url: produto.imagem_url,
-                especificacoes: produto.especificacoes
+                especificacoes: especificacoesAtualizadas
             });
 
             if (res.data.success) {
@@ -182,32 +220,71 @@ function Produtos() {
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'sku', headerName: 'SKU', width: 130, editable: true },
         { field: 'nome', headerName: 'Nome', width: 130, editable: true },
-        { field: 'imagem_url', headerName: 'Imagem', width: 130, 
+        { field: 'imagem_url', headerName: 'Imagem', width: 200, 
             renderCell: (params) => (
                 <img
-                    src={`http://localhost:3001/${params.row.imagem_url}`}
-                    alt="Imagem Produto"
-                    style={{ width: '50px', height: '50px' }}
+                    src={params.row.imagem_url ? `http://localhost:3001/${params.row.imagem_url}` : "https://via.placeholder.com/50"}
+                    style={{ width: '200px', height: '200px' }}
                 />
             )
         },
         { field: 'tipo_produto', headerName: 'Tipo de Produto', width: 150 },
-        { field: 'especificacoes', headerName: 'Especificações', width: 200, 
+        // { field: 'especificacoes', headerName: 'Especificações', width: 200, 
+        //     renderCell: (params) => {
+        //         try {
+        //             const especificacoes = JSON.parse(params.row.especificacoes);
+        //             return (
+        //                 <div>
+        //                     {Object.keys(especificacoes).map((key, index) => (
+        //                         <div key={index}>{key}: {especificacoes[key]}</div>
+        //                     ))}
+        //                 </div>
+        //             );
+        //         } catch (e) {
+        //             return <div>Erro nas especificações</div>;
+        //         }
+        //     }
+        // },
+        {
+    field: 'especificacoes',
+    headerName: 'Especificações',
+    width: 300,
+    editable: false,
     renderCell: (params) => {
-        try {
-            const especificacoes = JSON.parse(params.row.especificacoes);
-            return (
-                <div>
-                    {Object.keys(especificacoes).map((key, index) => (
-                        <div key={index}>{key}: {especificacoes[key]}</div>
-                    ))}
-                </div>
-            );
-        } catch (e) {
-            return <div>Erro nas especificações</div>;
-        }
+      try {
+        const espec = typeof params.value === 'object' ? params.value : JSON.parse(params.value);
+        return (
+          <div style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}>
+            {Object.entries(espec).map(([key, val]) => (
+              <div key={key}><strong>{key}:</strong> {val}</div>
+            ))}
+          </div>
+        );
+      } catch {
+        return <div>Sem especificações</div>;
+      }
     }
-},
+  },
+  {
+    field: 'editar',
+    headerName: 'Editar',
+    width: 100,
+    renderCell: (params) => (
+      <button onClick={() => {
+        const atual = typeof params.value === 'object' ? params.value : JSON.parse(params.row.especificacoes);
+        const novo = prompt('Edita o JSON das especificações:', JSON.stringify(atual, null, 2));
+        if (novo) {
+          try {
+            const jsonEditado = JSON.parse(novo);
+            // Atualiza o estado ou backend conforme necessário
+            atualizarProduto(params.row.id, jsonEditado);
+          } catch {
+            alert('JSON inválido!');
+          }
+        }
+      }}>Editar</button>
+    )
+  },
         { field: 'descricao', headerName: 'Descrição', width: 130, editable: true },
         { field: 'preco', headerName: 'Preço', width: 130, editable: true },
         { field: 'stock', headerName: 'Stock', width: 130, editable: true },
@@ -223,13 +300,13 @@ function Produtos() {
                 return marca ? marca.nome : '';
             }
         },    
-        { field: 'ações', headerName: 'Ações', width: 200, renderCell: (params) => (
+        { field: 'ações', headerName: 'Ações', width: 250, renderCell: (params) => (
             <>
                 <button onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
                 <button onClick={() => atualizarProduto(params.row)}>Atualizar</button>
             </>
         )},
-    ]
+    ];
 
     useEffect(() => {
         document.body.className = stylesProdutos.bodyHome;
@@ -331,19 +408,20 @@ function Produtos() {
                     ))}
                 </select>
                 {camposEspecificacoes.map((campo, index) => (
-    <input
-        key={index}
-        type="text"
-        placeholder={`Especificação: ${campo.nome}`}
-        value={produtoEspecificacoes[campo.campo] || ''}
-        onChange={(e) =>
-            setProdutoEspecificacoes((prev) => ({
-                ...prev,
-                [campo.campo]: e.target.value
-            }))
-        }
-    />
-))}
+                    <div key={index}>
+                        <label>{campo.nome}</label>
+                        <input
+                            type="text"
+                            value={produtoEspecificacoes[campo.campo] || ''}
+                            onChange={(e) =>
+                                setProdutoEspecificacoes((prev) => ({
+                                    ...prev,
+                                    [campo.campo]: e.target.value
+                                }))
+                            }
+                        />
+                    </div>
+                ))}
                 <button onClick={adicionarProduto}>Adicionar Produto</button>
                 {mensagem && <p className={mensagemTipo}>{mensagem}</p>}
                 <br />
@@ -351,12 +429,14 @@ function Produtos() {
                 <br />
                 <br />
                 <h2>Lista Produtos</h2>
-                <div style={{ height: 400, width: '100%' }}>
+                <div style={{ height: 800, width: '100%' }}>
                     <DataGrid
                         rows={produtos}
                         columns={colunas}
                         pageSize={5}
                         getRowId={(row) => row.id}
+                        getRowHeight={() => 'auto'}
+                        rowHeight={null}
                     />
                 </div>
             </div>
