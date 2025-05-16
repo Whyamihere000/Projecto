@@ -95,7 +95,7 @@ routerAdminUtilizadores.post('/registo', async (req, res) => {
 
         return res.status(201).send({
           success: true,
-          message: 'Trabalhador registado com sucesso.',
+          message: 'Registo registado com sucesso.',
           user: user
         });
       });

@@ -229,8 +229,7 @@ const handleRegisto = async () => {
         setCodigoPostal('')
         setPais('')
         
-        const atualizar = await axios.post('http://localhost:3001/api/utilizadores/buscar');
-        setUtilizadores(atualizar.data)
+        setUtilizadores((prevUtilizadores) => [...prevUtilizadores, response.data.user]);
       } else {
         setMensagem(response.data.message)
         setMensagemTipo('error')
