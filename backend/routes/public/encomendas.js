@@ -55,4 +55,15 @@ routerEncomendas.post('/nova', (req, res) => {
     })
 })
 
+// Listar encomendas de um utilizador
+routerEncomendas.get('/:id_utilizador', (req, res) => {
+    const { id_utilizador } = req.params;
+
+    db.query('SELECT * FROM encomendas WHERE id_utilizador = ?', [id_utilizador], (err, results) => {
+        if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar encomendas.' });
+
+        res.json(results);
+    });
+});
+
 export default routerEncomendas
