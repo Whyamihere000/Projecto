@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import authRoutes from './routes/public/auth.js';
 import routerCarrinho from './routes/public/carrinho.js';
+import routerEncomendas from './routes/public/encomendas.js';
 import routerAdminCategorias from './routes/admin/gestao-categorias.js';
 import routerAdminMarcas from './routes/admin/gestao-marcas.js';
 import routerAdminProdutos from './routes/admin/gestao-produtos.js';
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/carrinhos', routerCarrinho);
+app.use('/api/encomendas', routerEncomendas);
 app.use('/api/categorias', routerAdminCategorias);
 app.use('/api/marcas', routerAdminMarcas);
 app.use('/api/produtos', routerAdminProdutos);
@@ -27,5 +29,4 @@ app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
 
 app.listen(3001, () => {
     console.log('Servidor a correr na porta 3001');
-}); 
-//Github Text
+});
