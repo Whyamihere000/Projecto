@@ -15,6 +15,20 @@ routerAdminUtilizadores.get('/buscar', (req, res) => {
     });
 });
 
+routerAdminUtilizadores.get('/buscar/:id', (req, res) => {
+  const userId = req.params.id;
+  db.query('SELECT * FROM utilizadores WHERE id = ?', [userId], (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar utilizador:', err);
+      return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
+    }
+    if (results.length === 0) {
+      return res.status(404).send({ success: false, message: 'Utilizador não encontrado' });
+    }
+    return res.json(results[0]); // devolve só o utilizador
+  });
+});
+
 routerAdminUtilizadores.put('/atualizar/:id', (req, res) => {
     console.log('Atualização na tabela utilizadores realizada na data:', new Date());   
     const { primeiro_nome, ultimo_nome, email, password_hash, telefone, tipo_utilizador, data_atualizacao, rua, cidade, codigo_postal, pais } = req.body;
