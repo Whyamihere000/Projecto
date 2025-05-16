@@ -153,7 +153,7 @@ function Produtos() {
           </Link>
 
           <div className={styles.dropdown}>
-            <button className={styles.dropbtn}>Componentes ▾</button>
+            <Link to="/produtos"><button className={styles.dropbtn}>Componentes ▾</button></Link>
             <div className={styles.dropdownContent}>
               <Link to="/produtos?tipo_produto=Memória">Memória</Link>
               <Link to="/produtos?tipo_produto=Processador">
@@ -171,7 +171,7 @@ function Produtos() {
               <Link to="/produtos?tipo_produto=Fonte de Alimentação">
                 Fonte de Alimentação
               </Link>
-              <Link to="/produtos?tipo_produto=Caixas">Caixas</Link>
+              <Link to="/produtos?tipo_produto=Caixa">Caixas</Link>
               <Link to="/produtos?tipo_produto=Monitor">Monitor</Link>
               <Link to="/produtos?tipo_produto=Periféricos">
                 Periféricos
