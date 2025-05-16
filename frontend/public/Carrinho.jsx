@@ -8,7 +8,13 @@ function Carrinho() {
   const [user, setUser] = useState(null);
   const [carrinho, setCarrinho] = useState({ items: [] });
   const [mensagem, setMensagem] = useState("");
-  const [morada, setMorada] = useState("");
+  const [rua, setRua] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [codigoPostal, setCodigoPostal] = useState("");
+  const [pais, setPais] = useState("");
+  const [email, setEmail] = useState(user?.email || "");
+  const [telefone, setTelefone] = useState("");
+  const [nif, setNif] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -148,12 +154,6 @@ function Carrinho() {
                 ))}
                 <div className={stylesCarrinho.total}>
                   <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
-                  <input 
-                    type="text" 
-                    placeholder="Insira a morada de envio" 
-                    value={morada} 
-                    onChange={(e) => setMorada(e.target.value)}
-                  />
                   <button onClick={handleFinalizarCompra}>Finalizar Compra</button>
                 </div>
               </div>
