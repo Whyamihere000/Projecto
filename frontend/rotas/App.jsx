@@ -4,7 +4,8 @@ import Login from '../public/Login.jsx';
 import Registo from '../public/Registo.jsx';
 import Produtos from '../public/Produtos.jsx';
 import Carrinho from '../public/Carrinho.jsx';
-import FinalizarEncomendas from '../public/FinalizarEncomendas.jsx';
+import FinalizarEncomendas from '../public/FinalizarEncomenda.jsx';
+import RevisaoEncomenda from '../public/RevisaoEncomenda.jsx';
 import Encomendas from '../public/Encomendas.jsx';
 import AdminHome from '../admin/AdminHome.jsx';
 // import RotaPrivadaAdmin from '../admin/RotaPrivadaAdmin.jsx';
@@ -22,6 +23,7 @@ function App() {
             <Route path="/produtos" element={<Produtos />} />
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/finalizar-encomenda" element={<FinalizarEncomendas />} />
+            <Route path="/revisao-encomenda" element={<RevisaoEncomenda />} />
             <Route path="/encomendas" element={<Encomendas />} />
             <Route path="/admin" element={<AdminHome />} />
             {/* <Route path="/admin/*" element={<RotaPrivadaAdmin />} /> */}
