@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import authRoutes from './routes/public/auth.js';
-import routerCarrinho from './routes/admin/carrinho.js';
+import routerCarrinho from './routes/public/carrinho.js';
 import routerAdminCategorias from './routes/admin/gestao-categorias.js';
 import routerAdminMarcas from './routes/admin/gestao-marcas.js';
 import routerAdminProdutos from './routes/admin/gestao-produtos.js';
