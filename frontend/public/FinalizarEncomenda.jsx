@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -20,6 +20,33 @@ function FinalizarEncomenda() {
 
     const idCarrinho = location.state?.idCarrinho;
 
+useEffect(() => {
+  const storedUser = localStorage.getItem("user");
+  if (storedUser && storedUser !== "undefined") {
+    const user = JSON.parse(storedUser);
+
+    // Buscar a última encomenda do utilizador
+    axios.get(`http://localhost:3001/api/encomendas/${user.id}`)
+      .then(response => {
+        const ultimaEncomenda = response.data[response.data.length - 1];
+        if (ultimaEncomenda) {
+          setForm({
+            rua: ultimaEncomenda.rua || "",
+            cidade: ultimaEncomenda.cidade || "",
+            codigo_postal: ultimaEncomenda.codigo_postal || "",
+            pais: ultimaEncomenda.pais || "",
+            email: ultimaEncomenda.email || "",
+            telefone: ultimaEncomenda.telefone || "",
+            nif: ultimaEncomenda.nif || "",
+          });
+        }
+      })
+      .catch(() => {
+        console.error("Erro ao carregar a última encomenda.");
+      });
+  }
+}, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prev) => ({ ...prev, [name]: value }));
@@ -38,7 +65,7 @@ function FinalizarEncomenda() {
 
             navigate("/revisao-encomenda", { state: { idEncomenda: response.data.id } });
         } catch (error) {
-            console.error("Erro ao criar encomenda:", error);
+            console.error("Erro ao criar encomenda:", error.response?.data || error.message);
             setMensagem("Erro ao criar encomenda.");
         }
     }
