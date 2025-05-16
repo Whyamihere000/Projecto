@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import stylesCarrinho from "../css/Carrinho.module.css";
 import styles from "../css/Global.module.css";
 
@@ -8,6 +8,8 @@ function Carrinho() {
   const [user, setUser] = useState(null);
   const [carrinho, setCarrinho] = useState({ items: [] });
   const [mensagem, setMensagem] = useState("");
+  const [morada, setMorada] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -76,23 +78,34 @@ function Carrinho() {
     }
 };
 
-  const handleFinalizarCompra = async () => {
-    if (!carrinho || carrinho.items.length === 0) {
-      setMensagem("Carrinho vazio.");
-      return;
-    }
+  // const handleFinalizarCompra = async () => {
+  //   if (!carrinho || carrinho.items.length === 0) {
+  //     setMensagem("Carrinho vazio.");
+  //     return;
+  //   }
 
-    try {
-      await axios.post(`http://localhost:3001/api/carrinhos/finalizar`, {
-        id_carrinho: carrinho.id,
-      });
+  //   try {
+  //     await axios.post(`http://localhost:3001/api/encomendas/nova`, {
+  //       id_carrinho: carrinho.id,
+  //       morada
+  //     });
 
-      setMensagem("Compra finalizada com sucesso.");
-    } catch (error) {
-      console.log(error);
-      setMensagem("Erro ao finalizar compra.");
-    }
-  };
+  //     setMensagem("Compra finalizada com sucesso.");
+  //     navigate("/encomendas");
+  //   } catch (error) {
+  //     console.error("Erro ao finalizar a compra:", error);
+  //     setMensagem("Erro ao finalizar compra.");
+  //   }
+  // };
+  const handleFinalizarCompra = () => {
+  if (!carrinho || carrinho.items.length === 0) {
+    setMensagem("Carrinho vazio.");
+    return;
+  }
+
+  // Passar o id do carrinho para a página de finalizar encomenda
+  navigate("/finalizar-encomenda", { state: { idCarrinho: carrinho.id } });
+};  
 
   return (
     <>
@@ -116,6 +129,7 @@ function Carrinho() {
           )}
         </div>
       </nav>
+
       <main className={stylesCarrinho.mainCarrinho}>
         <h1>Carrinho</h1>
         {mensagem && <p>{mensagem}</p>}
@@ -134,6 +148,12 @@ function Carrinho() {
                 ))}
                 <div className={stylesCarrinho.total}>
                   <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
+                  <input 
+                    type="text" 
+                    placeholder="Insira a morada de envio" 
+                    value={morada} 
+                    onChange={(e) => setMorada(e.target.value)}
+                  />
                   <button onClick={handleFinalizarCompra}>Finalizar Compra</button>
                 </div>
               </div>
