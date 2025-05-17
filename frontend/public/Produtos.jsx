@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import stylesProdutos from "../css/Produtos.module.css";
 import styles from "../css/Global.module.css";
-import ModalErro from "../components/ModalErro";
+import ModalErro from "../componentes/ModalErro";
 
 function Produtos() {
   const [user, setUser] = useState(null);
