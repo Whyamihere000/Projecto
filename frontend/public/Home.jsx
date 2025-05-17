@@ -34,8 +34,8 @@ function Home() {
 
       <div className={stylesGlobal.navLeft}>
             <img src="../icons/logo.png" alt="Logo" className={styles.logoIcon} />
-                <Link to="/" className={styles.navHome}>Home</Link>
-                <Link to="/produtos" className={styles.navProdutos}>Produtos</Link>
+                <Link to="/" className={stylesGlobal.navHome}>Home</Link>
+                <Link to="/produtos" className={stylesGlobal.navProdutos}>Produtos</Link>
 
     <div className={stylesGlobal.dropdown}>
       <Link to="/produtos"><button className={stylesGlobal.dropbtn}>Componentes▾</button></Link>
@@ -56,8 +56,8 @@ function Home() {
   <div className={stylesGlobal.navRight}>
     {user ? (
       <>
-        <p>{user.primeiro_nome}</p>
-        <button onClick={handleLogout}>Logout</button>
+        <Link to="/perfil" className={stylesGlobal.navNome}>{user.primeiro_nome}</Link>
+        <button onClick={handleLogout} className={stylesGlobal.navLogout}>Logout</button>
       </>
     ) : (
       <Link to="/login" className={stylesGlobal.navLogin}>Login</Link>

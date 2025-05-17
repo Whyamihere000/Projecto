@@ -52,7 +52,7 @@ body.bodyHome {
     color: #fff;
     padding: 15px 30px;
     height: 20px;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -70,9 +70,13 @@ body.bodyHome {
     align-items: center;
 }
 
-.navLogin, .navCarrinho, .navProdutos, .navHome {    
+.navLogin, .navCarrinho, .navProdutos, .navHome, .navNome {    
     color: #ffffff;
     text-decoration: none;
+}
+
+.navLogout {
+  background-color: rgb(196, 96, 4);
 }
 
 .modalOverlay {

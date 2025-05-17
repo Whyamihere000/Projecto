@@ -138,7 +138,8 @@ function Produtos() {
 
   return (
     <>
-      <nav className={styles.nav}>
+      <div className={stylesProdutos.container}>
+        <nav className={styles.nav}>
         <div className={styles.navLeft}>
           <img
             src="../icons/logo.png"
@@ -195,16 +196,18 @@ function Produtos() {
             <>
               <h4>{user.primeiro_nome}</h4>
               <button onClick={handleLogout}>Logout</button>
+              <Link to="/carrinho" className={styles.navCarrinho}>
+                Carrinho
+              </Link>
             </>
           ) : (
-            <Link to="/login" className={styles.navLogin}>
-              Login
-            </Link>
+            <>
+              <Link to="/login" className={styles.navLogin}>
+                Login
+              </Link>
+            </>
           )}
         </div>
-        <Link to="/carrinho" className={styles.navCarrinho}>
-          Carrinho
-        </Link>
       </nav>
 
       <main className={stylesProdutos.mainPublic}>
@@ -274,6 +277,7 @@ function Produtos() {
       {openModal && (
         <ModalErro mensagem={mensagem} onClose={closeModal} />
       )}
+      </div>
     </>
   );
 }
