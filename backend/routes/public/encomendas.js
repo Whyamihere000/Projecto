@@ -16,74 +16,58 @@ routerEncomendas.post('/nova', (req, res) => {
     nif
   } = req.body;
 
-  // Iniciar transação
-  db.query('START TRANSACTION', (err) => {
+  // Verificar carrinho
+  db.query('SELECT * FROM carrinhos WHERE id = ? AND estado = "ativo"', [id_carrinho], (err, results) => {
     if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
 
-    // Verificar carrinho
-    db.query('SELECT * FROM carrinhos WHERE id = ? AND estado = "ativo"', [id_carrinho], (err, results) => {
-      if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
+    if (results.length === 0) {
+      return res.status(400).json({ success: false, message: 'Carrinho não encontrado ou já finalizado' });
+    }
 
-      if (results.length === 0) {
-        return res.status(400).json({ success: false, message: 'Carrinho não encontrado ou já finalizado' });
+    const carrinho = results[0];
+
+    // Obter itens do carrinho
+    db.query('SELECT * FROM items_carrinhos WHERE id_carrinho = ?', [id_carrinho], (err, items) => {
+      if (err) return res.status(500).json({ success: false, message: 'Erro ao obter itens do carrinho.' });
+
+      if (items.length === 0) {
+        return res.status(400).json({ success: false, message: 'Carrinho vazio' });
       }
 
-      const carrinho = results[0];
+      // Criar encomenda
+      db.query(
+        `INSERT INTO encomendas (id_utilizador, total, rua, cidade, codigo_postal, pais, email, telefone, nif) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [carrinho.id_utilizador, carrinho.total, rua, cidade, codigo_postal, pais, email, telefone, nif],
+        (err, results) => {
+          if (err) return res.status(500).json({ success: false, message: 'Erro ao criar encomenda' });
 
-      // Obter itens do carrinho
-      db.query('SELECT * FROM items_carrinhos WHERE id_carrinho = ?', [id_carrinho], (err, items) => {
-        if (err) return res.status(500).json({ success: false, message: 'Erro ao obter itens do carrinho.' });
+          const id_encomenda = results.insertId;
 
-        if (items.length === 0) {
-          return res.status(400).json({ success: false, message: 'Carrinho vazio' });
-        }
+          // Preparar itens para inserir
+          const itemsEncomenda = items.map(item => [
+            id_encomenda,
+            item.id_produto,
+            item.quantidade,
+            item.preco
+          ]);
 
-        // Criar encomenda
-        db.query(
-          `INSERT INTO encomendas (id_utilizador, total, rua, cidade, codigo_postal, pais, email, telefone, nif) 
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [carrinho.id_utilizador, carrinho.total, rua, cidade, codigo_postal, pais, email, telefone, nif],
-          (err, results) => {
-            if (err) {
-              db.query('ROLLBACK');
-              return res.status(500).json({ success: false, message: 'Erro ao criar encomenda' });
+          db.query(
+            'INSERT INTO items_encomendas (id_encomenda, id_produto, quantidade, preco_unitario) VALUES ?',
+            [itemsEncomenda],
+            (err) => {
+              if (err) return res.status(500).json({ success: false, message: 'Erro ao adicionar items à encomenda' });
+
+              // Marcar carrinho como finalizado
+              db.query('UPDATE carrinhos SET estado = "finalizado" WHERE id = ?', [id_carrinho], (err) => {
+                if (err) return res.status(500).json({ success: false, message: 'Erro ao finalizar o carrinho' });
+
+                res.json({ success: true, message: 'Encomenda criada com sucesso', id_encomenda });
+              });
             }
-
-            const id_encomenda = results.insertId;
-
-            // Preparar itens para inserir
-            const itemsEncomenda = items.map(item => [
-              id_encomenda,
-              item.id_produto,
-              item.quantidade,
-              item.preco
-            ]);
-
-            db.query(
-              'INSERT INTO items_encomendas (id_encomenda, id_produto, quantidade, preco_unitario) VALUES ?',
-              [itemsEncomenda],
-              (err) => {
-                if (err) {
-                  db.query('ROLLBACK');
-                  return res.status(500).json({ success: false, message: 'Erro ao adicionar items à encomenda' });
-                }
-
-                // Marcar carrinho como finalizado
-                db.query('UPDATE carrinhos SET estado = "finalizado" WHERE id = ?', [id_carrinho], (err) => {
-                  if (err) {
-                    db.query('ROLLBACK');
-                    return res.status(500).json({ success: false, message: 'Erro ao finalizar o carrinho' });
-                  }
-
-                  // Confirmar transação
-                  db.query('COMMIT');
-                  res.json({ success: true, message: 'Encomenda criada com sucesso', id_encomenda });
-                });
-              }
-            );
-          }
-        );
-      });
+          );
+        }
+      );
     });
   });
 });
