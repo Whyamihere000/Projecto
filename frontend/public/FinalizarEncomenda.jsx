@@ -62,8 +62,9 @@ useEffect(() => {
                 id_carrinho: idCarrinho,
                 ...form,
             })
-
-            navigate("/revisao-encomenda", { state: { idEncomenda: response.data.id } });
+            
+            console.log("ID da Encomenda Criada:", response.data.id_encomenda);
+            navigate("/revisao-encomenda", { state: { idEncomenda: response.data.id_encomenda } });
         } catch (error) {
             console.error("Erro ao criar encomenda:", error.response?.data || error.message);
             setMensagem("Erro ao criar encomenda.");
