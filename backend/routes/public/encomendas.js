@@ -83,4 +83,50 @@ routerEncomendas.get('/:id_utilizador', (req, res) => {
   });
 });
 
+// Obter uma encomenda pelo ID
+routerEncomendas.get('/detalhes/:id_encomenda', (req, res) => {
+  const { id_encomenda } = req.params;
+
+  db.query('SELECT * FROM encomendas WHERE id = ?', [id_encomenda], (err, results) => {
+    if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar encomenda.' });
+
+    if (results.length === 0) {
+      return res.status(404).json({ success: false, message: 'Encomenda não encontrada.' });
+    }
+
+    res.json(results[0]);
+  });
+});
+
+// Pagar uma encomenda
+routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
+  const { id_encomenda } = req.params;
+  const { metodoPagamento, detalhesPagamento } = req.body;
+
+  if (!metodoPagamento) {
+    return res.status(400).json({ success: false, message: 'Método de pagamento obrigatório.' });
+  }
+
+  // Inserir pagamento
+  const query = `
+    INSERT INTO pagamentos (id_encomenda, metodo, estado, informacoes_adicionais)
+    VALUES (?, ?, 'pendente', ?)
+  `;
+
+  db.query(query, [id_encomenda, metodoPagamento, detalhesPagamento || null], (err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ success: false, message: 'Erro ao registar pagamento.' });
+    }
+
+    // Opcional: Atualizar estado da encomenda para "em_analise" (ou outro)
+    const updateOrder = 'UPDATE encomendas SET estado = "em_analise" WHERE id = ?';
+    db.query(updateOrder, [id_encomenda], (err2) => {
+      if (err2) console.error(err2);
+      // Não bloqueia resposta no erro de atualização
+      res.json({ success: true, message: 'Pagamento registado com sucesso.' });
+    });
+  });
+});
+
 export default routerEncomendas;
