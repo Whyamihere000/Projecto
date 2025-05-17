@@ -47,35 +47,30 @@ body.bodyHome {
     top: 0;
     left: 0;
     right: 0;
-    background-color: #333;
+    background: linear-gradient to bottom, #111111, #222222;
+    background-color: #000000;
     color: #fff;
-    padding: 10px 20px;
+    padding: 15px 30px;
     height: 20px;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .navLeft {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 .navRight {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
-.navLogin {    
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.navProdutos {    
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.navHome {    
+.navLogin, .navCarrinho, .navProdutos, .navHome {    
     color: #ffffff;
     text-decoration: none;
 }
@@ -114,14 +109,6 @@ body.bodyHome {
 .buttonModal:hover {
     background-color: #d32f2f;
 }
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #111;
-  padding: 10px 20px;
-}
-
 .dropdown {
   position: relative;
   display: inline-block;
@@ -129,7 +116,7 @@ body.bodyHome {
 }
 
 .dropbtn {
-  background-color: #111;
+  background-color: #000000;
   color: white;
   padding: 10px;
   font-size: 16px;
@@ -165,11 +152,13 @@ body.bodyHome {
 .dropdown:hover .dropdownContent {
   display: block;
 }
+
 .logoIcon {
   width: 32px;
   height: 32px;
   margin-right: 10px;
 }
+
 .inputPesquisa {
   padding: 8px 12px;
   font-size: 1rem;
