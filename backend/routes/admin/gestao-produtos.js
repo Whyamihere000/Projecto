@@ -192,4 +192,18 @@ routerAdminProdutos.get('/buscar/destaque', (req, res) => {
   });
 });
 
+
+routerAdminProdutos.get('/buscar/novidade', (req, res) => {
+  const sql = `
+    SELECT *, CAST(novidades AS UNSIGNED) as novidades
+    FROM produtos
+    WHERE data_registo >= NOW() - INTERVAL 7 DAY
+  `;
+
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
+    res.json(results);
+  });
+});
+
 export default routerAdminProdutos;
