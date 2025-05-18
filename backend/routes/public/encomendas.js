@@ -21,7 +21,7 @@ routerEncomendas.post('/nova', (req, res) => {
     if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
 
     if (results.length === 0) {
-      return res.status(400).json({ success: false, message: 'Carrinho não encontrado ou já finalizado' });
+      return res.status(400).json({ success: false, message: 'Carrinho não encontrado, está vazio ou já foi finalizado.' });
     }
 
     const carrinho = results[0];
@@ -36,11 +36,14 @@ routerEncomendas.post('/nova', (req, res) => {
 
       // Criar encomenda
       db.query(
-        `INSERT INTO encomendas (id_utilizador, total, rua, cidade, codigo_postal, pais, email, telefone, nif) 
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [carrinho.id_utilizador, carrinho.total, rua, cidade, codigo_postal, pais, email, telefone, nif],
+        `INSERT INTO encomendas (id_utilizador, id_carrinho, total, rua, cidade, codigo_postal, pais, email, telefone, nif) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [carrinho.id_utilizador, id_carrinho, carrinho.total, rua, cidade, codigo_postal, pais, email, telefone, nif],
         (err, results) => {
-          if (err) return res.status(500).json({ success: false, message: 'Erro ao criar encomenda' });
+          if (err) {
+            console.error('Erro na query de criar encomenda:', err);
+            return res.status(500).json({ success: false, message: 'Erro ao criar encomenda' });
+          } 
 
           const id_encomenda = results.insertId;
 
@@ -119,14 +122,8 @@ routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
       return res.status(500).json({ success: false, message: 'Erro ao registar pagamento.' });
     }
 
-    // Opcional: Atualizar estado da encomenda para "em_analise" (ou outro)
-    const updateOrder = 'UPDATE encomendas SET estado = "em_analise" WHERE id = ?';
-    db.query(updateOrder, [id_encomenda], (err2) => {
-      if (err2) console.error(err2);
-      // Não bloqueia resposta no erro de atualização
       res.json({ success: true, message: 'Pagamento registado com sucesso.' });
     });
   });
-});
 
 export default routerEncomendas;

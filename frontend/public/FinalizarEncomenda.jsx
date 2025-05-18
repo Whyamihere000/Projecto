@@ -67,7 +67,11 @@ useEffect(() => {
             navigate("/revisao-encomenda", { state: { idEncomenda: response.data.id_encomenda } });
         } catch (error) {
             console.error("Erro ao criar encomenda:", error.response?.data || error.message);
-            setMensagem("Erro ao criar encomenda.");
+            if (error.response) {
+                setMensagem(error.response.data.message || "Erro ao criar encomenda.");
+            } else {
+                setMensagem("Erro ao criar encomenda.");
+            }
         }
     }
 

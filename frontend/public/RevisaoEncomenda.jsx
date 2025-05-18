@@ -8,6 +8,7 @@ function RevisaoEncomenda() {
   const [mensagem, setMensagem] = useState("");
   const [metodoPagamento, setMetodoPagamento] = useState("mbway");
   const [detalhesPagamento, setDetalhesPagamento] = useState({});
+  const [emProcessamento, setEmProcessamento] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -157,7 +158,7 @@ function RevisaoEncomenda() {
           <select value={metodoPagamento} onChange={e => {
             setMetodoPagamento(e.target.value);
             setDetalhesPagamento({});
-          }}>
+          }} disabled={emProcessamento}>
             <option value="mbway">MB Way</option>
             <option value="paypal">PayPal</option>
             <option value="cartao">Cartão de Crédito/Débito</option>
@@ -168,7 +169,7 @@ function RevisaoEncomenda() {
           <h3>Detalhes de Pagamento:</h3>
           {CamposPagamento()}
 
-          <button onClick={handlePagamento}>Confirmar Pagamento</button>
+          <button onClick={handlePagamento} disabled={emProcessamento}>Confirmar Pagamento</button>
         </div>
       ) : (
         <p>A carregar encomenda...</p>
