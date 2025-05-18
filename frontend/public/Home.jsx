@@ -33,7 +33,7 @@ function Home() {
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        const res = await axios.get('http://localhost:3001/api/produtos/buscar');
+        const res = await axios.get('http://localhost:3001/api/produtos/buscar/destaque');
         setTodosProdutos(res.data);
       } catch (error) {
         console.error('Erro ao buscar produtos:', error);
@@ -42,10 +42,6 @@ function Home() {
 
     fetchProdutos();
   }, []);
-
-  // Filtragem no frontend
-  const produtosDestaque = todosProdutos.filter(p => p.isDestaque);
-  const novidades = todosProdutos.filter(p => p.isNovidade);
 
   const renderProdutos = (produtos) => (
     <div className={styles.listaProdutos}>
@@ -114,13 +110,13 @@ function Home() {
       <main className={styles.mainHome}>
         <section>
           <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
-          {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
+          {todosProdutos.length > 0 ? renderProdutos(todosProdutos) : <p>Nenhum produto em destaque.</p>}
         </section>
 
-        <section>
+        {/* <section>
           <h2 className={styles.tituloSecao}>Novidades</h2>
           {novidades.length > 0 ? renderProdutos(novidades) : <p>Sem novidades no momento.</p>}
-        </section>
+        </section> */}
       </main>
     </div>
   );

@@ -183,4 +183,13 @@ routerAdminProdutos.get('/buscar', (req, res) => {
   });
 });
 
+routerAdminProdutos.get('/buscar/destaque', (req, res) => {
+  const sql = 'SELECT *, CAST(destaques AS UNSIGNED) as destaques FROM produtos WHERE destaques = 1';
+
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
+    res.json(results);
+  });
+});
+
 export default routerAdminProdutos;
