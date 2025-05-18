@@ -10,6 +10,7 @@ import routerAdminCategorias from './routes/admin/gestao-categorias.js';
 import routerAdminMarcas from './routes/admin/gestao-marcas.js';
 import routerAdminProdutos from './routes/admin/gestao-produtos.js';
 import routerAdminUtilizadores from './routes/admin/gestao-utilizadores.js';
+//import './timers/pagamentosTimer.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);

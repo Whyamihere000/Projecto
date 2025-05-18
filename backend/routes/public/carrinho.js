@@ -6,7 +6,7 @@ const routerCarrinho = express.Router();
 routerCarrinho.get('/:id_utilizador', (req, res) => {
     const { id_utilizador } = req.params;
 
-    db.query('SELECT * FROM carrinhos WHERE id_utilizador = ?', [id_utilizador], (err, results) => {
+    db.query('SELECT * FROM carrinhos WHERE id_utilizador = ? AND estado = "ativo" LIMIT 1', [id_utilizador], (err, results) => {
         if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
 
         if (results.length > 0) {
@@ -34,7 +34,7 @@ routerCarrinho.get('/:id_utilizador', (req, res) => {
                 }
             );
         } else {
-            db.query('INSERT INTO carrinhos (id_utilizador) VALUES (?)', [id_utilizador], (err, results) => {
+            db.query('INSERT INTO carrinhos (id_utilizador, estado) VALUES (?, "ativo")', [id_utilizador], (err, results) => {
                 if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
                 res.json({id: results.insertId, id_utilizador, total: 0, items: []});
             })

@@ -31,9 +31,13 @@ function Carrinho() {
     if (user) {
       axios.get(`http://localhost:3001/api/carrinhos/${user.id}`)
         .then((response) => {
+          const items = response.data.items ?? [];
+          const total = items.reduce((acc, item) => acc + item.quantidade * item.preco, 0);
+
           setCarrinho({
             ...response.data,
-            items: response.data.items ?? []
+            items: items,
+            total: total
           });
         })
         .catch((error) => {
@@ -53,12 +57,17 @@ function Carrinho() {
       const updateCarrinho = carrinho.items.filter(
         (item) => item.id_produto !== id_produto
       );
-      setCarrinho({ ...carrinho, items: updateCarrinho });
+      const total = updateCarrinho.reduce(
+        (acc, item) => acc + item.quantidade * item.preco,
+        0
+      );
 
       console.log("Remover item:", {
         id_carrinho: carrinho.id,
         id_produto,
-      });
+      });      
+
+      setCarrinho({ ...carrinho, items: updateCarrinho, total: total });
 
       const resposta = await axios.post(
         `http://localhost:3001/api/carrinhos/remover`,
@@ -68,12 +77,7 @@ function Carrinho() {
         }
       );
 
-      console.log("Resposta do servidor:", resposta.data);
-
-      const total = updateCarrinho.reduce(
-        (acc, item) => acc + item.quantidade * item.preco,
-        0
-      );
+      console.log("Resposta do servidor:", resposta.data);      
 
       await axios.put(`http://localhost:3001/api/carrinhos/${carrinho.id}`, {
         total,
@@ -153,7 +157,7 @@ function Carrinho() {
                   </div>
                 ))}
                 <div className={stylesCarrinho.total}>
-                  <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
+                  <p><strong>Total: {carrinho.total}€</strong></p>
                   <button onClick={handleFinalizarCompra}>Finalizar Compra</button>
                 </div>
               </div>
