@@ -219,54 +219,62 @@ function Produtos() {
                 produto.nome.toLowerCase().includes(pesquisa.toLowerCase())
               )
               .map((produto) => (
-                <div
-                  key={produto.id}
-                  style={{
-                    border: "1px solid #ccc",
-                    padding: "10px",
-                    width: "250px",
-                    margin: "10px",
-                  }}
-                >
-                  <h3>{produto.nome}</h3>
-                  {produto.imagem_url && (
-                    <img
-                      src={`http://localhost:3001${produto.imagem_url}`}
-                      alt={produto.nome}
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        marginBottom: "10px",
-                      }}
-                    />
-                  )}
-                  <p>{produto.descricao}</p>
-                  <p>
-                    <strong>Preço:</strong> {produto.preco}€
-                  </p>
-                  <p>
-                    <strong>Tipo de Produto:</strong> {produto.tipo_produto}
-                  </p>
+              <div
+                key={produto.id}
+                style={{
+                  border: "1px solid #ccc",
+                  padding: "10px",
+                  width: "250px",
+                  margin: "10px",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <h3>{produto.nome}</h3>
 
-                  {produto.especificacoes && (
-                    <div>
-                      <h4>Especificações:</h4>
-                      <ul>
-                        {Object.keys(produto.especificacoes).map((key) => (
-                          <li key={key}>
-                            <strong>{key}:</strong> {produto.especificacoes[key]}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                {produto.imagem_url && (
+                  <img
+                    src={`http://localhost:3001${produto.imagem_url}`}
+                    alt={produto.nome}
+                    style={{
+                      width: "100%",
+                      height: "auto",
+                      marginBottom: "10px",
+                    }}
+                  />
+                )}
 
-                  <button
-                    onClick={() => handleAdicionarAoCarrinho(produto.id)}
-                  >
+                <p>{produto.descricao}</p>
+                <p>
+                  <strong>Preço:</strong> {produto.preco}€
+                </p>
+                <p>
+                  <strong>Tipo de Produto:</strong> {produto.tipo_produto}
+                </p>
+
+                {produto.especificacoes && (
+                  <div>
+                    <h4>Especificações:</h4>
+                    <ul>
+                      {Object.keys(produto.especificacoes).map((key) => (
+                        <li key={key}>
+                          <strong>{key}:</strong> {produto.especificacoes[key]}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Botão alinhado ao fundo e centralizado */}
+                <div style={{ marginTop: "auto", textAlign: "center" }}>
+                  <button onClick={() => handleAdicionarAoCarrinho(produto.id)}>
                     Adicionar ao carrinho
                   </button>
                 </div>
+              </div>
+
+                            
+                              
               ))
           ) : (
             <p>Nenhum produto disponível.</p>
