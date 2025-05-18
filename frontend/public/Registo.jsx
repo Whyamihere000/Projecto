@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import styles from '../css/Registo.module.css'
 
 function Registo() {
   const [primeiro_nome, setPrimeiroNome] = useState('')
@@ -95,7 +96,7 @@ function Registo() {
     <div>
       
       <h1>Registo</h1>
-      <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} />
+      <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} className={styles.input}/>
       {errors.primeiro_nome && <p style={{ color: 'red' }}>{errors.primeiro_nome}</p>}
 
       <input type="text" placeholder="Ultimo Nome" onChange={(e) => setUltimoNome(e.target.value)} />
