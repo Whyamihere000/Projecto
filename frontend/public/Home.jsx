@@ -53,11 +53,18 @@ function Home() {
         <div key={produto.id} className={styles.cardProduto}>
           <h3>{produto.nome}</h3>
           {produto.imagem_url && (
-            <img
-              src={`http://localhost:3001${produto.imagem_url}`}
+          <img
+            src={produto.imagem_url.startsWith("http://") || produto.imagem_url.startsWith("https://")
+            ? produto.imagem_url
+            : `http://localhost:3001${produto.imagem_url}`
+            }
               alt={produto.nome}
-              className={styles.imagemProduto}
-            />
+              style={{
+              width: "100%",
+              height: "auto",
+              marginBottom: "10px",
+            }}
+          />
           )}
           <p><strong>Preço:</strong> {produto.preco}€</p>
           {produto.especificacoes && (

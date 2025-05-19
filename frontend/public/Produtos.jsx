@@ -234,7 +234,10 @@ function Produtos() {
 
                 {produto.imagem_url && (
                   <img
-                    src={`http://localhost:3001${produto.imagem_url}`}
+                    src={produto.imagem_url.startsWith("http://") || produto.imagem_url.startsWith("https://")
+                      ? produto.imagem_url
+                      : `http://localhost:3001${produto.imagem_url}`
+                    }
                     alt={produto.nome}
                     style={{
                       width: "100%",
