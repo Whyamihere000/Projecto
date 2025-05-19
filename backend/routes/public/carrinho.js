@@ -3,6 +3,7 @@ import db from '../../db.js';
 
 const routerCarrinho = express.Router();
 
+// Cria carrinhos pelo utilizador
 routerCarrinho.get('/:id_utilizador', (req, res) => {
     const { id_utilizador } = req.params;
 
@@ -42,6 +43,7 @@ routerCarrinho.get('/:id_utilizador', (req, res) => {
     });
 });
 
+// Adicionas items ao carrinho
 routerCarrinho.post('/adicionar', (req, res) => {
     const { id_carrinho, id_produto, quantidade, preco } = req.body;
 
@@ -94,6 +96,7 @@ routerCarrinho.post('/adicionar', (req, res) => {
     )
 })
 
+// Remove items do carrinho
 routerCarrinho.post('/remover', (req, res) => {
     const { id_carrinho, id_produto } = req.body;
     console.log("Dados recebidos para remover:", { id_carrinho, id_produto });
@@ -133,6 +136,7 @@ routerCarrinho.post('/remover', (req, res) => {
     )
 })
 
+// Finaliza compra
 routerCarrinho.post('/finalizar', (req, res) => {
     const { id_carrinho } = req.body;
 
@@ -159,27 +163,27 @@ routerCarrinho.post('/finalizar', (req, res) => {
     )
 })
 
-routerCarrinho.post('/eliminar', (req, res) => {
-    const { id_utilizador } = req.body;
+// routerCarrinho.post('/eliminar', (req, res) => {
+//     const { id_utilizador } = req.body;
 
-    db.query('SELECT id FROM carrinhos WHERE id_utilizador = ?', [id_utilizador], (err, results) => {
-        if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
+//     db.query('SELECT id FROM carrinhos WHERE id_utilizador = ?', [id_utilizador], (err, results) => {
+//         if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
 
-        if (results.length > 0) {
-            const carrinhoId = results[0].id;
+//         if (results.length > 0) {
+//             const carrinhoId = results[0].id;
 
-            db.query('DELETE FROM items_carrinhos WHERE id_carrinho = ?', [carrinhoId], (err) => {
-                if (err) return res.status(500).json({ success: false, message: 'Erro ao eliminar itens do carrinho' });
+//             db.query('DELETE FROM items_carrinhos WHERE id_carrinho = ?', [carrinhoId], (err) => {
+//                 if (err) return res.status(500).json({ success: false, message: 'Erro ao eliminar itens do carrinho' });
 
-                db.query('DELETE FROM carrinhos WHERE id = ?', [carrinhoId], (err) => {
-                    if (err) return res.status(500).json({ success: false, message: 'Erro ao eliminar o carrinho' });
-                    res.json({ success: true, message: 'Carrinho e itens eliminados com sucesso' });
-                });
-            });
-        } else {
-            res.status(404).json({ success: false, message: 'Carrinho não encontrado' });
-        }
-    });
-});
+//                 db.query('DELETE FROM carrinhos WHERE id = ?', [carrinhoId], (err) => {
+//                     if (err) return res.status(500).json({ success: false, message: 'Erro ao eliminar o carrinho' });
+//                     res.json({ success: true, message: 'Carrinho e itens eliminados com sucesso' });
+//                 });
+//             });
+//         } else {
+//             res.status(404).json({ success: false, message: 'Carrinho não encontrado' });
+//         }
+//     });
+// });
 
 export default routerCarrinho;
