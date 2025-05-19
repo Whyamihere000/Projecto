@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from '../public/Home.jsx';
+import Perfil from '../public/Perfil.jsx';
 import Login from '../public/Login.jsx';
 import Registo from '../public/Registo.jsx';
 import Produtos from '../public/Produtos.jsx';
@@ -19,6 +20,7 @@ function App() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/perfil" element={<Perfil />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registo" element={<Registo />} />
             <Route path="/produtos" element={<Produtos />} />

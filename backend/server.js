@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import authRoutes from './routes/public/auth.js';
+import routerPerfil from './routes/public/perfil.js';
 import routerCarrinho from './routes/public/carrinho.js';
 import routerEncomendas from './routes/public/encomendas.js';
 import routerAdminCategorias from './routes/admin/gestao-categorias.js';
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/perfil', routerPerfil);
 app.use('/api/carrinhos', routerCarrinho);
 app.use('/api/encomendas', routerEncomendas);
 app.use('/api/categorias', routerAdminCategorias);
