@@ -75,7 +75,6 @@ function RevisaoEncomenda() {
               <option value="">Selecionar</option>
               <option value="visa">Visa</option>
               <option value="mastercard">Mastercard</option>
-              <option value="maestro">Maestro</option>
             </select>
             <label className={styles.revisaoLabel}>Número do Cartão:</label>
             <input
@@ -140,7 +139,32 @@ function RevisaoEncomenda() {
   };
 
   const handlePagamento = async () => {
+
+    if (!detalhesPagamento || Object.keys(detalhesPagamento).length === 0) return setMensagem("Erro: Detalhes de pagamento obrigatórios.");
+
     if (!idEncomenda) return setMensagem("Erro: Encomenda não encontrada.");
+
+    if (metodoPagamento === "mbway") {
+      if (!/^9[0-9]{8}$/.test(detalhesPagamento.telefone)) return setMensagem("Erro: Número de telemóvel errado. Deve ter 9 dígitos e começar por 9.");
+    }
+
+    if (metodoPagamento === "paypal") {
+      if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(detalhesPagamento.email)) return setMensagem("Erro: Email inválido.");
+    }
+
+    if (metodoPagamento === "cartao") {
+      if (!/^\d{16}$/.test(detalhesPagamento.cartao_numero)) return setMensagem("Erro: Número de cartão inválido.");
+      if (!/^\d{4}$/.test(detalhesPagamento.cartao_codigo_seguranca)) return setMensagem("Erro: Código de seguranca inválido.");
+      if (!/^\d{2}\/\d{2}$/.test(detalhesPagamento.cartao_validade)) return setMensagem("Erro: Validade inválida.");
+    }
+
+    if (metodoPagamento === "referencia") {
+      if (!/^\d{4} \d{4} \d{4} \d{4}$/.test(detalhesPagamento.referencia)) return setMensagem("Erro: Referência inválida.");
+    }
+
+    if (metodoPagamento === "simulado") {
+      if (!detalhesPagamento.informacoes_adicionais) return setMensagem("Erro: Informações adicionais obrigatórias.");
+    }
 
     try {
       setEmProcessamento(true);
