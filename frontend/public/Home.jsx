@@ -78,6 +78,7 @@ function Home() {
   return (
     <div className={styles.home}>
       <nav className={stylesGlobal.nav}>
+        
         <div className={stylesGlobal.navLeft}>
           <img src="../icons/logo.png" alt="Logo" className={stylesGlobal.logoIcon} />
           <Link to="/" className={stylesGlobal.navHome}>Home</Link>
@@ -112,7 +113,7 @@ function Home() {
       </nav>
 
       <main className={styles.mainHome}>
-        <section>
+        <section className={styles.secaoProdutos}>
           <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
           {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
         </section>

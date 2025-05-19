@@ -39,6 +39,7 @@
 
 .mainHome {
   padding: 20px;
+  
 }
 
 .tituloSecao {
@@ -65,4 +66,11 @@
   width: 100%;
   height: auto;
   margin-bottom: 10px;
+}
+
+.listaProdutos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 }
