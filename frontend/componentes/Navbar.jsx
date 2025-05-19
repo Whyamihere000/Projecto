@@ -1,7 +1,22 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "../css/Global.module.css";
 
 function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
+  // Estado local para o input
+  const [inputValue, setInputValue] = useState(pesquisa || "");
+
+  // Sincroniza o inputValue quando pesquisa muda (ex: ao limpar a pesquisa no pai)
+  useEffect(() => {
+    setInputValue(pesquisa || "");
+  }, [pesquisa]);
+
+  // Atualiza pesquisa global só ao carregar Enter
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setPesquisa(inputValue);
+    }
+  };
   return (
     <nav className={styles.nav}>
       <div className={styles.navLeft}>
@@ -29,8 +44,9 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
         <input
           type="text"
           placeholder="Pesquisar produto..."
-          value={pesquisa}
-          onChange={(e) => setPesquisa(e.target.value)}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}          
+          onKeyDown={handleKeyDown}
           className={styles.inputPesquisa}
         />
       </div>
