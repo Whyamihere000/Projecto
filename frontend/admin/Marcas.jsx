@@ -11,7 +11,7 @@ function Marcas() {
 
     const adicionarMarca = async () => {
         if (!marca.trim()) {
-            setMensagem('O nome da categoria é obrigatório.');
+            setMensagem('O nome da marca é obrigatório.');
             setMensagemTipo('error');
             return;
         }
@@ -49,14 +49,14 @@ function Marcas() {
             <div className={stylesMarcas.container}>
                 <Link to="/admin">Voltar</Link>
                 <h1>Adicionar Marca</h1>
-                <input
+               <input
                     type="text"
                     value={marca}
                     onChange={(e) => setMarca(e.target.value)}
                     placeholder="Nome da marca"
+                    className={stylesMarcas.input}
                 />
-                <button onClick={adicionarMarca}>Adicionar</button>
-
+                <button onClick={adicionarMarca} className={stylesMarcas.button}>Adicionar</button>
                 {mensagem && (
                     <p style={{ color: mensagemTipo === 'error' ? 'red' : 'green' }}>
                         {mensagem}

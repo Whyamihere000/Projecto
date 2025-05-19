@@ -1,11 +1,49 @@
-.container{
-    margin-top: 10px;
+.container {
+    max-width: 500px;
+    margin: 40px auto;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 20px;
+    flex-direction: column;
+    gap: 16px;
     padding: 20px;
-    margin-left: 100px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+}
+
+.container h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.container input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.container button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.container button:hover {
+    background-color: #218838;
+}
+
+.container a {
+    align-self: flex-start;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.container a:hover {
+    text-decoration: underline;
 }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import styles from "../css/Global.module.css";
+//import styles from "../css/Global.module.css";
+import styles from "../css/RevisaoEncomenda.module.css";
+
 
 function RevisaoEncomenda() {
   const [encomenda, setEncomenda] = useState(null);
@@ -22,14 +24,14 @@ function RevisaoEncomenda() {
     }
   }, [idEncomenda]);
 
-  // Função para renderizar campos adicionais conforme método
   const CamposPagamento = () => {
     switch (metodoPagamento) {
       case "mbway":
         return (
           <>
-            <label>Telefone MB Way:</label>
+            <label className={styles.revisaoLabel}>Telefone MB Way:</label>
             <input
+              className={styles.revisaoInput}
               type="tel"
               value={detalhesPagamento.telefone || ""}
               onChange={e => setDetalhesPagamento({ telefone: e.target.value })}
@@ -41,8 +43,9 @@ function RevisaoEncomenda() {
       case "paypal":
         return (
           <>
-            <label>Email PayPal:</label>
+            <label className={styles.revisaoLabel}>Email PayPal:</label>
             <input
+              className={styles.revisaoInput}
               type="email"
               value={detalhesPagamento.email || ""}
               onChange={e => setDetalhesPagamento({ email: e.target.value })}
@@ -54,15 +57,17 @@ function RevisaoEncomenda() {
       case "cartao":
         return (
           <>
-            <label>Nome no Cartão:</label>
+            <label className={styles.revisaoLabel}>Nome no Cartão:</label>
             <input
+              className={styles.revisaoInput}
               type="text"
               value={detalhesPagamento.nome_cartao || ""}
               onChange={e => setDetalhesPagamento({ ...detalhesPagamento, nome_cartao: e.target.value })}
               required
             />
-            <label>Tipo de Cartão:</label>
+            <label className={styles.revisaoLabel}>Tipo de Cartão:</label>
             <select
+              className={styles.revisaoSelect}
               value={detalhesPagamento.cartao_tipo || ""}
               onChange={e => setDetalhesPagamento({ ...detalhesPagamento, cartao_tipo: e.target.value })}
               required
@@ -72,24 +77,27 @@ function RevisaoEncomenda() {
               <option value="mastercard">Mastercard</option>
               <option value="maestro">Maestro</option>
             </select>
-            <label>Número do Cartão:</label>
+            <label className={styles.revisaoLabel}>Número do Cartão:</label>
             <input
+              className={styles.revisaoInput}
               type="text"
               maxLength={16}
               value={detalhesPagamento.cartao_numero || ""}
               onChange={e => setDetalhesPagamento({ ...detalhesPagamento, cartao_numero: e.target.value })}
               required
             />
-            <label>Validade (MM/AA):</label>
+            <label className={styles.revisaoLabel}>Validade (MM/AA):</label>
             <input
+              className={styles.revisaoInput}
               type="text"
               placeholder="MM/AA"
               value={detalhesPagamento.cartao_validade || ""}
               onChange={e => setDetalhesPagamento({ ...detalhesPagamento, cartao_validade: e.target.value })}
               required
             />
-            <label>Código Segurança (CVV):</label>
+            <label className={styles.revisaoLabel}>Código Segurança (CVV):</label>
             <input
+              className={styles.revisaoInput}
               type="text"
               maxLength={4}
               value={detalhesPagamento.cartao_codigo_seguranca || ""}
@@ -101,8 +109,9 @@ function RevisaoEncomenda() {
       case "referencia":
         return (
           <>
-            <label>Referência Multibanco:</label>
+            <label className={styles.revisaoLabel}>Referência Multibanco:</label>
             <input
+              className={styles.revisaoInput}
               type="text"
               value={detalhesPagamento.referencia || ""}
               onChange={e => setDetalhesPagamento({ referencia: e.target.value })}
@@ -114,8 +123,9 @@ function RevisaoEncomenda() {
       case "simulado":
         return (
           <>
-            <label>Info Simulado:</label>
+            <label className={styles.revisaoLabel}>Info Simulado:</label>
             <input
+              className={styles.revisaoInput}
               type="text"
               value={detalhesPagamento.informacoes_adicionais || ""}
               onChange={e => setDetalhesPagamento({ informacoes_adicionais: e.target.value })}
@@ -133,7 +143,7 @@ function RevisaoEncomenda() {
     if (!idEncomenda) return setMensagem("Erro: Encomenda não encontrada.");
 
     try {
-      // Envia o objeto detalhesPagamento como JSON stringificado para backend
+      setEmProcessamento(true);
       await axios.post(`http://localhost:3001/api/encomendas/pagar/${idEncomenda}`, {
         metodoPagamento,
         detalhesPagamento: JSON.stringify(detalhesPagamento)
@@ -141,24 +151,31 @@ function RevisaoEncomenda() {
       navigate("/sucesso-pagamento");
     } catch (error) {
       setMensagem("Erro ao processar o pagamento.");
+    } finally {
+      setEmProcessamento(false);
     }
   };
 
   return (
-    <div className={styles.main}>
-      <h1>Rever e Pagar Encomenda</h1>
-      {mensagem && <p>{mensagem}</p>}
+    <div className={styles.revisaoContainer}>
+      <h1 className={styles.revisaoTitulo}>Rever e Pagar Encomenda</h1>
+      {mensagem && <p className={styles.revisaoMensagem}>{mensagem}</p>}
 
       {encomenda ? (
         <div>
-          <p><strong>Encomenda ID:</strong> {encomenda.id}</p>
-          <p><strong>Total:</strong> {encomenda.total ? Number(encomenda.total).toFixed(2) + "€" : "Total não disponível"}</p>
+          <p className={styles.revisaoTexto}><strong>Encomenda ID:</strong> {encomenda.id}</p>
+          <p className={styles.revisaoTexto}><strong>Total:</strong> {encomenda.total ? Number(encomenda.total).toFixed(2) + "€" : "Total não disponível"}</p>
 
-          <h3>Selecionar Método de Pagamento:</h3>
-          <select value={metodoPagamento} onChange={e => {
-            setMetodoPagamento(e.target.value);
-            setDetalhesPagamento({});
-          }} disabled={emProcessamento}>
+          <h3 className={styles.revisaoTitulo}>Selecionar Método de Pagamento:</h3>
+          <select
+            className={styles.revisaoSelect}
+            value={metodoPagamento}
+            onChange={e => {
+              setMetodoPagamento(e.target.value);
+              setDetalhesPagamento({});
+            }}
+            disabled={emProcessamento}
+          >
             <option value="mbway">MB Way</option>
             <option value="paypal">PayPal</option>
             <option value="cartao">Cartão de Crédito/Débito</option>
@@ -166,13 +183,19 @@ function RevisaoEncomenda() {
             <option value="simulado">Simulado</option>
           </select>
 
-          <h3>Detalhes de Pagamento:</h3>
+          <h3 className={styles.revisaoTitulo}>Detalhes de Pagamento:</h3>
           {CamposPagamento()}
 
-          <button onClick={handlePagamento} disabled={emProcessamento}>Confirmar Pagamento</button>
+          <button
+            className={styles.revisaoBotao}
+            onClick={handlePagamento}
+            disabled={emProcessamento}
+          >
+            Confirmar Pagamento
+          </button>
         </div>
       ) : (
-        <p>A carregar encomenda...</p>
+        <p className={styles.revisaoTexto}>A carregar encomenda...</p>
       )}
     </div>
   );

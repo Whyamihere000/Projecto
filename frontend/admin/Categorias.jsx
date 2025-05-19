@@ -48,14 +48,15 @@ function Categorias() {
 
             <div className={stylesCategorias.container}>
                 <Link to="/admin">Voltar</Link>
-                <h1>Adicionar Categoria</h1>
+               <h1>Adicionar Categoria</h1>
                 <input
                     type="text"
                     value={categoria}
                     onChange={(e) => setCategoria(e.target.value)}
                     placeholder="Nome da categoria"
+                    className={stylesCategorias.input}
                 />
-                <button onClick={adicionarCategoria}>Adicionar</button>
+                <button onClick={adicionarCategoria} className={stylesCategorias.button}>Adicionar</button>
 
                 {mensagem && (
                     <p style={{ color: mensagemTipo === 'error' ? 'red' : 'green' }}>
