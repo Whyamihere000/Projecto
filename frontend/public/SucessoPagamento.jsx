@@ -8,7 +8,7 @@ function SucessoPagamento() {
       <p className={styles.mensagem}>Obrigado pela sua compra. A sua encomenda está a ser processada.</p>
       <Link to="/" className={styles.linkBotao}>Voltar à página inicial</Link>
       <br />
-      <Link to="/minhas-encomendas" className={styles.linkBotao}>Ver as minhas encomendas</Link>
+      <Link to="/Perfil" className={styles.linkBotao}>Ver as minhas encomendas</Link>
     </div>
   );
 }
