@@ -133,9 +133,9 @@ function Produtos() {
     setOpenModal(false);
   };
 
-  const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
-  };
+  // const useQuery = () => {
+  //   return new URLSearchParams(useLocation().search);
+  // };
 
   return (
     <>
