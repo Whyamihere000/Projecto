@@ -141,6 +141,7 @@ function Carrinho() {
       </nav>
 
       <main className={stylesCarrinho.mainCarrinho}>
+        <br />
         <h1>Carrinho</h1>
         {mensagem && <p>{mensagem}</p>}
 
