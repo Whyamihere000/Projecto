@@ -73,7 +73,7 @@ function Perfil() {
 
   const colunas = [
   { field: 'id', headerName: 'ID Encomenda', width: 120 },
-  { field: 'data', headerName: 'Data', width: 180, valueFormatter: (params) => new Date(params.value).toLocaleDateString() },
+  { field: 'data', headerName: 'Data', width: 180, },
   { field: 'total', headerName: 'Total (€)', width: 120, type: 'number' },
   { field: 'produtos', headerName: 'Produtos', width: 300, flex: 1 },
 ];
