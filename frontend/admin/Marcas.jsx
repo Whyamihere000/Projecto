@@ -46,7 +46,7 @@ function Marcas() {
                 <button className={styles.logout}>Logout</button>
             </nav>
 
-            <div>
+            <div className={stylesMarcas.container}>
                 <Link to="/admin">Voltar</Link>
                 <h1>Adicionar Marca</h1>
                 <input

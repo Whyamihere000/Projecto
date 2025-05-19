@@ -46,7 +46,7 @@ function Categorias() {
                 <button className={styles.logout}>Logout</button>
             </nav>
 
-            <div>
+            <div className={stylesCategorias.container}>
                 <Link to="/admin">Voltar</Link>
                 <h1>Adicionar Categoria</h1>
                 <input
