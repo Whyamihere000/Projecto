@@ -195,9 +195,9 @@ routerAdminProdutos.get('/buscar/destaque', (req, res) => {
 
 routerAdminProdutos.get('/buscar/novidade', (req, res) => {
   const sql = `
-    SELECT *, CAST(novidades AS UNSIGNED) as novidades
+    SELECT *
     FROM produtos
-    WHERE data_registo >= NOW() - INTERVAL 7 DAY
+    WHERE data_registo >= DATE(NOW() - INTERVAL 7 DAY)
   `;
 
   db.query(sql, (err, results) => {
