@@ -109,7 +109,7 @@ function Home() {
         <div className={stylesGlobal.navRight}>
           {user ? (
             <>
-              <h4>{user.primeiro_nome}</h4>
+              <Link to="/perfil" className={stylesGlobal.navPerfil}>{user.primeiro_nome}</Link>
               <button onClick={handleLogout}>Logout</button>
               <Link to="/carrinho" className={stylesGlobal.navCarrinho}>Carrinho</Link>
             </>
