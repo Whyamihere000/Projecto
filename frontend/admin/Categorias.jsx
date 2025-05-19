@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import styles from "../css/Global.module.css";
+import stylesCategorias from "../css/AdminCategorias.module.css";
 
 function Categorias() {
     const [categoria, setCategoria] = useState('');
@@ -35,23 +37,33 @@ function Categorias() {
     }
 
     return (
-        <div>
-            <Link to="/admin">Voltar</Link>
-            <h1>Adicionar Categoria</h1>
-            <input
-                type="text"
-                value={categoria}
-                onChange={(e) => setCategoria(e.target.value)}
-                placeholder="Nome da categoria"
-            />
-            <button onClick={adicionarCategoria}>Adicionar</button>
+        <>
+            <nav className={styles.navegacao_admin}>
+                <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
+                <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
+                <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
+                <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
+                <button className={styles.logout}>Logout</button>
+            </nav>
 
-            {mensagem && (
-                <p style={{ color: mensagemTipo === 'error' ? 'red' : 'green' }}>
-                    {mensagem}
-                </p>
-            )}
-        </div>
+            <div>
+                <Link to="/admin">Voltar</Link>
+                <h1>Adicionar Categoria</h1>
+                <input
+                    type="text"
+                    value={categoria}
+                    onChange={(e) => setCategoria(e.target.value)}
+                    placeholder="Nome da categoria"
+                />
+                <button onClick={adicionarCategoria}>Adicionar</button>
+
+                {mensagem && (
+                    <p style={{ color: mensagemTipo === 'error' ? 'red' : 'green' }}>
+                        {mensagem}
+                    </p>
+                )}
+            </div>
+        </>        
     );
 }
 
