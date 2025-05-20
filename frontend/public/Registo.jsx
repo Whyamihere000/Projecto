@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from "react";
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styles from '../css/Registo.module.css'
@@ -75,7 +75,17 @@ function Registo() {
     }
   }
 
+     useEffect(() => {
+        document.body.className = styles.bodysHome;
+        return () => {
+          document.body.className = "";
+        };
+      }, []);
+
   return (
+    <>
+
+
     <div className={styles.container}>
       <h1 className={styles.title}>Registo</h1>
 
@@ -104,6 +114,7 @@ function Registo() {
 
       <Link to="/" style={{ marginTop: '10px', textAlign: 'center', color: '#007bff' }}>Voltar</Link>
     </div>
+    </>
   )
 }
 
