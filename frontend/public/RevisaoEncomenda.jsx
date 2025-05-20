@@ -3,9 +3,11 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 //import styles from "../css/Global.module.css";
 import styles from "../css/RevisaoEncomenda.module.css";
+import Navbar from "../componentes/Navbar";
 
 
 function RevisaoEncomenda() {
+  const [user, setUser] = useState(null);
   const [encomenda, setEncomenda] = useState(null);
   const [mensagem, setMensagem] = useState("");
   const [metodoPagamento, setMetodoPagamento] = useState("mbway");
@@ -29,6 +31,10 @@ function RevisaoEncomenda() {
       case "mbway":
         return (
           <>
+           <Navbar
+              user={user}
+              handleLogout={handleLogout}
+           />
             <label className={styles.revisaoLabel}>Telefone MB Way:</label>
             <input
               className={styles.revisaoInput}

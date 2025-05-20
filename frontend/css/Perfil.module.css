@@ -84,14 +84,10 @@ input {
   color: white;
 }
 
-button {
-  margin-top: 1rem;
-  padding: 0.8rem 1.2rem;
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+input:focus {
+  outline: none;
+  border-color: #ff540b;
+  box-shadow: 0 0 0 3px rgba(255, 11, 11, 0.25);
 }
 
 button:hover {
