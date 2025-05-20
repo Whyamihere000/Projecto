@@ -17,19 +17,21 @@
 
 .mainPublic {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start; /* Alinhado à esquerda */
     gap: 20px;
     padding: 20px;
-    margin-left: 100px;
     margin-top: 60px;
 }
 
+.filtrosContainer {
+  flex: 1;
+  max-width: 250px;
+}
+
 .produtosPublic {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    width: 100%;
+  flex: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .produtosPublic > div {

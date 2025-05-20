@@ -152,21 +152,21 @@ function Produtos() {
         />
 
       <main className={stylesProdutos.mainPublic}>
-        <div>
+        <div className={stylesProdutos.filtrosContainer}>
           <FiltrosProdutos filtros={filtros} setFiltros={setFiltros} />
         </div>
         <div className={stylesProdutos.produtosPublic}>
           <h1>Produtos</h1>
           {produtos.length > 0 ? (
             produtos
-    .filter((produto) =>
-      produto.nome.toLowerCase().includes(pesquisa.toLowerCase())
-    )
-    .filter((produto) => {
-      if (filtros.marca && produto.nome_marca !== filtros.marca) return false;
-      if (filtros.precoMax && produto.preco > parseFloat(filtros.precoMax)) return false;
-      return true;
-    })
+            .filter((produto) =>
+              produto.nome.toLowerCase().includes(pesquisa.toLowerCase())
+            )
+              .filter((produto) => {
+                if (filtros.marca && produto.nome_marca !== filtros.marca) return false;
+                if (filtros.precoMax && produto.preco > parseFloat(filtros.precoMax)) return false;
+                return true;
+              })
               .map((produto) => (
               <div
                 key={produto.id}
@@ -205,6 +205,7 @@ function Produtos() {
                 </p>
                 <p>
                   <strong>Marca:</strong> {produto.nome_marca}
+                  
                 </p>
 
                 {produto.especificacoes && (
@@ -226,10 +227,7 @@ function Produtos() {
                     Adicionar ao carrinho
                   </button>
                 </div>
-              </div>
-
-                            
-                              
+              </div>                          
               ))
           ) : (
             <p>Nenhum produto disponível.</p>
