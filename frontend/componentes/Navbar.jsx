@@ -54,7 +54,7 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
       <div className={styles.navRight}>
         {user ? (
           <>
-            <h4>{user.primeiro_nome}</h4>
+            <Link to={'/perfil'}>{user.primeiro_nome}</Link>
             <button onClick={handleLogout}>Logout</button>
             <Link to="/carrinho" className={styles.navCarrinho}>Carrinho</Link>
           </>
