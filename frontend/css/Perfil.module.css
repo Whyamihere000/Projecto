@@ -5,7 +5,7 @@
   min-height: 100vh;
 }
 .bodyHome{
-    background-color: #1d1d20;
+    background-color: #ffffff;
 }
 .perfilTitulo {
   font-size: 28px;
@@ -47,12 +47,10 @@
   background-color: #006fe6;
 }
 
-.encomendasContainer {
-  margin-top: 40px;
-}
 .container {
   max-width: 700px;
   margin: 0 auto;
+  margin-top: 3rem;
   padding: 2rem;
   background-color: #1e1e1e;
   color: white;
@@ -109,4 +107,8 @@ button:hover {
 .strengthBar.weak {
   width: 33%;
   background-color: red;
+}
+
+.button {
+  margin-top: 10px;
 }

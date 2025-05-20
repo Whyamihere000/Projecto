@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
-import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import styles from "../css/Perfil.module.css";
+import Navbar from "../componentes/Navbar";
+import { Navigate } from "react-router-dom";
 
 function Perfil() {
   const [user, setUser] = useState(null);
-  const [encomendas, setEncomendas] = useState([]);
   const [passwordAtual, setPasswordAtual] = useState("");
   const [novaPassword, setNovaPassword] = useState("");
   const [confirmarPassword, setConfirmarPassword] = useState("");
+
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   useEffect(() => {
     document.body.className = styles.bodyHome;
@@ -23,11 +26,15 @@ function Perfil() {
       const user = JSON.parse(storedUser);
       if (user.tipo_utilizador === 'cliente') {
         setUser(user);
-        fetchEncomendas(user.id);
         fetchDadosUser(user.id);
       }
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    Navigate('/');
+  };
 
   const fetchDadosUser = async (id) => {
     try {
@@ -35,15 +42,6 @@ function Perfil() {
       setUser(res.data);
     } catch (error) {
       console.error("Erro ao carregar dados do utilizador", error);
-    }
-  };
-
-  const fetchEncomendas = async (id) => {
-    try {
-      const res = await axios.get(`http://localhost:3001/api/perfil/encomendas/${id}`);
-      setEncomendas(res.data);
-    } catch (error) {
-      console.error("Erro ao carregar encomendas", error);
     }
   };
 
@@ -97,7 +95,43 @@ function Perfil() {
   const cores = ["red", "orange", "gold", "green"];
   const percentuais = ["25%", "50%", "75%", "100%"];
 
+  const handleMudarPassword = async () => {
+    if (novaPassword !== confirmarPassword) {
+      setMessage("As passwords devem ser iguais.");
+      setMessageType("error");
+      return;
+    }
+
+    if (forca < 3) {
+      setMessage("A password é demasiado fraca.");
+      setMessageType("error");
+      return;
+    }
+
+    try {
+      const res = await axios.put(`http://localhost:3001/api/perfil/atualizar-password/${user.id}`, {
+        passwordAtual,
+        novaPassword,
+      });
+
+      setMessage(res.data.message);
+      setMessageType(res.data.messageType);
+      console.log(res.data);
+    } catch (error) {
+      setMessage("Erro ao atualizar password.");
+      setMessageType("error");
+      console.error(error);
+    }
+  };
+
   return (
+    <>
+    <div>
+        <Navbar user={user} handleLogout={handleLogout} />
+    </div>
+
+    <br />
+
     <div className={styles.container}>
       <h2>Perfil do Utilizador</h2>
 
@@ -138,9 +172,12 @@ function Perfil() {
           </div>
           <input type="password" placeholder="Confirmar nova password" value={confirmarPassword} onChange={(e) => setConfirmarPassword(e.target.value)} />
         </div>
-        <button>Guardar Password</button>
+        <button className={styles.button} onClick={handleMudarPassword}>Guardar Password</button>
+        <br />
+        <p style={{ color: messageType === "success" ? "green" : "red" }}>{message}</p>
       </div>
     </div>
+    </>
   );
 }
 

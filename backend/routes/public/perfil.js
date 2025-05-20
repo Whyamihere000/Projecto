@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../../db.js';
+import bcrypt from 'bcrypt';
 
 const routerPerfil = express.Router();
 
@@ -94,4 +95,42 @@ routerPerfil.get('/encomendas/:id', (req, res) => {
   });
 });
 
-export default routerPerfil;
+routerPerfil.put('/atualizar-password/:id', (req, res) => {
+  const { id } = req.params;
+  const { passwordAtual, novaPassword } = req.body;
+
+  const buscarUtilizador = `SELECT password FROM utilizadores WHERE id = ?`;
+
+  db.query(buscarUtilizador, [id], async (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ success: false, message: 'Erro no servidor.' });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ success: false, message: 'Utilizador não encontrado.' });
+    }
+
+    const passwordGuardada = results[0].password;
+
+    const corresponde = await bcrypt.compare(passwordAtual, passwordGuardada);
+    if (!corresponde) {
+      return res.status(401).json({ success: false, message: 'Palavra-passe atual incorreta.' });
+    }
+
+    const novaPasswordHash = await bcrypt.hash(novaPassword, 10);
+
+    const atualizarSql = `UPDATE utilizadores SET password = ? WHERE id = ?`;
+
+    db.query(atualizarSql, [novaPasswordHash, id], (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: 'Erro ao atualizar a palavra-passe.' });
+      }
+
+      return res.json({ success: true, message: 'Palavra-passe atualizada com sucesso.', messageType: 'success' });
+    });
+  });
+});
+
+export default routerPerfil
