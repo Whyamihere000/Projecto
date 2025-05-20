@@ -5,6 +5,7 @@ import stylesProdutos from "../css/Produtos.module.css";
 import styles from "../css/Global.module.css";
 import ModalErro from "../componentes/ModalErro";
 import Navbar from "../componentes/Navbar";
+import FiltrosProdutos from "../componentes/Filtragem";
 
 function Produtos() {
   const [user, setUser] = useState(null);
@@ -13,6 +14,7 @@ function Produtos() {
   const [carrinho, setCarrinho] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [pesquisa, setPesquisa] = useState("");
+  const [filtros, setFiltros] = useState({marca: '', precoMax: ''});
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const tipoProduto = queryParams.get("tipo_produto");
@@ -149,13 +151,21 @@ function Produtos() {
         />
 
       <main className={stylesProdutos.mainPublic}>
+        <div>
+          <FiltrosProdutos filtros={filtros} setFiltros={setFiltros} />
+        </div>
         <div className={stylesProdutos.produtosPublic}>
           <h1>Produtos</h1>
           {produtos.length > 0 ? (
             produtos
-              .filter((produto) =>
-                produto.nome.toLowerCase().includes(pesquisa.toLowerCase())
-              )
+    .filter((produto) =>
+      produto.nome.toLowerCase().includes(pesquisa.toLowerCase())
+    )
+    .filter((produto) => {
+      if (filtros.marca && produto.nome_marca !== filtros.marca) return false;
+      if (filtros.precoMax && produto.preco > parseFloat(filtros.precoMax)) return false;
+      return true;
+    })
               .map((produto) => (
               <div
                 key={produto.id}
@@ -191,6 +201,9 @@ function Produtos() {
                 </p>
                 <p>
                   <strong>Tipo de Produto:</strong> {produto.tipo_produto}
+                </p>
+                <p>
+                  <strong>Marca:</strong> {produto.nome_marca}
                 </p>
 
                 {produto.especificacoes && (
