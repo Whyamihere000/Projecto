@@ -96,7 +96,7 @@ function Home() {
         infiniteLoop
         showThumbs={false}
         showStatus={false}
-        interval={4000}
+        interval={5000}
         dynamicHeight={false}
       >
         <div>
