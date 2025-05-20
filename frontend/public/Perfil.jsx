@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
-// import { Link } from "react-router-dom";
-// import styles from "../css/Global.module.css";
-//import stylesPerfil from "../css/Perfil.module.css";
+import styles from "../css/Perfil.module.css";
 
 function Perfil() {
-    const [user, setUser] = useState(null);
-    const [encomendas, setEncomendas] = useState([]);
+  const [user, setUser] = useState(null);
+  const [encomendas, setEncomendas] = useState([]);
+  const [passwordAtual, setPasswordAtual] = useState("");
+  const [novaPassword, setNovaPassword] = useState("");
+  const [confirmarPassword, setConfirmarPassword] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser && storedUser !== 'undefined') {
       const user = JSON.parse(storedUser);
@@ -21,10 +22,9 @@ function Perfil() {
     }
   }, []);
 
-    const fetchDadosUser = async (id) => {
+  const fetchDadosUser = async (id) => {
     try {
       const res = await axios.get(`http://localhost:3001/api/perfil/buscar/${id}`);
-      console.log("Dados do utilizador recebidos:", res.data);
       setUser(res.data);
     } catch (error) {
       console.error("Erro ao carregar dados do utilizador", error);
@@ -34,7 +34,6 @@ function Perfil() {
   const fetchEncomendas = async (id) => {
     try {
       const res = await axios.get(`http://localhost:3001/api/perfil/encomendas/${id}`);
-      console.log("Encomendas recebidas:", res.data);
       setEncomendas(res.data);
     } catch (error) {
       console.error("Erro ao carregar encomendas", error);
@@ -69,55 +68,70 @@ function Perfil() {
     }
   };
 
+  const calcularForcaPassword = (senha) => {
+    let forca = 0;
+    if (senha.length > 5) forca++;
+    if (/[A-Z]/.test(senha)) forca++;
+    if (/[0-9]/.test(senha)) forca++;
+    if (/[^A-Za-z0-9]/.test(senha)) forca++;
+    return forca;
+  };
+
   if (!user) return <p>Carregando...</p>;
 
   const colunas = [
-  { field: 'id', headerName: 'ID Encomenda', width: 120 },
-  { field: 'data', headerName: 'Data', width: 180, },
-  { field: 'total', headerName: 'Total (€)', width: 120, type: 'number' },
-  { field: 'produtos', headerName: 'Produtos', width: 300, flex: 1 },
-];
+    { field: 'id', headerName: 'ID Encomenda', width: 120 },
+    { field: 'data', headerName: 'Data', width: 180 },
+    { field: 'total', headerName: 'Total (€)', width: 120, type: 'number' },
+    { field: 'produtos', headerName: 'Produtos', width: 300, flex: 1 },
+  ];
 
-   return (
-    <div style={{ padding: 20 }}>
+  const forca = calcularForcaPassword(novaPassword);
+  const cores = ["red", "orange", "gold", "green"];
+  const percentuais = ["25%", "50%", "75%", "100%"];
+
+  return (
+    <div className={styles.container}>
       <h2>Perfil do Utilizador</h2>
-      <div style={{ marginBottom: 30 }}>
-        <label>
-          Nome: <input type="text" name="nome" value={user.nome || ''} onChange={handleInputChange} />
-        </label><br />
-        <label>
-          Email: <input type="email" name="email" value={user.email || ''} onChange={handleInputChange} />
-        </label><br />
-        <label>
-          Telefone: <input type="text" name="telefone" value={user.telefone || ''} onChange={handleInputChange} />
-        </label><br />
-        
-        <h3>Morada:</h3>
-        <label>
-          Rua: <input type="text" name="rua" value={user.rua || ''} onChange={handleInputChange} />
-        </label><br />
-        <label>
-          Cidade: <input type="text" name="cidade" value={user.cidade || ''} onChange={handleInputChange} />
-        </label><br />
-        <label>
-          Código Postal: <input type="text" name="codigo_postal" value={user.codigo_postal || ''} onChange={handleInputChange} />
-        </label><br />
-        <label>
-          País: <input type="text" name="pais" value={user.pais || ''} onChange={handleInputChange} />
-        </label><br />
 
-        <button onClick={handleSave}>Guardar Alterações</button>
+      <div className={styles.section}>
+        <h3>Dados Pessoais</h3>
+        <div className={styles.fieldGroup}>
+          <input type="text" name="nome" value={user.nome || ''} onChange={handleInputChange} placeholder="Nome" />
+          <input type="email" name="email" value={user.email || ''} onChange={handleInputChange} placeholder="Email" />
+          <input type="text" name="telefone" value={user.telefone || ''} onChange={handleInputChange} placeholder="Telefone" />
+        </div>
       </div>
 
-      <h2>Encomendas</h2>
-      <div style={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={encomendas}
-          columns={colunas}
-          pageSize={5}
-          getRowId={(row) => row.id}
-          autoHeight
-        />
+      <div className={styles.section}>
+        <h3>Morada</h3>
+        <div className={styles.fieldGroup}>
+          <input type="text" name="rua" value={user.rua || ''} onChange={handleInputChange} placeholder="Rua" />
+          <input type="text" name="cidade" value={user.cidade || ''} onChange={handleInputChange} placeholder="Cidade" />
+          <input type="text" name="codigo_postal" value={user.codigo_postal || ''} onChange={handleInputChange} placeholder="Código Postal" />
+          <input type="text" name="pais" value={user.pais || ''} onChange={handleInputChange} placeholder="País" />
+        </div>
+      </div>
+
+      <button onClick={handleSave}>Guardar Alterações</button>
+
+      <div className={styles.section}>
+        <h3>Alterar Password</h3>
+        <div className={styles.fieldGroup}>
+          <input type="password" placeholder="Password atual" value={passwordAtual} onChange={(e) => setPasswordAtual(e.target.value)} />
+          <input type="password" placeholder="Nova password" value={novaPassword} onChange={(e) => setNovaPassword(e.target.value)} />
+          <div className={styles.passwordStrength}>
+            <div
+              className={styles.strengthBar}
+              style={{
+                width: percentuais[forca - 1] || "0%",
+                backgroundColor: cores[forca - 1] || "#333"
+              }}
+            />
+          </div>
+          <input type="password" placeholder="Confirmar nova password" value={confirmarPassword} onChange={(e) => setConfirmarPassword(e.target.value)} />
+        </div>
+        <button>Guardar Password</button>
       </div>
     </div>
   );
