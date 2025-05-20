@@ -4,7 +4,9 @@
   color: #fff;
   min-height: 100vh;
 }
-
+.bodyHome{
+    background-color: #1d1d20;
+}
 .perfilTitulo {
   font-size: 28px;
   margin-bottom: 20px;

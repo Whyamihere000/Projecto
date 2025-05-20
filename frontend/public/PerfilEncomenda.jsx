@@ -74,8 +74,7 @@ function PerfilEncomendas() {
           autoHeight
           sx={{
             backgroundColor: "#2c2c2c",
-            color: "#fff",
-            borderColor: "#555",
+            color: "#fff",        
           }}
         />
       </div>

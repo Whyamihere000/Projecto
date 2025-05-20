@@ -11,6 +11,13 @@ function Perfil() {
   const [confirmarPassword, setConfirmarPassword] = useState("");
 
   useEffect(() => {
+    document.body.className = styles.bodyHome;
+    return () => {
+      document.body.className = "";
+    };
+  }, []);
+
+  useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser && storedUser !== 'undefined') {
       const user = JSON.parse(storedUser);
