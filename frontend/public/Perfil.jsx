@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../css/Perfil.module.css";
 import Navbar from "../componentes/Navbar";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 function Perfil() {
   const [user, setUser] = useState(null);
@@ -127,7 +127,10 @@ function Perfil() {
   return (
     <>
     <div>
-        <Navbar user={user} handleLogout={handleLogout} />
+        <Navbar
+         user={user} 
+         handleLogout={handleLogout}
+        />
     </div>
 
     <br />
