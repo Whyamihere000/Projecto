@@ -28,6 +28,10 @@ function Produtos() {
     const [mensagem, setMensagem] = useState('');
     const [mensagemTipo, setMensagemTipo] = useState('');
 
+    const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+    const [jsonEspecificacoesEditado, setJsonEspecificacoesEditado] = useState('');
+    const [mostrarModal, setMostrarModal] = useState(false);
+
     useEffect(() => {
         const fetchCategorias = async () => {
             try {
@@ -271,18 +275,13 @@ function Produtos() {
     width: 100,
     renderCell: (params) => (
       <button onClick={() => {
-        const atual = typeof params.value === 'object' ? params.value : JSON.parse(params.row.especificacoes);
-        const novo = prompt('Edita o JSON das especificações:', JSON.stringify(atual, null, 2));
-        if (novo) {
-          try {
-            const jsonEditado = JSON.parse(novo);
-            // Atualiza o estado ou backend conforme necessário
-            atualizarProduto(params.row.id, jsonEditado);
-          } catch {
-            alert('JSON inválido!');
-          }
-        }
-      }}>Editar</button>
+  const atual = typeof params.row.especificacoes === 'object'
+    ? params.row.especificacoes
+    : JSON.parse(params.row.especificacoes);
+  setProdutoSelecionado(params.row);
+  setJsonEspecificacoesEditado(JSON.stringify(atual, null, 2));
+  setMostrarModal(true);
+}}>Editar</button>
     )
   },
         { field: 'descricao', headerName: 'Descrição', width: 130, editable: true },
@@ -338,6 +337,32 @@ function Produtos() {
 
     return (
         <>
+                {mostrarModal && (
+  <div className={stylesProdutos.modalOverlay}>
+    <div className={stylesProdutos.modalContent}>
+      <h3>Editar Especificações (JSON)</h3>
+      <textarea
+        rows={10}
+        cols={50}
+        value={jsonEspecificacoesEditado}
+        onChange={(e) => setJsonEspecificacoesEditado(e.target.value)}
+      />
+      <div className={stylesProdutos.modalButtons}>
+        <button onClick={() => {
+          try {
+            const json = JSON.parse(jsonEspecificacoesEditado);
+            atualizarProduto({ ...produtoSelecionado, especificacoes: json });
+            setMostrarModal(false);
+          } catch {
+            alert('JSON inválido!');
+          }
+        }}>Guardar</button>
+        <button onClick={() => setMostrarModal(false)}>Cancelar</button>
+      </div>
+    </div>
+  </div>
+)}
+
             <nav className={styles.navegacao_admin}>
                 <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
                 <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
