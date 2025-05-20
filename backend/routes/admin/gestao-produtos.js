@@ -168,6 +168,7 @@ routerAdminProdutos.delete('/eliminar/:id', (req, res) => {
 // });
 routerAdminProdutos.get('/buscar', (req, res) => {
   const tipoProduto = req.query.tipo_produto;
+  const pesquisa = req.query.pesquisa;
 
   let sql = `
   SELECT produtos.*, marcas.nome AS nome_marca 
@@ -175,10 +176,20 @@ routerAdminProdutos.get('/buscar', (req, res) => {
   LEFT JOIN marcas ON produtos.id_marca = marcas.id
   `;
   const params = [];
+  const filtros = [];
 
   if (tipoProduto) {
-    sql += ' WHERE produtos.tipo_produto = ?';
+    filtros.push("produtos.tipo_produto = ?");
     params.push(tipoProduto);
+  }
+
+  if (pesquisa) {
+    filtros.push("produtos.nome LIKE ?");
+    params.push(`%${pesquisa}%`);
+  }
+
+  if (filtros.length > 0) {
+    sql += " WHERE " + filtros.join(" AND ");
   }
 
   db.query(sql, params, (err, results) => {

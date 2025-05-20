@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/Global.module.css";
 
 function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
+  const navigate = useNavigate();
+
   // Estado local para o input
   const [inputValue, setInputValue] = useState(pesquisa || "");
 
@@ -13,8 +15,12 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
 
   // Atualiza pesquisa global só ao carregar Enter
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      setPesquisa(inputValue);
+    if (e.key === "Enter" && inputValue.trim() !== "") {
+      navigate(`/produtos?pesquisa=${encodeURIComponent(inputValue.trim())}`);
+    }
+
+    if (e.key === "Enter" && inputValue.trim() === "") {
+      navigate("/produtos");
     }
   };
   return (
@@ -49,12 +55,19 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
           onKeyDown={handleKeyDown}
           className={styles.inputPesquisa}
         />
+        {/* <button onClick={() => {
+          if (inputValue.trim() !== '') {
+            navigate(`/produtos?pesquisa=${encodeURIComponent(inputValue.trim())}`);
+          }
+          }}>
+            Pesquisar
+        </button> */}
       </div>
 
       <div className={styles.navRight}>
         {user ? (
           <>
-            <h4>{user.primeiro_nome}</h4>
+            <Link to={'/perfil'}>{user.primeiro_nome}</Link>
             <button onClick={handleLogout}>Logout</button>
             <Link to="/carrinho" className={styles.navCarrinho}>Carrinho</Link>
           </>

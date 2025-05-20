@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import stylesProdutos from "../css/Produtos.module.css";
-import styles from "../css/Global.module.css";
 import ModalErro from "../componentes/ModalErro";
 import Navbar from "../componentes/Navbar";
 import FiltrosProdutos from "../componentes/Filtragem";
@@ -15,9 +14,11 @@ function Produtos() {
   const [openModal, setOpenModal] = useState(false);
   const [pesquisa, setPesquisa] = useState("");
   const [filtros, setFiltros] = useState({marca: '', precoMax: ''});
+  
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const tipoProduto = queryParams.get("tipo_produto");
+  const pesquisado = queryParams.get("pesquisa");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -33,7 +34,7 @@ function Produtos() {
     const fetchProdutos = async () => {
       try {
         const res = await axios.get("http://localhost:3001/api/produtos/buscar", {
-          params: { tipo_produto: tipoProduto },
+          params: { tipo_produto: tipoProduto, pesquisa: pesquisado },
         });
         setProdutos(res.data);
       } catch (error) {
@@ -57,7 +58,7 @@ function Produtos() {
           setOpenModal(true);
         });
     }
-  }, [user, tipoProduto]);
+  }, [user, tipoProduto, pesquisado]);
 
   const handleAdicionarAoCarrinho = async (produtoID, quantidade = 1) => {
     if (!user) {
