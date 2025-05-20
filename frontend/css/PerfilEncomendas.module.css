@@ -1,0 +1,50 @@
+.perfilContainer {
+  padding: 20px;
+  background-color: #1e1e1e;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.perfilTitulo {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #f5f5f5;
+}
+
+.formulario {
+  margin-bottom: 30px;
+}
+
+.formulario label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.formulario input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #2c2c2c;
+  color: #fff;
+}
+
+.formulario button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #0b84ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.formulario button:hover {
+  background-color: #006fe6;
+}
+
+.encomendasContainer {
+  margin-top: 40px;
+}

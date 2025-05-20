@@ -15,6 +15,7 @@ import AdminCategorias from '../admin/Categorias.jsx';
 import AdminMarcas from '../admin/Marcas.jsx';
 import AdminProdutos from '../admin/AdminProdutos.jsx';
 import AdminUtilizadores from '../admin/Utilizadores.jsx';
+import PerfilEncomendas from '../public/PerfilEncomenda.jsx';
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/admin/marcas" element={<AdminMarcas />} />
             <Route path="/admin/produtos" element={<AdminProdutos />} />
             <Route path="/admin/utilizadores" element={<AdminUtilizadores />} />
+            <Route path="/perfil-encomendas" element={<PerfilEncomendas />} />
         </Routes>
     )
 }
