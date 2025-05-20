@@ -8,13 +8,13 @@ function Carrinho() {
   const [user, setUser] = useState(null);
   const [carrinho, setCarrinho] = useState({ items: [] });
   const [mensagem, setMensagem] = useState("");
-  const [rua, setRua] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [codigoPostal, setCodigoPostal] = useState("");
-  const [pais, setPais] = useState("");
-  const [email, setEmail] = useState(user?.email || "");
-  const [telefone, setTelefone] = useState("");
-  const [nif, setNif] = useState("");
+  // const [rua, setRua] = useState("");
+  // const [cidade, setCidade] = useState("");
+  // const [codigoPostal, setCodigoPostal] = useState("");
+  // const [pais, setPais] = useState("");
+  // const [email, setEmail] = useState(user?.email || "");
+  // const [telefone, setTelefone] = useState("");
+  // const [nif, setNif] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {

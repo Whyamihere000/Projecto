@@ -10,7 +10,7 @@ import RevisaoEncomenda from '../public/RevisaoEncomenda.jsx';
 import SucessoPagamento from '../public/SucessoPagamento.jsx';
 import Encomendas from '../public/Encomendas.jsx';
 import AdminHome from '../admin/AdminHome.jsx';
-// import RotaPrivadaAdmin from '../admin/RotaPrivadaAdmin.jsx';
+import RotaPrivadaAdmin from '../admin/RotaPrivadaAdmin.jsx';
 import AdminCategorias from '../admin/Categorias.jsx';
 import AdminMarcas from '../admin/Marcas.jsx';
 import AdminProdutos from '../admin/AdminProdutos.jsx';
@@ -30,7 +30,7 @@ function App() {
             <Route path="/sucesso-pagamento" element={<SucessoPagamento />} />
             <Route path="/encomendas" element={<Encomendas />} />
             <Route path="/admin" element={<AdminHome />} />
-            {/* <Route path="/admin/*" element={<RotaPrivadaAdmin />} /> */}
+            <Route path="/admin/*" element={<RotaPrivadaAdmin />} />
             <Route path="/admin/categorias" element={<AdminCategorias />} />
             <Route path="/admin/marcas" element={<AdminMarcas />} />
             <Route path="/admin/produtos" element={<AdminProdutos />} />
