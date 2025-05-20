@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import stylesProdutos from "../css/Produtos.module.css";
 import ModalErro from "../componentes/ModalErro";
 import Navbar from "../componentes/Navbar";
@@ -179,7 +179,7 @@ function Produtos() {
                   flexDirection: "column",
                 }}
               >
-                <h3>{produto.nome}</h3>
+                <Link to={`/produto/${produto.id}`}>{produto.nome}</Link>
 
                 {produto.imagem_url && (
                   <img
