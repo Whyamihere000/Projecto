@@ -221,4 +221,26 @@ routerAdminProdutos.get('/buscar/novidade', (req, res) => {
   });
 });
 
+// GET /api/produtos/:id
+routerAdminProdutos.get('/:id', (req, res) => {
+  const id = req.params.id;
+
+  const sql = `
+    SELECT produtos.*, marcas.nome AS nome_marca
+    FROM produtos
+    LEFT JOIN marcas ON produtos.id_marca = marcas.id
+    WHERE produtos.id = ?
+  `;
+
+  db.query(sql, [id], (err, results) => {
+    if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
+
+    if (results.length === 0) {
+      return res.status(404).json({ success: false, message: 'Produto não encontrado' });
+    }
+
+    res.json(results[0]);
+  });
+});
+
 export default routerAdminProdutos;
