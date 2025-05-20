@@ -1,12 +1,21 @@
 .login {
-  background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(0,1px);
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   margin-top: 100px;
   transition: all 0.3s ease-in-out;
 }
-
+.bodyHome {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("https://honeywellaircomfort.com/cdn/shop/articles/gaming_system_cooling_1024x1024.jpg?v=1741681188");
+  background-size: cover;
+  background-position: center;
+}
 .login h1 {
   font-size: 2rem;
   margin-bottom: 20px;
@@ -80,4 +89,46 @@ link{
   color: #007bff;
   text-decoration: none;
   align-items: center;
+}
+
+/* Checklist */
+
+.checklist {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
+.checklist li {
+  display: flex;
+  align-items: center; 
+  margin: 5px; 
+  position: relative;
+  padding-left: 25px;
+}
+.checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #127900; /* Cor da bola (pode ser qualquer cor) */
+}
+
+.checklist li.invalid::before {
+  background-color: #000000; /* Cor para inválido */
+}
+.valid {
+  color: #127900;
+}
+
+.invalid {
+  color: #000000;
 }
