@@ -4,6 +4,9 @@ import axios from 'axios';
 import styles from '../css/Home.module.css';
 import stylesGlobal from '../css/Global.module.css';
 import Navbar from '../componentes/Navbar';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+
 
 function Home() {
   const [user, setUser] = useState(null);
@@ -86,6 +89,30 @@ function Home() {
   return (
     <div className={styles.home}>
       <Navbar user={user} handleLogout={handleLogout} />
+
+     <section className={styles.carrosselContainer}>
+      <Carousel
+        autoPlay
+        infiniteLoop
+        showThumbs={false}
+        showStatus={false}
+        interval={4000}
+        dynamicHeight={false}
+      >
+        <div>
+          <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 1" />
+        </div>
+        <div>
+          <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 2" />
+        </div>
+        <div>
+          <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 3" />
+        </div>
+      </Carousel>
+    </section>
+
+
+
 
       <main className={styles.mainHome}>
         <section className={styles.secaoProdutos}>

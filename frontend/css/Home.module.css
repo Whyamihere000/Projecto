@@ -1,5 +1,7 @@
 .bodyHome {
     background-color: #1A1A1D;
+     background-image: url(" https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/graphic-cards/50-series/5070-family/geforce-rtx-5070-banner-xl-offset-desktop.jpg");
+      background-repeat: no-repeat;  
 }
 
 .home {
@@ -82,4 +84,12 @@
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+}
+.carrosselContainer {
+  max-width: 1280px;
+  margin: 0 auto 40px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
