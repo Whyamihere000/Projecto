@@ -55,7 +55,7 @@ function Home() {
     <div className={styles.listaProdutos}>
       {produtos.map((produto) => (
         <div key={produto.id} className={styles.cardProduto}>
-          <h3>{produto.nome}</h3>
+          <Link to={`/produto/${produto.id}`}>{produto.nome}</Link>
           {produto.imagem_url && (
           <img
             src={produto.imagem_url.startsWith("http://") || produto.imagem_url.startsWith("https://")
