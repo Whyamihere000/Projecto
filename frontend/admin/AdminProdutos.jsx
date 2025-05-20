@@ -227,30 +227,13 @@ function Produtos() {
         { field: 'imagem_url', headerName: 'Imagem', width: 200, 
             renderCell: (params) => (
                 <img
-                    src={params.row.imagem_url ? `http://localhost:3001/${params.row.imagem_url}` : "https://via.placeholder.com/50"}
+                    src={params.row.imagem_url ? `http://localhost:3001/${params.row.imagem_url}` : {imagem_url}}
                     style={{ width: '200px', height: '200px' }}
                 />
             )
         },
         { field: 'tipo_produto', headerName: 'Tipo de Produto', width: 150 },
-        // { field: 'especificacoes', headerName: 'Especificações', width: 200, 
-        //     renderCell: (params) => {
-        //         try {
-        //             const especificacoes = JSON.parse(params.row.especificacoes);
-        //             return (
-        //                 <div>
-        //                     {Object.keys(especificacoes).map((key, index) => (
-        //                         <div key={index}>{key}: {especificacoes[key]}</div>
-        //                     ))}
-        //                 </div>
-        //             );
-        //         } catch (e) {
-        //             return <div>Erro nas especificações</div>;
-        //         }
-        //     }
-        // },
-        {
-    field: 'especificacoes',
+        {field: 'especificacoes',
     headerName: 'Especificações',
     width: 300,
     editable: false,
@@ -462,6 +445,15 @@ function Produtos() {
                         getRowId={(row) => row.id}
                         getRowHeight={() => 'auto'}
                         rowHeight={null}
+                        sx={{
+    '& .MuiDataGrid-columnHeaders': {
+      '& .MuiDataGrid-columnHeader': {
+        backgroundColor: '#1976d2',
+        color: '#ffffff',
+        fontWeight: 'bold',
+      },
+    },
+  }}
                     />
                 </div>
             </div>
