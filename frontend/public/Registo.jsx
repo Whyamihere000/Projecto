@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styles from '../css/Registo.module.css'
+import Navbar from '../componentes/Navbar'
 
 function Registo() {
   const [primeiro_nome, setPrimeiroNome] = useState('')
@@ -87,6 +88,8 @@ function Registo() {
 
 
     <div className={styles.container}>
+      <Navbar user={null} handleLogout={null} pesquisa={null} setPesquisa={null} />
+
       <h1 className={styles.title}>Registo</h1>
 
       <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} className={styles.input} />

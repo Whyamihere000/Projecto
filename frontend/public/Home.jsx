@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../css/Home.module.css';
 import stylesGlobal from '../css/Global.module.css';
+import Navbar from '../componentes/Navbar';
 
 function Home() {
   const [user, setUser] = useState(null);
@@ -84,40 +85,7 @@ function Home() {
 
   return (
     <div className={styles.home}>
-      <nav className={stylesGlobal.nav}>
-        
-        <div className={stylesGlobal.navLeft}>
-          <img src="../icons/logo.png" alt="Logo" className={stylesGlobal.logoIcon} />
-          <Link to="/" className={stylesGlobal.navHome}>Home</Link>
-          <Link to="/produtos" className={stylesGlobal.navProdutos}>Produtos</Link>
-          <div className={stylesGlobal.dropdown}>
-            <button className={stylesGlobal.dropbtn}>Componentes▾</button>
-            <div className={stylesGlobal.dropdownContent}>
-              <Link to="/produtos?tipo_produto=Memória">Memória</Link>
-              <Link to="/produtos?tipo_produto=Processador">Processador</Link>
-              <Link to="/produtos?tipo_produto=Placa Gráfica">Placa Gráfica</Link>
-              <Link to="/produtos?tipo_produto=MotherBoard">MotherBoard</Link>
-              <Link to="/produtos?tipo_produto=Armazenamento">Armazenamento</Link>
-              <Link to="/produtos?tipo_produto=Fonte de Alimentação">Fonte de Alimentação</Link>
-              <Link to="/produtos?tipo_produto=Caixa">Caixas</Link>
-              <Link to="/produtos?tipo_produto=Monitor">Monitor</Link>
-              <Link to="/produtos?tipo_produto=Periféricos">Periféricos</Link>
-            </div>
-          </div>
-        </div>
-
-        <div className={stylesGlobal.navRight}>
-          {user ? (
-            <>
-              <Link to="/perfil" className={stylesGlobal.navPerfil}>{user.primeiro_nome}</Link>
-              <button onClick={handleLogout}>Logout</button>
-              <Link to="/carrinho" className={stylesGlobal.navCarrinho}>Carrinho</Link>
-            </>
-          ) : (
-            <Link to="/login" className={stylesGlobal.navLogin}>Login</Link>
-          )}
-        </div>
-      </nav>
+      <Navbar user={user} handleLogout={handleLogout} />
 
       <main className={styles.mainHome}>
         <section className={styles.secaoProdutos}>

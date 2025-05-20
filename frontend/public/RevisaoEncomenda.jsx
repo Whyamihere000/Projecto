@@ -19,6 +19,21 @@ function RevisaoEncomenda() {
   const idEncomenda = location.state?.idEncomenda;
 
   useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser && storedUser !== 'undefined') {
+      const user = JSON.parse(storedUser);
+      if (user.tipo_utilizador === 'cliente') {
+        setUser(user);
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
+
+  useEffect(() => {
     if (idEncomenda) {
       axios.get(`http://localhost:3001/api/encomendas/detalhes/${idEncomenda}`)
         .then(response => setEncomenda(response.data))
@@ -188,6 +203,8 @@ function RevisaoEncomenda() {
 
   return (
     <div className={styles.revisaoContainer}>
+      <Navbar user={user} handleLogout={handleLogout} />
+
       <h1 className={styles.revisaoTitulo}>Rever e Pagar Encomenda</h1>
       {mensagem && <p className={styles.revisaoMensagem}>{mensagem}</p>}
 

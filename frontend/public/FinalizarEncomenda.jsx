@@ -3,8 +3,10 @@ import axios from "axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import styles from "../css/FinalizarEncomenda.module.css";
+import Navbar from "../componentes/Navbar";
 
 function FinalizarEncomenda() {
+  const [user, setUser] = useState(null);
   const [form, setForm] = useState({
     rua: "",
     cidade: "",
@@ -18,6 +20,21 @@ function FinalizarEncomenda() {
   const navigate = useNavigate();
   const location = useLocation();
   const idCarrinho = location.state?.idCarrinho;
+  
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser && storedUser !== 'undefined') {
+      const user = JSON.parse(storedUser);
+      if (user.tipo_utilizador === 'cliente') {
+        setUser(user);
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -67,6 +84,8 @@ function FinalizarEncomenda() {
 
   return (
     <div className={styles.wrapper}>
+      <Navbar user={user} handleLogout={handleLogout}/>
+
       <div className={styles.box}>
         <h1>Finalizar Encomenda</h1>
         <form onSubmit={handleSubmit}>

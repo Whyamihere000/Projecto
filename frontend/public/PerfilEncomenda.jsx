@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import styles from "../css/PerfilEncomendas.module.css";
+import Navbar from "../componentes/Navbar";
 
 function PerfilEncomendas() {
   const [user, setUser] = useState(null);
@@ -18,6 +19,11 @@ function PerfilEncomendas() {
       }
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
 
   const fetchDadosUser = async (id) => {
     try {
@@ -63,7 +69,8 @@ function PerfilEncomendas() {
   ];
 
   return (
-    <div className={styles.perfilContainer}>    
+    <div>    
+      <Navbar user={user} handleLogout={handleLogout} />
       <div className={styles.encomendasContainer}>
         <h2 className={styles.perfilTitulo}>Encomendas</h2>
         <DataGrid
@@ -71,11 +78,17 @@ function PerfilEncomendas() {
           columns={colunas}
           pageSize={5}
           getRowId={(row) => row.id}
-          autoHeight
+          getRowHeight={() => "auto"}
+          rowHeight={null}
           sx={{
-            backgroundColor: "#2c2c2c",
-            color: "#fff",        
-          }}
+    '& .MuiDataGrid-columnHeaders': {
+      '& .MuiDataGrid-columnHeader': {
+        backgroundColor: '#1976d2',
+        color: '#ffffff',
+        fontWeight: 'bold',
+      },
+    },
+  }}
         />
       </div>
     </div>
