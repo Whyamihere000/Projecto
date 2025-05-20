@@ -169,11 +169,15 @@ routerAdminProdutos.delete('/eliminar/:id', (req, res) => {
 routerAdminProdutos.get('/buscar', (req, res) => {
   const tipoProduto = req.query.tipo_produto;
 
-  let sql = 'SELECT * FROM produtos';
+  let sql = `
+  SELECT produtos.*, marcas.nome AS nome_marca 
+  FROM produtos 
+  LEFT JOIN marcas ON produtos.id_marca = marcas.id
+  `;
   const params = [];
 
   if (tipoProduto) {
-    sql += ' WHERE tipo_produto = ?';
+    sql += ' WHERE produtos.tipo_produto = ?';
     params.push(tipoProduto);
   }
 
