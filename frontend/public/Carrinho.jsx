@@ -9,14 +9,6 @@ function Carrinho() {
   const [user, setUser] = useState(null);
   const [carrinho, setCarrinho] = useState({ items: [] });
   const [mensagem, setMensagem] = useState("");
-  const [produtos, setProdutos] = useState([]);
-  // const [rua, setRua] = useState("");
-  // const [cidade, setCidade] = useState("");
-  // const [codigoPostal, setCodigoPostal] = useState("");
-  // const [pais, setPais] = useState("");
-  // const [email, setEmail] = useState(user?.email || "");
-  // const [telefone, setTelefone] = useState("");
-  // const [nif, setNif] = useState("");
   const navigate = useNavigate();
 
 
@@ -134,6 +126,7 @@ const handleLogout = () => {
     localStorage.removeItem('user');
     window.location.reload();
   };
+
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
@@ -157,7 +150,7 @@ const handleLogout = () => {
                             src={
                               item.imagem_url.startsWith("http://") ||
                               item.imagem_url.startsWith("https://")
-                                ? produto.imagem_url
+                                ? item.imagem_url
                                 : `http://localhost:3001${item.imagem_url}`
                             }
                             alt={item.nome}
