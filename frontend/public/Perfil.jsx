@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../css/Perfil.module.css";
 import Navbar from "../componentes/Navbar";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, Link } from "react-router-dom";
 
 function Perfil() {
   const [user, setUser] = useState(null);
@@ -178,6 +178,8 @@ function Perfil() {
         <button className={styles.button} onClick={handleMudarPassword}>Guardar Password</button>
         <br />
         <p style={{ color: messageType === "success" ? "green" : "red" }}>{message}</p>
+        <br />
+        <Link to="/perfil-encomendas">Ver as minhas encomendas</Link>
       </div>
     </div>
     </>

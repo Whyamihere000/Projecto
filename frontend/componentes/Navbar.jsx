@@ -28,7 +28,7 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
       <div className={styles.navLeft}>
         <img src="../icons/logo.png" alt="Logo" className={styles.logoIcon} />
         <Link to="/" className={styles.navHome}>Home</Link>
-        <Link to="/produtos" className={styles.navProdutos}>Produtos</Link>
+        {/* <Link to="/produtos" className={styles.navProdutos}>Produtos</Link> */}
 
         <div className={styles.dropdown}>
           <Link to="/produtos"><button className={styles.dropbtn}>Produtos ▾</button></Link>
