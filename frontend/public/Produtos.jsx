@@ -183,6 +183,7 @@ function Produtos() {
                       textDecoration: "none", color: "inherit", border: "1px solid #ccc", padding: "10px", width: "250px", margin: "10px", display: "flex", flexDirection: "column",
                     }}>
                         <h3>{produto.nome}</h3>
+                        <p>{produto.sku}</p>
 
                         {produto.imagem_url && (
                           <img
