@@ -40,6 +40,8 @@ function Carrinho() {
             items: items,
             total: total
           });
+
+          setMensagem("");
         })
         .catch((error) => {
           console.log(error);
@@ -136,7 +138,11 @@ const handleLogout = () => {
       <main className={stylesCarrinho.mainCarrinho}>
         <br />
         <h1>Carrinho</h1>
-        {mensagem && <p>{mensagem}</p>}
+        {mensagem && (
+  <p style={{ color: mensagem.includes("Erro") ? "red" : "green" }}>
+    {mensagem}
+  </p>
+)}
 
         {carrinho ? (
           <div>
