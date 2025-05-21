@@ -1,58 +1,71 @@
 .bodyHomePublic {
     background-color: #1A1A1D;
+    min-height: 100vh;
+    
 }
 
-.container{
+.container {
     font-family: Arial, sans-serif;
-    margin-top: 10px;
+    padding: 20px 50px;
     display: flex;
     flex-direction: row;
+    gap: 40px;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
-    margin-left: 100px;
+    box-sizing: border-box;
 }
 
 .mainPublic {
     display: flex;
-    gap: 20px;
-    padding: 20px;
-    margin-top: 60px;
+    flex-direction: row;
+    gap: 30px;
+    margin-top: 50px;
+    width: 100%;
 }
 
 .filtrosContainer {
-  flex: 1;
-  max-width: 250px;
+    flex: 1;
+    display: flex;
+    max-width: 250px;
+    background-color: #2D2D30;
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
 }
 
 .produtosPublic {
-  flex: 3;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+    flex: 4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
 }
 
 .produtosPublic > div {
     background-color: #ffffff;
     border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    width: calc(25% - 20px); /* 25% para 4 por linha, menos o gap */
-    transition: transform 0.3s;
+    border-radius: 10px;
+    padding: 15px;
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
     box-sizing: border-box;
 }
 
 .produtosPublic > div:hover {
     transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .produtosPublic h1 {
+  
     font-size: 2rem;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 20px;
-    width: 100%; /* Título ocupa toda a linha */
+    width: 100%;
 }
 
 .produtosPublic h3 {
@@ -62,13 +75,15 @@
 }
 
 .produtosPublic button {
+  
     background-color: #007bff;
     color: #fff;
     border: none;
-    padding: 10px 15px;
+    padding: 10px 12px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color .2s;
+    font-weight: bold;
 }
 
 .produtosPublic button:hover {
@@ -76,32 +91,60 @@
 }
 
 .modalOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modalContent {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 500px;
-  max-width: 90%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    max-width: 90%;
 }
 
 .modalButtons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
+
 .cardLink {
-  text-decoration: none;
-  color: inherit;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Responsivo para tablets e telemóveis */
+@media (max-width: 1200px) {
+    .produtosPublic > div {
+        width: calc(33.33% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .mainPublic {
+        flex-direction: column;
+    }
+
+    .filtrosContainer {
+        max-width: 100%;
+    }
+
+    .produtosPublic > div {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .produtosPublic > div {
+        width: 100%;
+    }
 }
