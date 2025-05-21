@@ -17,6 +17,8 @@ import AdminProdutos from '../admin/AdminProdutos.jsx';
 import AdminUtilizadores from '../admin/Utilizadores.jsx';
 import PerfilEncomendas from '../public/PerfilEncomenda.jsx';
 import ProdutoDetalhe from '../componentes/ProdutoDetalhe.jsx';
+import MostrarEncomendas from '../admin/MostrarEncomendas.jsx';
+import MostrarPagamentos from '../admin/MostrarPagamentos.jsx';
 
 function App() {
     return (
@@ -39,6 +41,8 @@ function App() {
             <Route path="/admin/utilizadores" element={<AdminUtilizadores />} />
             <Route path="/perfil-encomendas" element={<PerfilEncomendas />} />
             <Route path="/produto/:id" element={<ProdutoDetalhe />} />
+            <Route path="/admin/mostrar-encomendas" element={<MostrarEncomendas />} />
+            <Route path="/admin/mostrar-pagamentos" element={<MostrarPagamentos />} />
         </Routes>
     )
 }

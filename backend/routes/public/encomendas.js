@@ -75,6 +75,58 @@ routerEncomendas.post('/nova', (req, res) => {
   });
 });
 
+// Listar todas as encomendas
+routerEncomendas.get('/tudo', (req, res) => {
+  db.query(
+    `SELECT 
+  e.id AS id_encomenda,
+  u.primeiro_nome,
+  u.ultimo_nome,
+  p.nome AS nome_produto,
+  ie.quantidade,
+  ie.preco_unitario,
+  e.total,
+  e.estado,
+  e.data
+FROM encomendas e
+JOIN utilizadores u ON e.id_utilizador = u.id
+JOIN items_encomendas ie ON ie.id_encomenda = e.id
+JOIN produtos p ON p.id = ie.id_produto
+ORDER BY e.data DESC`, 
+    (err, results) => {
+      if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar encomendas.' });
+
+      res.json(results);
+    }
+  )  
+})
+
+// Listar pagamentos
+routerEncomendas.get('/pagamentos', (req, res) => {
+  db.query(
+    `SELECT 
+      p.id AS id_pagamento,
+      p.metodo,
+      p.estado,
+      p.referencia,
+      p.data_pagamento,
+      p.nome_cartao,
+      p.cartao_tipo,
+      p.cartao_token,
+      e.id AS id_encomenda,
+      u.primeiro_nome,
+      u.ultimo_nome
+    FROM pagamentos p
+    JOIN encomendas e ON p.id_encomenda = e.id
+    JOIN utilizadores u ON e.id_utilizador = u.id
+    ORDER BY p.data_pagamento DESC`,
+    (err, results) => {
+      if (err) return res.status(500).json({ message: 'Erro ao carregar pagamentos.' });
+      res.json(results);
+    }
+  );
+});
+
 // Listar encomendas de um utilizador
 routerEncomendas.get('/:id_utilizador', (req, res) => {
   const { id_utilizador } = req.params;

@@ -351,6 +351,7 @@ function Produtos() {
                 <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
                 <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
                 <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
+                <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
                 <button className={styles.logout}>Logout</button>
             </nav>
 
