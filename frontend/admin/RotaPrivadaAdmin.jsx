@@ -1,15 +1,17 @@
 import { Navigate } from 'react-router-dom';
 
 function RotaPrivadaAdmin({ children }) {
-  const user = JSON.parse(localStorage.getItem('user'));
+  let user;
 
-  // Se não estiver autenticado ou não for admin, redirecionar para página inicial
-  if (!user || user.tipo_utilizador !== 'admin') {
-    return <Navigate to="/" replace />;
+  try {
+    user = JSON.parse(localStorage.getItem('user'));
+  } catch (err) {
+    user = null;
   }
 
-  // Se for admin, mostrar os filhos (ex: o painel admin)
-  return children;
+  const isAdmin = user?.tipo_utilizador === 'admin';
+
+  return isAdmin ? children : <Navigate to="/" replace />;
 }
 
 export default RotaPrivadaAdmin;

@@ -44,6 +44,7 @@ function Categorias() {
                 <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
                 <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
                 <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
+                <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
                 <button className={styles.logout}>Logout</button>
             </nav>
 

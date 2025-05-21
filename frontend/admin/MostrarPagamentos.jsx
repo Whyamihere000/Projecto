@@ -52,6 +52,7 @@ function MostrarPagamentos() {
                 <Link to="/admin/produtos" className={stylesNav.link}>Produtos</Link>
                 <Link to="/admin/utilizadores" className={stylesNav.link}>Utilizadores</Link>
                 <Link to="/admin/mostrar-encomendas" className={stylesNav.link}>Encomendas</Link>
+                <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
                 <button className={stylesNav.logout}>Logout</button>
             </nav>
     <div className={styles.container}>
