@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import stylesCarrinho from "../css/Carrinho.module.css";
 import styles from "../css/Global.module.css";
+import Navbar from "../componentes/Navbar";
 
 function Carrinho() {
   const [user, setUser] = useState(null);
@@ -48,44 +49,50 @@ function Carrinho() {
   }, [user]);
 
   const handleRemoverItem = async (id_produto) => {
-    if (!carrinho) {
-      setMensagem("Carrinho não encontrado.");
-      return;
-    }
+  if (!carrinho) {
+    setMensagem("Carrinho não encontrado.");
+    return;
+  }
 
-    try {
-      const updateCarrinho = carrinho.items.filter(
-        (item) => item.id_produto !== id_produto
-      );
-      const total = updateCarrinho.reduce(
-        (acc, item) => acc + item.quantidade * item.preco,
-        0
-      );
+  try {
+    console.log("Remover item:", {
+      id_carrinho: carrinho.id,
+      id_produto,
+    });
 
-      console.log("Remover item:", {
+    // Primeiro remove do backend
+    const resposta = await axios.post(
+      `http://localhost:3001/api/carrinhos/remover`,
+      {
         id_carrinho: carrinho.id,
         id_produto,
-      });      
+      }
+    );
 
-      setCarrinho({ ...carrinho, items: updateCarrinho, total: total });
+    console.log("Resposta do servidor:", resposta.data);
 
-      const resposta = await axios.post(
-        `http://localhost:3001/api/carrinhos/remover`,
-        {
-          id_carrinho: carrinho.id,
-          id_produto,
-        }
-      );
+    // Depois atualiza o estado local
+    const updateCarrinho = carrinho.items.filter(
+      (item) => item.id_produto !== id_produto
+    );
+    const total = updateCarrinho.reduce(
+      (acc, item) => acc + item.quantidade * item.preco,
+      0
+    );
 
-      console.log("Resposta do servidor:", resposta.data);      
+    setCarrinho({ ...carrinho, items: updateCarrinho, total });
 
-      await axios.put(`http://localhost:3001/api/carrinhos/${carrinho.id}`, {
-        total,
-      });
-    } catch (error) {
-      console.error("Erro ao remover item do carrinho:", error);
-      setMensagem("Erro ao remover item do carrinho.");
-    }
+    // Atualiza o total no backend (opcional, dependendo do design do teu sistema)
+    await axios.put(`http://localhost:3001/api/carrinhos/${carrinho.id}`, {
+      total,
+    });
+
+    setMensagem(""); // Limpa a mensagem de erro se tudo correr bem
+
+  } catch (error) {
+    console.error("Erro ao remover item do carrinho:", error);
+    setMensagem("Erro ao remover item do carrinho.");
+  }
 };
 
   // const handleFinalizarCompra = async () => {
@@ -111,34 +118,20 @@ function Carrinho() {
   if (!carrinho || carrinho.items.length === 0) {
     setMensagem("Carrinho vazio.");
     return;
-  }
+  }  
 
   // Passar o id do carrinho para a página de finalizar encomenda
-  navigate("/finalizar-encomenda", { state: { idCarrinho: carrinho.id } });
+  navigate("/finalizar-encomenda", { state: { idCarrinho: carrinho.id } });  
 };  
+
+const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
+  };
 
   return (
     <>
-      <nav className={styles.nav}>
-        <div className={styles.navLeft}>
-          <Link to="/" className={styles.navHome}>Home</Link>
-          <Link to="/produtos" className={styles.navProdutos}>Produtos</Link>
-        </div>
-        <div className={styles.navRight}>
-          {user ? (
-            <>
-              <p>{user ? `${user.primeiro_nome}` : ''}</p>
-              <p>
-                <button onClick={() => { localStorage.removeItem('user'); window.location.reload(); }}>Logout</button>
-              </p>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className={styles.navLogin}>Login</Link>
-            </>
-          )}
-        </div>
-      </nav>
+      <Navbar user={user} handleLogout={handleLogout} />
 
       <main className={stylesCarrinho.mainCarrinho}>
         <br />
@@ -158,7 +151,7 @@ function Carrinho() {
                   </div>
                 ))}
                 <div className={stylesCarrinho.total}>
-                  <p><strong>Total: {carrinho.total}€</strong></p>
+                  <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
                   <button onClick={handleFinalizarCompra}>Finalizar Compra</button>
                 </div>
               </div>

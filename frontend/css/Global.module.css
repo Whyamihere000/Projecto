@@ -71,9 +71,23 @@ body.bodyHome {
     align-items: center;
 }
 
-.navLogin, .navCarrinho, .navProdutos, .navHome, .navNome {    
+.navLogin, .navCarrinho, .navProdutos, .navHome, .navNome, .navPerfil {    
     color: #ffffff;
     text-decoration: none;
+    padding: 10px;
+    border-radius: 5px
+}
+
+.navPerfil:hover {
+  background-color: rgb(114, 21, 18);
+  padding: 10px;
+  border-radius: 5px
+}
+
+.navCarrinho:hover {
+  background-color: rgb(155, 106, 0);
+  padding: 10px;
+  border-radius: 5px
 }
 
 .navLogout {
