@@ -7,7 +7,6 @@ import Navbar from '../componentes/Navbar';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
-
 function Home() {
   const [user, setUser] = useState(null);
   const [produtosDestaque, setProdutosDestaque] = useState([]);
@@ -54,34 +53,36 @@ function Home() {
   const renderProdutos = (produtos) => (
     <div className={styles.listaProdutos}>
       {produtos.map((produto) => (
-        <div key={produto.id} className={styles.cardProduto}>
-          <Link to={`/produto/${produto.id}`}>{produto.nome}</Link>
-          {produto.imagem_url && (
-          <img
-            src={produto.imagem_url.startsWith("http://") || produto.imagem_url.startsWith("https://")
-            ? produto.imagem_url
-            : `http://localhost:3001${produto.imagem_url}`
-            }
-              alt={produto.nome}
-              style={{
-              width: "100%",
-              height: "auto",
-              marginBottom: "10px",
-            }}
-          />
-          )}
-          <p><strong>Preço:</strong> {produto.preco}€</p>
-          {produto.especificacoes && (
-            <div>
-              <h4>Detalhes:</h4>
-              <ul>
-                {Object.entries(produto.especificacoes).map(([key, value]) => (
-                  <li key={key}><strong>{key}:</strong> {value}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
+        <Link key={produto.id} to={`/produto/${produto.id}`} className={styles.cardLink}>
+          <div className={styles.cardProduto}>
+            <h3>{produto.nome}</h3>
+            {produto.imagem_url && (
+              <img
+                src={produto.imagem_url.startsWith("http://") || produto.imagem_url.startsWith("https://")
+                  ? produto.imagem_url
+                  : `http://localhost:3001${produto.imagem_url}`
+                }
+                alt={produto.nome}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  marginBottom: "10px",
+                }}
+              />
+            )}
+            <p><strong>Preço:</strong> {produto.preco}€</p>
+            {produto.especificacoes && (
+              <div>
+                <h4>Detalhes:</h4>
+                <ul>
+                  {Object.entries(produto.especificacoes).map(([key, value]) => (
+                    <li key={key}><strong>{key}:</strong> {value}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </Link>
       ))}
     </div>
   );
@@ -90,29 +91,26 @@ function Home() {
     <div className={styles.home}>
       <Navbar user={user} handleLogout={handleLogout} />
 
-     <section className={styles.carrosselContainer}>
-      <Carousel
-        autoPlay
-        infiniteLoop
-        showThumbs={false}
-        showStatus={false}
-        interval={5000}
-        dynamicHeight={false}
-      >
-        <div>
-          <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 1" />
-        </div>
-        <div>
-          <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 2" />
-        </div>
-        <div>
-          <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 3" />
-        </div>
-      </Carousel>
-    </section>
-
-
-
+      <section className={styles.carrosselContainer}>
+        <Carousel
+          autoPlay
+          infiniteLoop
+          showThumbs={false}
+          showStatus={false}
+          interval={5000}
+          dynamicHeight={false}
+        >
+          <div>
+            <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 1" />
+          </div>
+          <div>
+            <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 2" />
+          </div>
+          <div>
+            <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 3" />
+          </div>
+        </Carousel>
+      </section>
 
       <main className={styles.mainHome}>
         <section className={styles.secaoProdutos}>

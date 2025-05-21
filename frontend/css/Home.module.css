@@ -92,3 +92,9 @@
   overflow: hidden;
   position: relative;
 }
+.cardLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+
+}
