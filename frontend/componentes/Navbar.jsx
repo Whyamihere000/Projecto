@@ -31,7 +31,7 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
         <Link to="/produtos" className={styles.navProdutos}>Produtos</Link>
 
         <div className={styles.dropdown}>
-          <Link to="/produtos"><button className={styles.dropbtn}>Componentes ▾</button></Link>
+          <Link to="/produtos"><button className={styles.dropbtn}>Produtos ▾</button></Link>
           <div className={styles.dropdownContent}>
             <Link to="/produtos?tipo_produto=Memória">Memória</Link>
             <Link to="/produtos?tipo_produto=Processador">Processador</Link>
