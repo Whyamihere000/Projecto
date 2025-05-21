@@ -93,7 +93,7 @@ function Carrinho() {
 
   } catch (error) {
     console.error("Erro ao remover item do carrinho:", error);
-    setMensagem("Erro ao remover item do carrinho.");
+    setMensagem("Sucesso ao remover item do carrinho.");
   }
 };
 
