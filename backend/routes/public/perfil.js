@@ -10,6 +10,7 @@ routerPerfil.get('/buscar/:id', (req, res) => {
 
   const sql = `
     SELECT 
+      id,
       CONCAT(primeiro_nome, ' ', ultimo_nome) AS nome,
       email, 
       telefone, 
@@ -95,11 +96,12 @@ routerPerfil.get('/encomendas/:id', (req, res) => {
   });
 });
 
+// Mudar Password
 routerPerfil.put('/atualizar-password/:id', (req, res) => {
   const { id } = req.params;
   const { passwordAtual, novaPassword } = req.body;
 
-  const buscarUtilizador = `SELECT password FROM utilizadores WHERE id = ?`;
+  const buscarUtilizador = `SELECT password_hash FROM utilizadores WHERE id = ?`;
 
   db.query(buscarUtilizador, [id], async (err, results) => {
     if (err) {
@@ -111,7 +113,7 @@ routerPerfil.put('/atualizar-password/:id', (req, res) => {
       return res.status(404).json({ success: false, message: 'Utilizador não encontrado.' });
     }
 
-    const passwordGuardada = results[0].password;
+    const passwordGuardada = results[0].password_hash;
 
     const corresponde = await bcrypt.compare(passwordAtual, passwordGuardada);
     if (!corresponde) {
@@ -120,7 +122,7 @@ routerPerfil.put('/atualizar-password/:id', (req, res) => {
 
     const novaPasswordHash = await bcrypt.hash(novaPassword, 10);
 
-    const atualizarSql = `UPDATE utilizadores SET password = ? WHERE id = ?`;
+    const atualizarSql = `UPDATE utilizadores SET password_hash = ? WHERE id = ?`;
 
     db.query(atualizarSql, [novaPasswordHash, id], (err, results) => {
       if (err) {
@@ -130,6 +132,28 @@ routerPerfil.put('/atualizar-password/:id', (req, res) => {
 
       return res.json({ success: true, message: 'Palavra-passe atualizada com sucesso.', messageType: 'success' });
     });
+  });
+});
+
+// favoritos
+routerPerfil.get('/novoFavorito/:id_utilizador', (req, res) => {
+  const { id_utilizador } = req.params;
+
+  db.query('INSERT INTO favoritos (id_utilizador, id_produto) VALUES (?, ?)', [id_utilizador], (err, results) => {
+    if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar favoritos.' });
+
+    res.json(results);
+  });
+});
+
+// favoritos
+routerPerfil.get('/favoritos/:id_utilizador', (req, res) => {
+  const { id_utilizador } = req.params;
+
+  db.query('SELECT * FROM favoritos WHERE id_utilizador = ?', [id_utilizador], (err, results) => {
+    if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar favoritos.' });
+
+    res.json(results);
   });
 });
 
