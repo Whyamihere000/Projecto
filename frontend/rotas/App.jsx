@@ -33,8 +33,7 @@ function App() {
             <Route path="/revisao-encomenda" element={<RevisaoEncomenda />} />
             <Route path="/sucesso-pagamento" element={<SucessoPagamento />} />
             <Route path="/encomendas" element={<Encomendas />} />
-            <Route path="/admin/*" element={<RotaPrivadaAdmin />} />
-            <Route path="/admin" element={<AdminHome />} />
+            <Route path="/admin" element={<RotaPrivadaAdmin><AdminHome /></RotaPrivadaAdmin>} />
             <Route path="/admin/categorias" element={<AdminCategorias />} />
             <Route path="/admin/marcas" element={<AdminMarcas />} />
             <Route path="/admin/produtos" element={<AdminProdutos />} />
