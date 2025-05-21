@@ -4,6 +4,7 @@ import axios from 'axios';
 import styles from '../css/Home.module.css';
 import stylesGlobal from '../css/Global.module.css';
 import Navbar from '../componentes/Navbar';
+import Footer from '../componentes/Footer';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
@@ -122,6 +123,8 @@ function Home() {
           <h2 className={styles.tituloSecao}>Novidades</h2>
           {novidades.length > 0 ? renderProdutos(novidades) : <p>Sem novidades no momento.</p>}
         </section>
+
+        <Footer />
       </main>
     </div>
   );

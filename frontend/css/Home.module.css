@@ -89,7 +89,7 @@
 .carrosselContainer {
   width: 100%;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 20px auto;
   overflow: hidden;
   position: relative;
   border-radius: 0 0 10px 10px;
@@ -98,5 +98,4 @@
   text-decoration: none;
   color: inherit;
   display: flex;
-
 }

@@ -201,3 +201,17 @@ body.bodyHome {
 }
 
 /* Barra de Pesquisa */
+
+
+/* Footer */
+.footer {
+    background-color: #000000;
+    color: #fff;
+    padding: 10px 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+}
