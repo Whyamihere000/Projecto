@@ -9,18 +9,18 @@ function ModalErro({produto, produtos, nome, mensagem, onClose }) {
       <div className={styles.modalContent}>
         <h3>{produtos}</h3>
          {produtos.imagem_url && (
-                          <img
-                            src={
-                              produtos.imagem_url.startsWith("http://") ||
-                              produtos.imagem_url.startsWith("https://")
-                                ? produto.imagem_url
-                                : `http://localhost:3001${produtos.imagem_url}`
-                            }
-                            alt={produtos.nome}
-                            style={{
-                              width: "100%",
-                              height: "auto",
-                              marginBottom: "10px",
+          <img
+            src={
+            produtos.imagem_url.startsWith("http://") ||
+            produtos.imagem_url.startsWith("https://")
+             ? produto.imagem_url
+             : `http://localhost:3001${produtos.imagem_url}`
+            }
+            alt={produtos.nome}
+              style={{
+                width: "100%",
+                height: "auto",
+                marginBottom: "10px",
             }}
            />
           )}
