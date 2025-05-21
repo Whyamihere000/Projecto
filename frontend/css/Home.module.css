@@ -8,6 +8,7 @@
     text-align: center;
     padding: 20px;
 }
+
 .logoIcon {
   width: 32px;
   height: 32px;
@@ -46,7 +47,8 @@
 .tituloSecao {
   margin-top: 30px;
   font-size: 24px;
-  color: #387478;
+  color: #ffffff;
+  text-align: center;
 }
 
 .listaProdutos {
@@ -91,6 +93,7 @@
   margin: 0 auto;
   overflow: hidden;
   position: relative;
+  border-radius: 0 0 10px 10px;
 }
 .cardLink {
   text-decoration: none;
