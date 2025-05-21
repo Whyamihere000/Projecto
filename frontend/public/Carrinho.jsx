@@ -1,6 +1,6 @@
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
 import stylesCarrinho from "../css/Carrinho.module.css";
 import styles from "../css/Global.module.css";
 import Navbar from "../componentes/Navbar";
@@ -9,6 +9,7 @@ function Carrinho() {
   const [user, setUser] = useState(null);
   const [carrinho, setCarrinho] = useState({ items: [] });
   const [mensagem, setMensagem] = useState("");
+  const [produtos, setProdutos] = useState([]);
   // const [rua, setRua] = useState("");
   // const [cidade, setCidade] = useState("");
   // const [codigoPostal, setCodigoPostal] = useState("");
@@ -17,6 +18,7 @@ function Carrinho() {
   // const [telefone, setTelefone] = useState("");
   // const [nif, setNif] = useState("");
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -27,6 +29,8 @@ function Carrinho() {
       }
     }
   }, []);
+
+
 
   useEffect(() => {
     if (user) {
@@ -130,20 +134,17 @@ const handleLogout = () => {
     localStorage.removeItem('user');
     window.location.reload();
   };
-
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
-
       <main className={stylesCarrinho.mainCarrinho}>
         <br />
         <h1>Carrinho</h1>
         {mensagem && (
-  <p style={{ color: mensagem.includes("Erro") ? "red" : "green" }}>
-    {mensagem}
-  </p>
-)}
-
+        <p style={{ color: mensagem.includes("Erro") ? "red" : "green" }}>
+          {mensagem}
+        </p>
+        )}
         {carrinho ? (
           <div>
             {carrinho.items.length > 0 ? (
@@ -151,6 +152,22 @@ const handleLogout = () => {
                 {carrinho.items.map((item) => (
                   <div key={item.id_produto} className={stylesCarrinho.itemCarrinho}>
                     <h3>{item.nome}</h3>
+                    {item.imagem_url && (
+                          <img
+                            src={
+                              item.imagem_url.startsWith("http://") ||
+                              item.imagem_url.startsWith("https://")
+                                ? produto.imagem_url
+                                : `http://localhost:3001${item.imagem_url}`
+                            }
+                            alt={item.nome}
+                            style={{
+                              width: "100%",
+                              height: "auto",
+                              marginBottom: "10px",
+                            }}
+                          />
+                        )}
                     <p>Quantidade: {item.quantidade}</p>
                     <p>Preço: {item.preco}€</p>
                     <button onClick={() => handleRemoverItem(item.id_produto)}>Remover</button>

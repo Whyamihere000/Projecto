@@ -23,6 +23,8 @@ import MostrarPagamentos from '../admin/MostrarPagamentos.jsx';
 function App() {
     return (
         <Routes>
+            {/* Rotas publicas */}
+            
             <Route path="/" element={<Home />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/login" element={<Login />} />
@@ -33,15 +35,18 @@ function App() {
             <Route path="/revisao-encomenda" element={<RevisaoEncomenda />} />
             <Route path="/sucesso-pagamento" element={<SucessoPagamento />} />
             <Route path="/encomendas" element={<Encomendas />} />
-            <Route path="/admin" element={<RotaPrivadaAdmin><AdminHome /></RotaPrivadaAdmin>} />
-            <Route path="/admin/categorias" element={<AdminCategorias />} />
-            <Route path="/admin/marcas" element={<AdminMarcas />} />
-            <Route path="/admin/produtos" element={<AdminProdutos />} />
-            <Route path="/admin/utilizadores" element={<AdminUtilizadores />} />
             <Route path="/perfil-encomendas" element={<PerfilEncomendas />} />
             <Route path="/produto/:id" element={<ProdutoDetalhe />} />
-            <Route path="/admin/mostrar-encomendas" element={<MostrarEncomendas />} />
-            <Route path="/admin/mostrar-pagamentos" element={<MostrarPagamentos />} />
+
+            {/* Routas admin */}
+            
+            <Route path="/admin" element={<RotaPrivadaAdmin><AdminHome /></RotaPrivadaAdmin>} />
+            <Route path="/admin/categorias" element={<RotaPrivadaAdmin> <AdminCategorias /> </RotaPrivadaAdmin>} />
+            <Route path="/admin/marcas" element={<RotaPrivadaAdmin> <AdminMarcas /> </RotaPrivadaAdmin> } />
+            <Route path="/admin/produtos" element={<RotaPrivadaAdmin><AdminProdutos /> </RotaPrivadaAdmin>}/>
+            <Route path="/admin/utilizadores" element={<RotaPrivadaAdmin><AdminUtilizadores /></RotaPrivadaAdmin>} />
+            <Route path="/admin/mostrar-encomendas" element={<RotaPrivadaAdmin><MostrarEncomendas /></RotaPrivadaAdmin>} />
+            <Route path="/admin/mostrar-pagamentos" element={<RotaPrivadaAdmin><MostrarPagamentos /> </RotaPrivadaAdmin>}/>
         </Routes>
     )
 }
