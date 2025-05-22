@@ -19,6 +19,7 @@ import PerfilEncomendas from '../public/PerfilEncomenda.jsx';
 import ProdutoDetalhe from '../componentes/ProdutoDetalhe.jsx';
 import MostrarEncomendas from '../admin/MostrarEncomendas.jsx';
 import MostrarPagamentos from '../admin/MostrarPagamentos.jsx';
+import Favoritos from '../public/Favoritos.jsx';
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/encomendas" element={<Encomendas />} />
             <Route path="/perfil-encomendas" element={<PerfilEncomendas />} />
             <Route path="/produto/:id" element={<ProdutoDetalhe />} />
+            <Route path="/favoritos" element={<Favoritos />} />
 
             {/* Routas admin */}
             
