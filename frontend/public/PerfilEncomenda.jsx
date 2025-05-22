@@ -2,12 +2,21 @@ import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 import styles from "../css/PerfilEncomendas.module.css";
+
 import Navbar from "../componentes/Navbar";
+import SubNavbar from "../componentes/SubNavbar";
 
 function PerfilEncomendas() {
   const [user, setUser] = useState(null);
   const [encomendas, setEncomendas] = useState([]);
 
+  useEffect(() => {
+    document.body.className = styles.bodyHome;
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
+  
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser && storedUser !== "undefined") {
@@ -70,7 +79,8 @@ function PerfilEncomendas() {
 
   return (
     <div>    
-      <Navbar user={user} handleLogout={handleLogout} />
+      <Navbar user={user} handleLogout={handleLogout} /> 
+      <SubNavbar />
       <div className={styles.encomendasContainer}>
         <h2 className={styles.perfilTitulo}>Encomendas</h2>
         <DataGrid
@@ -90,6 +100,7 @@ function PerfilEncomendas() {
     },
   }}
         />
+       
       </div>
     </div>
   );
