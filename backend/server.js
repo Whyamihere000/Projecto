@@ -12,6 +12,7 @@ import routerAdminCategorias from './routes/admin/gestao-categorias.js';
 import routerAdminMarcas from './routes/admin/gestao-marcas.js';
 import routerAdminProdutos from './routes/admin/gestao-produtos.js';
 import routerAdminUtilizadores from './routes/admin/gestao-utilizadores.js';
+import routerFavoritos from './routes/public/favoritos.js';
 //import './timers/pagamentosTimer.js';
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/categorias', routerAdminCategorias);
 app.use('/api/marcas', routerAdminMarcas);
 app.use('/api/produtos', routerAdminProdutos);
 app.use('/api/utilizadores', routerAdminUtilizadores);
+app.use('/api/favoritos', routerFavoritos);
 app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
 
 app.listen(3001, () => {
