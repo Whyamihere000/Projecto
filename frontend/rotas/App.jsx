@@ -38,7 +38,7 @@ function App() {
             <Route path="/encomendas" element={<Encomendas />} />
             <Route path="/perfil-encomendas" element={<PerfilEncomendas />} />
             <Route path="/produto/:id" element={<ProdutoDetalhe />} />
-            <Route path="/favoritos" element={<Favoritos />} />
+            <Route path="/perfil-favoritos" element={<Favoritos />} />
 
             {/* Routas admin */}
             

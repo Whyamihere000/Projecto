@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../css/Perfil.module.css";
-import Navbar from "../componentes/Navbar";
 import { Navigate, useLocation, Link } from "react-router-dom";
+
+import Navbar from "../componentes/Navbar";
+import SubNavbar from "../componentes/SubNavbar";
+
 
 function Perfil() {
   const [user, setUser] = useState(null);
@@ -131,7 +134,9 @@ function Perfil() {
          user={user} 
          handleLogout={handleLogout}
         />
+        <SubNavbar />
     </div>
+
 
     <br />
 
