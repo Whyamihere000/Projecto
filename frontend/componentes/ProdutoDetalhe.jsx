@@ -1,12 +1,18 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ModalErro from "./ModalErro";
 import axios from "axios";
 import styles from "../css/ProdutoDetalhe.module.css";
 import Navbar from "./Navbar";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 function ProdutoDetalhe() {
+  //const [produtosModale, setProdutoModale] = useState([]);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [carrinho, setCarrinho] = useState(null);
+  const [mensagem, setMensagem] = useState("");
+  const [produtoModal, setProdutoModal] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
   const [quantidade, setQuantidade] = useState(1);
   const [favorito, setFavorito] = useState(false);
 
@@ -25,12 +31,70 @@ function ProdutoDetalhe() {
       .catch((err) => console.error("Erro ao carregar produto", err));
   }, [id]);
 
-  const handleAdicionarAoCarrinho = (id) => {
-    // lógica do carrinho
-    alert(`Adicionado ${quantidade} unidade(s) do produto ${id} ao carrinho.`);
-  };
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(`http://localhost:3001/api/carrinhos/${user.id}`)
+        .then((response) => {
+          setCarrinho(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro ao carregar carrinho", error);
+          setMensagem("Erro ao carregar carrinho.");
+          setOpenModal(true);
+        });
+    }
+  }, [user]);
 
   if (!produto) return <p>A carregar produto...</p>;
+
+  const handleAdicionarAoCarrinho = async (produtoID, quantidadeProduto = quantidade) => {
+    if (!user) {
+      setMensagem("Faça login para adicionar ao carrinho.");
+      setOpenModal(true);
+      return;
+    }
+
+    if (!carrinho) {
+      setMensagem("Carrinho não encontrado.");
+      setOpenModal(true);
+      return;
+    }
+
+    if (!produto) {
+      setMensagem("Produto não encontrado.");
+      setOpenModal(true);
+      return;
+    } 
+    setProdutoModal(produto.nome); 
+
+    try {
+      await axios.post("http://localhost:3001/api/carrinhos/adicionar", {
+        id_carrinho: carrinho.id,
+        id_produto: produtoID,
+        quantidade: quantidade,
+        preco: produto.preco,
+      });
+
+      setMensagem("Produto adicionado ao carrinho.");
+      setOpenModal(true);
+
+      setCarrinho((prevCarrinho) => ({
+        ...prevCarrinho,
+        total: prevCarrinho.total + quantidadeProduto * produto.preco,
+      }));
+
+      setTimeout(() => setOpenModal(false), 1000);
+    } catch (error) {
+      console.error("Erro ao adicionar ao carrinho", error);
+      setMensagem("Erro ao adicionar ao carrinho.");
+      setOpenModal(true);
+    }
+  };
+
+  const closeModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <>
@@ -81,6 +145,9 @@ function ProdutoDetalhe() {
           )}
         </div>
       </div>
+      {openModal && (
+          <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
+        )}  
     </>
   );
 }
