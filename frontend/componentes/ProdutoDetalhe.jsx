@@ -46,6 +46,45 @@ function ProdutoDetalhe() {
     }
   }, [user]);
 
+  useEffect(() => {
+  if (user && produto) {
+    axios
+      .get(`http://localhost:3001/api/favoritos/verificar/${user.id}/${produto.id}`)
+      .then((res) => {
+        setFavorito(res.data.favorito);
+      })
+      .catch((err) => console.error("Erro ao verificar favorito", err));
+  }
+}, [user, produto]);
+
+const toggleFavorito = async () => {
+  if (!user) {
+    setMensagem("Faça login para guardar favoritos.");
+    setOpenModal(true);
+    return;
+  }
+
+  try {
+    if (favorito) {
+      await axios.delete("http://localhost:3001/api/favoritos/remover", {
+        data: { id_utilizador: user.id, id_produto: produto.id }
+      });
+      setFavorito(false);
+    } else {
+      await axios.post("http://localhost:3001/api/favoritos/adicionar", {
+        id_utilizador: user.id,
+        id_produto: produto.id
+      });
+      setFavorito(true);
+    }
+  } catch (err) {
+    console.error("Erro ao atualizar favorito", err);
+    setMensagem("Erro ao atualizar favorito.");
+    setOpenModal(true);
+  }
+};
+
+
   if (!produto) return <p>A carregar produto...</p>;
 
   const handleAdicionarAoCarrinho = async (produtoID, quantidadeProduto = quantidade) => {
@@ -127,7 +166,7 @@ function ProdutoDetalhe() {
             </button>
 
             <button
-              onClick={() => setFavorito(!favorito)}
+              onClick={toggleFavorito}
               className={styles.favoritoBtn}
             >
               {favorito ? <FaHeart color="red" /> : <FaRegHeart />}
