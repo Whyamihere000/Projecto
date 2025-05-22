@@ -7,7 +7,7 @@ import Navbar from "../componentes/Navbar";
 import FiltrosProdutos from "../componentes/Filtragem";
 
 function Produtos() {
-  const [produtosModale, setProdutoModale] = useState([]);
+  //const [produtosModale, setProdutoModale] = useState([]);
   const [produtoModal, setProdutoModal] = useState([]);
   const [user, setUser] = useState(null);
   const [produtos, setProdutos] = useState([]);
@@ -242,7 +242,7 @@ function Produtos() {
         </main>
 
         {openModal && (
-          <ModalErro mensagem={mensagem} onClose={closeModal} produto={produtosModale} produtos={produtoModal} />
+          <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
         )}
       </div>
     </>
