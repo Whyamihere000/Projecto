@@ -80,16 +80,11 @@ function Carrinho() {
 
     setCarrinho({ ...carrinho, items: updateCarrinho, total });
 
-    // Atualiza o total no backend (opcional, dependendo do design do teu sistema)
-    await axios.put(`http://localhost:3001/api/carrinhos/${carrinho.id}`, {
-      total,
-    });
-
     setMensagem(""); // Limpa a mensagem de erro se tudo correr bem
 
   } catch (error) {
     console.error("Erro ao remover item do carrinho:", error);
-    setMensagem("Sucesso ao remover item do carrinho.");
+    setMensagem("Erro ao remover item do carrinho.");
   }
 };
 
