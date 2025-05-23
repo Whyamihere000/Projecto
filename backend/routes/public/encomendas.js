@@ -165,20 +165,36 @@ routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
     return res.status(400).json({ success: false, message: 'Método de pagamento obrigatório.' });
   }
 
-  // Inserir pagamento
-  const query = `
+  db.query(`
     INSERT INTO pagamentos (id_encomenda, metodo, estado, informacoes_adicionais)
     VALUES (?, ?, 'pendente', ?)
-  `;
-
-  db.query(query, [id_encomenda, metodoPagamento, detalhesPagamento || null], (err) => {
+  `, [id_encomenda, metodoPagamento, detalhesPagamento || null], (err) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ success: false, message: 'Erro ao registar pagamento.' });
     }
 
+    db.query(`UPDATE encomendas SET estado = 'pago' WHERE id = ?`, [id_encomenda], (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ success: false, message: 'Erro ao atualizar encomenda.' });
+    }
+    
+    db.query(
+      `UPDATE produtos JOIN items_encomendas ON items_encomendas.id_produto = produtos.id
+      SET produtos.stock = produtos.stock - items_encomendas.quantidade
+      WHERE items_encomendas.id_encomenda = ?`,
+      [id_encomenda],
+      (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ success: false, message: 'Erro ao atualizar produtos.' });
+        }
+
       res.json({ success: true, message: 'Pagamento registado com sucesso.' });
     });
   });
+  });
+});
 
 export default routerEncomendas;
