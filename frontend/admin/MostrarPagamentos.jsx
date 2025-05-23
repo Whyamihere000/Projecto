@@ -44,17 +44,22 @@ function MostrarPagamentos() {
     { field: "cartao_token", headerName: "Token", width: 180 }
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigater('/');
+  };
+
   return (
     <>
     <nav className={stylesNav.navegacao_admin}>
-                <Link to="/admin/categorias" className={stylesNav.link}>Categorias</Link>
-                <Link to="/admin/marcas" className={stylesNav.link}>Marcas</Link>
-                <Link to="/admin/produtos" className={stylesNav.link}>Produtos</Link>
-                <Link to="/admin/utilizadores" className={stylesNav.link}>Utilizadores</Link>
-                <Link to="/admin/mostrar-encomendas" className={stylesNav.link}>Encomendas</Link>
-                <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
-                <button className={stylesNav.logout}>Logout</button>
-            </nav>
+            <Link to="/admin/categorias" className={stylesNav.link}>Categorias</Link>
+            <Link to="/admin/marcas" className={stylesNav.link}>Marcas</Link>
+            <Link to="/admin/produtos" className={stylesNav.link}>Produtos</Link>
+            <Link to="/admin/utilizadores" className={stylesNav.link}>Utilizadores</Link>
+            <Link to="/admin/mostrar-encomendas" className={stylesNav.link}>Encomendas</Link>
+            <Link to="/admin/mostrar-pagamentos" className={stylesNav.link}>Pagamentos</Link>
+            <button className={stylesNav.logout} onClick={handleLogout}>Logout</button>
+          </nav>
     <div className={styles.container}>
       {pagamentos.length === 0 ? (
         <p>Sem pagamentos para mostrar.</p>

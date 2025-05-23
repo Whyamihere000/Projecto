@@ -3,22 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/Global.module.css";
 
 function AdminHome() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const user = JSON.parse(localStorage.getItem('user'));
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
 
-  //   if (!user || user.tipo_utilizador !== 'admin') {
-  //     navigate('/');
-  //   }
-  // }, [navigate]);
+    if (!user || user.tipo_utilizador !== 'admin') {
+      navigate('/');
+    }
+  }, [navigate]);
 
-  // const navigater = useNavigate();
+  const navigater = useNavigate();
 
-  // const handleLogout = () => {
-  //   localStorage.removeItem('user');
-  //   navigater('/');
-  // };
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigater('/');
+  };
 
   useEffect(() => {
         document.body.className = styles.bodyHome;
@@ -36,7 +36,7 @@ function AdminHome() {
         <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
         <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
         <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
-        <button className={styles.logout}>Logout</button>
+        <button className={styles.logout} onClick={handleLogout}>Logout</button>
       </nav>
     </>
   );
