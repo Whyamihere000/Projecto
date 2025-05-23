@@ -11,5 +11,9 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
-    margin-left: 100px;
+    margin-left: 200px;
+}
+
+.titulo {
+    color: white;
 }

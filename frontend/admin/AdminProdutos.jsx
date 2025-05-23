@@ -3,9 +3,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
-import stylesProdutos from "../css/Produtos.module.css";
+import stylesProdutos from "../css/AdminProdutos.module.css";
+import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function Produtos() {
+    const [user, setUser] = useState(null);
     const [produtoSku, setProdutoSku] = useState('');
     const [produtoNome, setProdutoNome] = useState('');
     const [produtoDescricao, setProdutoDescricao] = useState('');
@@ -31,6 +33,16 @@ function Produtos() {
     const [produtoSelecionado, setProdutoSelecionado] = useState(null);
     const [jsonEspecificacoesEditado, setJsonEspecificacoesEditado] = useState('');
     const [mostrarModal, setMostrarModal] = useState(false);
+
+    useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser && storedUser !== 'undefined') {
+      const user = JSON.parse(storedUser);
+      if (user.tipo_utilizador === 'admin') {
+        setUser(user);
+      }
+    }
+  }, []);
 
     useEffect(() => {
         const fetchCategorias = async () => {
@@ -323,6 +335,13 @@ function Produtos() {
     navigater('/');
   };
 
+  useEffect(() => {
+          document.body.className = styles.bodyHome;
+          return () => {
+              document.body.className = ''; // Remove ao sair
+          };
+      }, []);
+
     return (
         <>
                 {mostrarModal && (
@@ -351,18 +370,10 @@ function Produtos() {
   </div>
 )}
 
-            <nav className={styles.navegacao_admin}>
-                    <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
-                    <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
-                    <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
-                    <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
-                    <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
-                    <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
-                    <button className={styles.logout} onClick={handleLogout}>Logout</button>
-                  </nav>
+            <NavbarAdmin handleLogout={handleLogout} user={user} />
 
             <div className={stylesProdutos.container}>
-                <h1>Adicionar Produto</h1>
+                <h1 className={stylesProdutos.titulo}>Adicionar Produto</h1>
                 <input
                     type="text"
                     placeholder="SKU do produto"
@@ -443,7 +454,7 @@ function Produtos() {
                 <br />
                 <br />
                 <br />
-                <h2>Lista Produtos</h2>
+                <h2 className={stylesProdutos.titulo}>Lista Produtos</h2>
                 <div style={{ height: 800, width: '100%' }}>
                     <DataGrid
                         rows={produtos}
@@ -469,4 +480,3 @@ function Produtos() {
 }
 
 export default Produtos;
-

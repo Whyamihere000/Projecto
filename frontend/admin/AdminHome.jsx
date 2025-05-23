@@ -19,9 +19,9 @@ function AdminHome() {
   }, []);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const userAdmin = JSON.parse(localStorage.getItem('user'));
 
-    if (!user || user.tipo_utilizador !== 'admin') {
+    if (!userAdmin || userAdmin.tipo_utilizador !== 'admin') {
       navigate('/');
     }
   }, [navigate]);

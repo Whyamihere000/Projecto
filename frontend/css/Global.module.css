@@ -1,29 +1,36 @@
 body.bodyHome {
-    background-color: #682f2f;
+    background-color: #1d1d1d;
 }
 
 .navegacao_admin {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    background-color: #8f6464;
+    align-items: center;
+    background-color: #414141;
     color: #ffffff;
     padding: 20px;
     width: fit-content;
     height: 100vh;
     position: fixed;
     top: 0;
-    left: 0
+    left: 0;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-top: 20px;
+    height: max-content;
 }
 
 .linkAdmin {
-    color: #ad9494;
+    color: #ffffff;
+    background-color: #000000;
     text-decoration: none;
     margin-bottom: 10px;
+    width: 150px;
 }
 
 .linkAdmin:hover {
-    text-decoration: underline;
+    background-color: #c09d00;
 }
 
 .logoutAdmin {
@@ -35,10 +42,11 @@ body.bodyHome {
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 10px;
+    width: 150px;
 }
 
 .logoutAdmin:hover {
-    background-color: #c0392b;
+    background-color: #680e04;
 }
 
 .nav {

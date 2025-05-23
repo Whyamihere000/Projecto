@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "../css/Global.module.css";
 import stylesCategorias from "../css/AdminCategorias.module.css";
+import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function Categorias() {
+    const [user, setUser] = useState(null);
     const [categoria, setCategoria] = useState('');
     const [mensagem, setMensagem] = useState('');
     const [mensagemTipo, setMensagemTipo] = useState(''); // success ou error
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser && storedUser !== 'undefined') {
+          const user = JSON.parse(storedUser);
+          if (user.tipo_utilizador === 'admin') {
+            setUser(user);
+          }
+        }
+      }, []);
 
     const adicionarCategoria = async () => {
         if (!categoria.trim()) {
@@ -41,17 +53,16 @@ function Categorias() {
     navigater('/');
   };
 
+  useEffect(() => {
+          document.body.className = styles.bodyHome;
+          return () => {
+              document.body.className = ''; // Remove ao sair
+          };
+      }, []);
+
     return (
         <>
-            <nav className={styles.navegacao_admin}>
-                    <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
-                    <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
-                    <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
-                    <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
-                    <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
-                    <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
-                    <button className={styles.logout} onClick={handleLogout}>Logout</button>
-                  </nav>
+            <NavbarAdmin handleLogout={handleLogout} user={user} />
 
             <div className={stylesCategorias.container}>
                 <Link to="/admin">Voltar</Link>

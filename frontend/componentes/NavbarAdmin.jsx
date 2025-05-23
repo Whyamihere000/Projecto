@@ -6,13 +6,13 @@ function NavbarAdmin({ handleLogout, user }) {
     return (
     <>
       <nav className={styles.navegacao_admin}>
-        <Link to="/admin/categorias" className={styles.linkAdmin}>Categorias</Link>
-        <Link to="/admin/marcas" className={styles.linkAdmin}>Marcas</Link>
-        <Link to="/admin/produtos" className={styles.linkAdmin}>Produtos</Link>
-        <Link to="/admin/utilizadores" className={styles.linkAdmin}>Utilizadores</Link>
-        <Link to="/admin/mostrar-encomendas" className={styles.linkAdmin}>Encomendas</Link>
-        <Link to="/admin/mostrar-pagamentos" className={styles.linkAdmin}>Pagamentos</Link>
-        <p>Olá, {user.primeiro_nome}</p>
+        <Link to="/admin/categorias" ><button className={styles.linkAdmin}>Categorias</button></Link>
+        <Link to="/admin/marcas" ><button className={styles.linkAdmin}>Marcas</button></Link>
+        <Link to="/admin/produtos" ><button className={styles.linkAdmin}>Produtos</button></Link>
+        <Link to="/admin/utilizadores" ><button className={styles.linkAdmin}>Utilizadores</button></Link>
+        <Link to="/admin/mostrar-encomendas" ><button className={styles.linkAdmin}>Encomendas</button></Link>
+        <Link to="/admin/mostrar-pagamentos" ><button className={styles.linkAdmin}>Pagamentos</button></Link>
+        <p>Olá, {user?.primeiro_nome}</p>
         <button className={styles.logoutAdmin} onClick={handleLogout}>Logout</button>
       </nav>
     </>
