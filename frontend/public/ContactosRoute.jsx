@@ -5,11 +5,27 @@ import Navbar from "../componentes/Navbar";
 import SubNavbar from "../componentes/SubNavbar";
 
 function Contactos() {
+  const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({ nome: "", email: "", mensagem: "" });
   const [status, setStatus] = useState("");
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser && storedUser !== 'undefined') {
+      const user = JSON.parse(storedUser);
+      if (user.tipo_utilizador === 'cliente') {
+        setUser(user);
+      }
+    }
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -23,7 +39,7 @@ function Contactos() {
     e.preventDefault();
     setStatus("");
     try {
-      await axios.post("http://localhost:3001/api/contactos", formData);
+      await axios.post("http://localhost:3001/api/contactos/contactos", formData);
       setStatus("success");
       setFormData({ nome: "", email: "", mensagem: "" });
     } catch (err) {
@@ -34,7 +50,7 @@ function Contactos() {
 
   return (
     <>
-      <Navbar />
+      <Navbar user={user} handleLogout={handleLogout} />
       <SubNavbar />
       <div className={styles.contactContainer}>
         <h2 className={styles.contactTitle}>Contacta-nos</h2>
