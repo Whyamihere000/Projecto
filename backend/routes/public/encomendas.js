@@ -105,21 +105,21 @@ ORDER BY encomendas.data DESC`,
 routerEncomendas.get('/pagamentos', (req, res) => {
   db.query(
     `SELECT 
-      produtos.id AS id_pagamento,
-      produtos.metodo,
-      produtos.estado,
-      produtos.referencia,
-      produtos.data_pagamento,
-      produtos.nome_cartao,
-      produtos.cartao_tipo,
-      produtos.cartao_token,
+      pagamentos.id AS id_pagamento,
+      pagamentos.metodo,
+      pagamentos.estado,
+      pagamentos.referencia,
+      pagamentos.data_pagamento,
+      pagamentos.nome_cartao,
+      pagamentos.cartao_tipo,
+      pagamentos.cartao_token,
       encomendas.id AS id_encomenda,
       utilizadores.primeiro_nome,
       utilizadores.ultimo_nome
     FROM pagamentos
-    JOIN encomendas ON produtos.id_encomenda = encomendas.id
+    JOIN encomendas ON pagamentos.id_encomenda = encomendas.id
     JOIN utilizadores ON encomendas.id_utilizador = utilizadores.id
-    ORDER BY produtos.data_pagamento DESC`,
+    ORDER BY pagamentos.data_pagamento DESC`,
     (err, results) => {
       if (err) return res.status(500).json({ message: 'Erro ao carregar pagamentos.' });
       res.json(results);
