@@ -73,15 +73,15 @@ routerPerfil.get('/encomendas/:id', (req, res) => {
 
   const sql = `
     SELECT 
-      e.id,
-      e.data,
-      e.total,
-      GROUP_CONCAT(p.nome SEPARATOR ', ') AS produtos
-    FROM encomendas e
-    JOIN items_encomendas ie ON e.id = ie.id_encomenda
-    JOIN produtos p ON ie.id_produto = p.id
-    WHERE e.id_utilizador = ?
-    GROUP BY e.id, e.data, e.total;
+      encomendas.id,
+      encomendas.data,
+      encomendas.total,
+      GROUP_CONCAT(produtos.nome SEPARATOR ', ') AS produtos
+    FROM encomendas
+    JOIN items_encomendas ON encomendas.id = items_encomendas.id_encomenda
+    JOIN produtos ON items_encomendas.id_produto = produtos.id
+    WHERE encomendas.id_utilizador = ?
+    GROUP BY encomendas.id, encomendas.data, encomendas.total;
   `;
 
   db.query(sql, [id], (err, results) => {
