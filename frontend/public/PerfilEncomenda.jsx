@@ -24,7 +24,6 @@ function PerfilEncomendas() {
       if (user.tipo_utilizador === "cliente") {
         setUser(user);
         fetchEncomendas(user.id);
-        fetchDadosUser(user.id);
       }
     }
   }, []);

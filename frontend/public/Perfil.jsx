@@ -29,7 +29,6 @@ function Perfil() {
       const user = JSON.parse(storedUser);
       if (user.tipo_utilizador === 'cliente') {
         setUser(user);
-        fetchDadosUser(user.id);
       }
     }
   }, []);
