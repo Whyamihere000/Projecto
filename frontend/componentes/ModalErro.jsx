@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
 import styles from '../css/Global.module.css'
 
 
-function ModalErro({produto, produtos, nome, mensagem, onClose }) {
+function ModalErro({produto, produtos, mensagem, onClose }) {
   return (
     
     <div className={styles.modalOverlay}>
