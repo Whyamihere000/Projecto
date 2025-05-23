@@ -71,10 +71,10 @@ function PerfilEncomendas() {
   if (!user) return <p className={styles.perfilContainer}>Carregando...</p>;
 
   const colunas = [
-    { field: "id", headerName: "ID Encomenda", width: 120 },
-    { field: "data", headerName: "Data", width: 180 },
-    { field: "total", headerName: "Total (€)", width: 120, type: "number" },
-    { field: "produtos", headerName: "Produtos", width: 300, flex: 1 },
+    { field: "id", headerName: "ID Encomenda", width: 120, selection: false },
+    { field: "data", headerName: "Data", width: 180, selection: false },
+    { field: "total", headerName: "Total (€)", width: 120, type: "number", selection: false },
+    { field: "produtos", headerName: "Produtos", width: 300, flex: 1, selection: false },
   ];
 
   return (
@@ -90,6 +90,8 @@ function PerfilEncomendas() {
           getRowId={(row) => row.id}
           getRowHeight={() => "auto"}
           rowHeight={null}
+          disableSelectionOnClick
+          disableColumnMenu
           sx={{
     '& .MuiDataGrid-columnHeaders': {
       '& .MuiDataGrid-columnHeader': {
