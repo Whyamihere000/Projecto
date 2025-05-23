@@ -21,6 +21,7 @@ import MostrarEncomendas from '../admin/MostrarEncomendas.jsx';
 import MostrarPagamentos from '../admin/MostrarPagamentos.jsx';
 import Favoritos from '../public/Favoritos.jsx';
 import Contactos from '../public/ContactosRoute.jsx';
+import MostrarContactos from '../admin/MostrarContactos.jsx';
 
 function App() {
     return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="/admin/utilizadores" element={<RotaPrivadaAdmin><AdminUtilizadores /></RotaPrivadaAdmin>} />
             <Route path="/admin/mostrar-encomendas" element={<RotaPrivadaAdmin><MostrarEncomendas /></RotaPrivadaAdmin>} />
             <Route path="/admin/mostrar-pagamentos" element={<RotaPrivadaAdmin><MostrarPagamentos /> </RotaPrivadaAdmin>}/>
+            <Route path="/admin/mostrar-contactos" element={<RotaPrivadaAdmin><MostrarContactos /></RotaPrivadaAdmin>} />
         </Routes>
     )
 }

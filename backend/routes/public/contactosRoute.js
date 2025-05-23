@@ -3,6 +3,7 @@ import db from '../../db.js';
 
 const routerContactos = express.Router();
 
+// Criar contacto
 routerContactos.post("/contactos", (req, res) => {
   const { nome, email, mensagem } = req.body;
 
@@ -17,6 +18,18 @@ routerContactos.post("/contactos", (req, res) => {
       return res.status(500).json({ error: "Erro no servidor." });
     }
     res.status(201).json({ message: "Mensagem enviada com sucesso!" });
+  });
+});
+
+// Ver contactos
+routerContactos.get("/tudo", (req, res) => {
+  const sql = "SELECT * FROM contactos";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error("Erro ao obter contactos:", err);
+      return res.status(500).json({ error: "Erro no servidor." });
+    }
+    res.json(result);
   });
 });
 

@@ -12,6 +12,7 @@ function NavbarAdmin({ handleLogout, user }) {
         <Link to="/admin/utilizadores" ><button className={styles.linkAdmin}>Utilizadores</button></Link>
         <Link to="/admin/mostrar-encomendas" ><button className={styles.linkAdmin}>Encomendas</button></Link>
         <Link to="/admin/mostrar-pagamentos" ><button className={styles.linkAdmin}>Pagamentos</button></Link>
+        <Link to="/admin/mostrar-contactos" ><button className={styles.linkAdmin}>Contactos</button></Link>
         <p>Olá, {user?.primeiro_nome}</p>
         <button className={styles.logoutAdmin} onClick={handleLogout}>Logout</button>
       </nav>
