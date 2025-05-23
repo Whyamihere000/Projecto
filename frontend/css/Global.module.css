@@ -16,17 +16,17 @@ body.bodyHome {
     left: 0
 }
 
-.link {
-    color: #ffffff;
+.linkAdmin {
+    color: #ad9494;
     text-decoration: none;
     margin-bottom: 10px;
 }
 
-.link:hover {
+.linkAdmin:hover {
     text-decoration: underline;
 }
 
-.logout {
+.logoutAdmin {
     background-color: #e74c3c;
     color: #ffffff;
     border: none;
@@ -37,7 +37,7 @@ body.bodyHome {
     margin-top: 10px;
 }
 
-.logout:hover {
+.logoutAdmin:hover {
     background-color: #c0392b;
 }
 

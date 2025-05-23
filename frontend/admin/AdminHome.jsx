@@ -1,9 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../css/Global.module.css";
+import NavbarAdmin from "../componentes/NavbarAdmin";
+import stylesAdminHome from "../css/Global.module.css";
 
 function AdminHome() {
+  const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser && storedUser !== 'undefined') {
+      const user = JSON.parse(storedUser);
+      if (user.tipo_utilizador === 'admin') {
+        setUser(user);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -21,7 +34,7 @@ function AdminHome() {
   };
 
   useEffect(() => {
-        document.body.className = styles.bodyHome;
+        document.body.className = stylesAdminHome.bodyHome;
         return () => {
             document.body.className = ''; // Remove ao sair
         };
@@ -29,15 +42,7 @@ function AdminHome() {
     
   return (
     <>
-      <nav className={styles.navegacao_admin}>
-        <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
-        <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
-        <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
-        <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
-        <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
-        <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
-        <button className={styles.logout} onClick={handleLogout}>Logout</button>
-      </nav>
+      <NavbarAdmin user={user} handleLogout={handleLogout} />
     </>
   );
 }
