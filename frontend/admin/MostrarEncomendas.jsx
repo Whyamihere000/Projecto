@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-import stylesNav from "../css/Global.module.css";
-import styles from "../css/MostrarEncomendas.module.css";
+import styles from "../css/Global.module.css";
+import stylesEncomendas from "../css/MostrarEncomendas.module.css";
 
 function MostrarEncomendas() {
   const [encomendas, setEncomendas] = useState([]);
@@ -48,18 +48,23 @@ function MostrarEncomendas() {
     { field: "estado", headerName: "Estado", width: 120 }
   ];
 
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigater('/');
+  };
+
   return (
     <>
-    <nav className={stylesNav.navegacao_admin}>
-                <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
-                <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
-                <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
-                <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
-                <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
-                <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
-                <button className={styles.logout}>Logout</button>
-            </nav>
-    <div className={styles.container}>
+    <nav className={styles.navegacao_admin}>
+            <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
+            <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
+            <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
+            <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
+            <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
+            <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
+            <button className={styles.logout} onClick={handleLogout}>Logout</button>
+          </nav>
+    <div className={stylesEncomendas.container}>
       {encomendas.length === 0 ? (
         <p>Sem encomendas para mostrar.</p>
       ) : (

@@ -318,6 +318,11 @@ function Produtos() {
         }
     };
 
+    const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigater('/');
+  };
+
     return (
         <>
                 {mostrarModal && (
@@ -347,14 +352,14 @@ function Produtos() {
 )}
 
             <nav className={styles.navegacao_admin}>
-                <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
-                <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
-                <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
-                <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
-                <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
-                <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
-                <button className={styles.logout}>Logout</button>
-            </nav>
+                    <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
+                    <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
+                    <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
+                    <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
+                    <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
+                    <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
+                    <button className={styles.logout} onClick={handleLogout}>Logout</button>
+                  </nav>
 
             <div className={stylesProdutos.container}>
                 <h1>Adicionar Produto</h1>

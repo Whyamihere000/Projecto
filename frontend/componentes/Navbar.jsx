@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/Global.module.css";
 
-function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
+function Navbar({ user, handleLogout, pesquisa}) {
   const navigate = useNavigate();
 
   // Estado local para o input
@@ -23,6 +23,7 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
       navigate("/produtos");
     }
   };
+
   return (
     <nav className={styles.nav}>
       <div className={styles.navLeft}>
@@ -73,7 +74,7 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
             <Link to="/carrinho" className={styles.navCarrinho}>Carrinho</Link>
           </>
         ) : (
-          <Link to="/login" className={styles.navLogin}>Login</Link>
+          <Link to="/login" className={styles.navLogin} onClick={() => {localStorage.setItem('redirectAfterLogin', window.location.pathname)}}>Login</Link>
         )}
       </div>
     </nav>
