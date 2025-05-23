@@ -73,6 +73,7 @@ function Contactos() {
               value={formData.mensagem}
               onChange={handleChange}
               required
+              style={{ resize: "none" }}
             ></textarea>
           </div>
           <button type="submit" className={styles.submitButton}>Enviar</button>

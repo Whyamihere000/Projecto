@@ -1,8 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const db = require("../db");
+import express from 'express';
+import db from '../../db.js';
 
-router.post("/contactos", (req, res) => {
+const routerContactos = express.Router();
+
+routerContactos.post("/contactos", (req, res) => {
   const { nome, email, mensagem } = req.body;
 
   if (!nome || !email || !mensagem) {
@@ -19,4 +20,4 @@ router.post("/contactos", (req, res) => {
   });
 });
 
-module.exports = router;
+export default routerContactos;

@@ -93,25 +93,29 @@ body.bodyHomeAdmin {
 .navHome:hover, .navProdutos:hover {
   background-color: rgb(0, 43, 160);
   padding: 10px;
-  border-radius: 5px
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 .navLogin:hover {
   background-color: rgb(0, 16, 241);
   padding: 10px;
-  border-radius: 5px
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 .navPerfil:hover {
   background-color: rgb(114, 21, 18);
   padding: 10px;
-  border-radius: 5px
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 .navCarrinho:hover {
   background-color: rgb(155, 106, 0);
   padding: 10px;
-  border-radius: 5px
+  border-radius: 5px;
+  text-decoration: none;
 }
 
 .navLogout {
