@@ -72,10 +72,12 @@ function Login() {
         setMessageType('success')
         setOpenModal(true)
 
+        const redirectPath = localStorage.getItem('redirectAfterLogin') || '/';
+
         if (response.data.user.tipo_utilizador === 'admin') {
           window.location.href = '/admin'
         } else {
-          window.location.href = '/'
+          window.location.href = redirectPath
         }
       } else {
         setMessage(response.data.message)

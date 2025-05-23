@@ -74,7 +74,7 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
             <Link to="/carrinho" className={styles.navCarrinho}>Carrinho</Link>
           </>
         ) : (
-          <Link to="/login" className={styles.navLogin}>Login</Link>
+          <Link to="/login" className={styles.navLogin} onClick={() => {localStorage.setItem('redirectAfterLogin', window.location.pathname)}}>Login</Link>
         )}
       </div>
     </nav>
