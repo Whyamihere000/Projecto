@@ -23,6 +23,7 @@ function Navbar({ user, handleLogout, pesquisa, setPesquisa}) {
       navigate("/produtos");
     }
   };
+
   return (
     <nav className={styles.nav}>
       <div className={styles.navLeft}>
