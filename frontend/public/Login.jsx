@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import ModalErro from '../componentes/ModalGlobal'
 import Styles from '../css/Login.module.css'
 import Navbar from "../componentes/Navbar";
 
@@ -10,12 +11,14 @@ function Login() {
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState('')
+  const [openModal, setOpenModal] = useState(false);
   const [passwordValidation, setPasswordValidation] = useState({
     lowercase: false,
     uppercase: false,
     number: false,
     specialChar: false,
   })
+  
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser && storedUser !== "undefined") {
@@ -37,12 +40,6 @@ function Login() {
   }, [password])
 
   const handleLogout = async () => {
-    const storedUser = localStorage.getItem("user");
-
-    if (storedUser) {
-      const user = JSON.parse(storedUser);      
-    }
-
     localStorage.removeItem("user");
     window.location.reload();
   };
@@ -51,6 +48,7 @@ function Login() {
     if (!email || !password) {
       setMessage('Preencha todos os campos.')
       setMessageType('error')
+      setOpenModal(true)
       return
     }
 
@@ -58,6 +56,7 @@ function Login() {
     if (!lowercase || !uppercase || !number || !specialChar) {
       setMessage('A password não cumpre todos os critérios.')
       setMessageType('error')
+      setOpenModal(true)
       return
     }
 
@@ -71,6 +70,7 @@ function Login() {
         localStorage.setItem('user', JSON.stringify(response.data.user))
         setMessage('Login efetuado com sucesso.')
         setMessageType('success')
+        setOpenModal(true)
 
         if (response.data.user.tipo_utilizador === 'admin') {
           window.location.href = '/admin'
@@ -80,11 +80,13 @@ function Login() {
       } else {
         setMessage(response.data.message)
         setMessageType('error')
+        setOpenModal(true)
       }
     } catch (err) {
       console.error('Erro no login:', err)
       setMessage('Erro ao efetuar o login.')
       setMessageType('error')
+      setOpenModal(true)
     }
   }
 
@@ -94,6 +96,10 @@ function Login() {
       document.body.className = "";
     };
   }, []);
+
+  const closeModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <>
@@ -151,14 +157,11 @@ function Login() {
         <div style={{ textAlign: 'center' }}>
           <Link to="/" style={{ color: '#007bff' }}>Voltar</Link>
         </div>
-
-        {message && (
-          <p className={messageType === 'success' ? Styles.success : Styles.error}>
-            {message}
-          </p>
-        )}
       </div>
     </div>
+    {openModal && (
+          <ModalErro mensagem={message} onClose={closeModal} />
+        )}
     </>
   )
 }
