@@ -79,20 +79,20 @@ routerEncomendas.post('/nova', (req, res) => {
 routerEncomendas.get('/tudo', (req, res) => {
   db.query(
     `SELECT 
-  e.id AS id_encomenda,
-  u.primeiro_nome,
-  u.ultimo_nome,
-  p.nome AS nome_produto,
-  ie.quantidade,
-  ie.preco_unitario,
-  e.total,
-  e.estado,
-  e.data
-FROM encomendas e
-JOIN utilizadores u ON e.id_utilizador = u.id
-JOIN items_encomendas ie ON ie.id_encomenda = e.id
-JOIN produtos p ON p.id = ie.id_produto
-ORDER BY e.data DESC`, 
+  encomenda.id AS id_encomenda,
+  utilizadores.primeiro_nome,
+  utilizadores.ultimo_nome,
+  produtos.nome AS nome_produto,
+  items_encomendas.quantidade,
+  items_encomendas.preco_unitario,
+  encomendas.total,
+  encomendas.estado,
+  encomendas.data
+FROM encomendas
+JOIN utilizadores ON encomendas.id_utilizador = utlizadores.id
+JOIN items_encomendas ON items_encomendas.id_encomenda = encomendas.id
+JOIN produtos ON produtos.id = items_encomendas.id_produto
+ORDER BY encomendas.data DESC`, 
     (err, results) => {
       if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar encomendas.' });
 
@@ -105,21 +105,21 @@ ORDER BY e.data DESC`,
 routerEncomendas.get('/pagamentos', (req, res) => {
   db.query(
     `SELECT 
-      p.id AS id_pagamento,
-      p.metodo,
-      p.estado,
-      p.referencia,
-      p.data_pagamento,
-      p.nome_cartao,
-      p.cartao_tipo,
-      p.cartao_token,
-      e.id AS id_encomenda,
-      u.primeiro_nome,
-      u.ultimo_nome
-    FROM pagamentos p
-    JOIN encomendas e ON p.id_encomenda = e.id
-    JOIN utilizadores u ON e.id_utilizador = u.id
-    ORDER BY p.data_pagamento DESC`,
+      produtos.id AS id_pagamento,
+      produtos.metodo,
+      produtos.estado,
+      produtos.referencia,
+      produtos.data_pagamento,
+      produtos.nome_cartao,
+      produtos.cartao_tipo,
+      produtos.cartao_token,
+      encomendas.id AS id_encomenda,
+      utilizadores.primeiro_nome,
+      utilizadores.ultimo_nome
+    FROM pagamentos
+    JOIN encomendas ON produtos.id_encomenda = encomendas.id
+    JOIN utilizadores ON encomendas.id_utilizador = utilizadores.id
+    ORDER BY produtos.data_pagamento DESC`,
     (err, results) => {
       if (err) return res.status(500).json({ message: 'Erro ao carregar pagamentos.' });
       res.json(results);
