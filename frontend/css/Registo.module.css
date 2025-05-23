@@ -1,5 +1,5 @@
 .container {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.199);
   backdrop-filter: blur(0,1px);
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -14,7 +14,6 @@
 
 .bodysHome {
   min-height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-image: url("https://honeywellaircomfort.com/cdn/shop/articles/gaming_system_cooling_1024x1024.jpg?v=1741681188");
