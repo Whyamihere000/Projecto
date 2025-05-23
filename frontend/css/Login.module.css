@@ -1,5 +1,5 @@
 .login {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.199);
   backdrop-filter: blur(0,1px);
   padding: 30px;
   border-radius: 15px;
@@ -19,7 +19,7 @@
 .login h1 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #333;
+  color: #ffffff;
 }
 
 .input {
@@ -30,7 +30,7 @@
 .input:focus {
  outline: none;
   border-color: #ff540b;
-  box-shadow: 0 0 0 3px rgba(255, 11, 11, 0.25);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
 
 .buttonContainer {
@@ -62,18 +62,18 @@
 }
 
 .error {
-  color: red;
+  color: rgb(255, 255, 255);
   margin-top: 15px;
 }
 .errorMessage {
-  color: red;
+  color: rgb(255, 255, 255);
   margin-top: 15px;
 }
 .label {
   font-weight: 500;
   margin-top: 10px;
   margin-bottom: 5px;
-  color: #333;
+  color: #ffffff;
 }
 .input {
   width: 100%;
@@ -119,16 +119,16 @@ link{
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #127900; /* Cor da bola (pode ser qualquer cor) */
+  background-color: #27ff01; /* Cor da bola (pode ser qualquer cor) */
 }
 
 .checklist li.invalid::before {
-  background-color: #000000; /* Cor para inválido */
+  background-color: #ffffff; /* Cor para inválido */
 }
 .valid {
-  color: #127900;
+  color: #27ff01;
 }
 
 .invalid {
-  color: #000000;
+  color: #ffffff;
 }
