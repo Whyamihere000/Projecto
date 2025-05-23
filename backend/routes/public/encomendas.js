@@ -79,7 +79,7 @@ routerEncomendas.post('/nova', (req, res) => {
 routerEncomendas.get('/tudo', (req, res) => {
   db.query(
     `SELECT 
-  encomenda.id AS id_encomenda,
+  encomendas.id AS id_encomenda,
   utilizadores.primeiro_nome,
   utilizadores.ultimo_nome,
   produtos.nome AS nome_produto,
@@ -89,12 +89,15 @@ routerEncomendas.get('/tudo', (req, res) => {
   encomendas.estado,
   encomendas.data
 FROM encomendas
-JOIN utilizadores ON encomendas.id_utilizador = utlizadores.id
+JOIN utilizadores ON encomendas.id_utilizador = utilizadores.id
 JOIN items_encomendas ON items_encomendas.id_encomenda = encomendas.id
 JOIN produtos ON produtos.id = items_encomendas.id_produto
 ORDER BY encomendas.data DESC`, 
     (err, results) => {
-      if (err) return res.status(500).json({ success: false, message: 'Erro ao carregar encomendas.' });
+      if (err) {
+        console.error('Erro ao carregar encomendas:', err);
+        return res.status(500).json({ success: false, message: 'Erro ao carregar encomendas.' });
+      }
 
       res.json(results);
     }
