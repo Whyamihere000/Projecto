@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import stylesNav from "../css/Global.module.css";
 import styles from "../css/MostrarPagamentos.module.css";
+import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function MostrarPagamentos() {
+  const [user, setUser] = useState(null);
   const [pagamentos, setPagamentos] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser && storedUser !== 'undefined') {
+      const user = JSON.parse(storedUser);
+      if (user.tipo_utilizador === 'admin') {
+        setUser(user);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchPagamentos = async () => {
@@ -44,22 +57,22 @@ function MostrarPagamentos() {
     { field: "cartao_token", headerName: "Token", width: 180 }
   ];
 
+  useEffect(() => {
+              document.body.className = styles.bodyHomeAdmin;
+              return () => {
+                  document.body.className = '';
+              };
+          }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('user');
-    navigater('/');
+    navigate('/');
   };
 
   return (
     <>
-    <nav className={stylesNav.navegacao_admin}>
-            <Link to="/admin/categorias" className={stylesNav.link}>Categorias</Link>
-            <Link to="/admin/marcas" className={stylesNav.link}>Marcas</Link>
-            <Link to="/admin/produtos" className={stylesNav.link}>Produtos</Link>
-            <Link to="/admin/utilizadores" className={stylesNav.link}>Utilizadores</Link>
-            <Link to="/admin/mostrar-encomendas" className={stylesNav.link}>Encomendas</Link>
-            <Link to="/admin/mostrar-pagamentos" className={stylesNav.link}>Pagamentos</Link>
-            <button className={stylesNav.logout} onClick={handleLogout}>Logout</button>
-          </nav>
+    <NavbarAdmin onLogout={handleLogout} user={user} />
+
     <div className={styles.container}>
       {pagamentos.length === 0 ? (
         <p>Sem pagamentos para mostrar.</p>
@@ -68,7 +81,6 @@ function MostrarPagamentos() {
           rows={pagamentos}
           columns={colunas}
           pageSize={10}
-          getRowHeight={() => 'auto'}
         />
       )}
     </div>

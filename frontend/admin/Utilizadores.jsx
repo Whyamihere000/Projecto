@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
 import stylesUtilizadores from "../css/Utilizadores.module.css";
+import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function Utilizadores() {
+  const [user, setUser] = useState(null);
   const [utilizadores, setUtilizadores] = useState([]);
 
   const [primeiro_nome, setPrimeiroNome] = useState('')
@@ -23,6 +25,8 @@ function Utilizadores() {
   const [mensagemTipo, setMensagemTipo] = useState("");  
   const [errors, setErrors] = useState({})
 
+  const navigate = useNavigate();
+
   // const validarEmail = (email) => {
   //   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   //   return regex.test(email);
@@ -33,6 +37,16 @@ function Utilizadores() {
   //   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
   //   return regex.test(password);
   // };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser && storedUser !== 'undefined') {
+      const user = JSON.parse(storedUser);
+      if (user.tipo_utilizador === 'admin') {
+        setUser(user);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const fetchUtilizadores = async () => {
@@ -242,31 +256,23 @@ const handleRegisto = async () => {
   }
 
 useEffect(() => {
-        document.body.className = stylesUtilizadores.bodyHome;
-        return () => {
-            document.body.className = '';
-        };
-    }, []);
+            document.body.className = styles.bodyHomeAdmin;
+            return () => {
+                document.body.className = '';
+            };
+        }, []);
 
     const handleLogout = () => {
     localStorage.removeItem('user');
-    navigater('/');
+    navigate('/');
   };
 
   return (
     <>
-      <nav className={styles.navegacao_admin}>
-              <Link to="/admin/categorias" className={styles.link}>Categorias</Link>
-              <Link to="/admin/marcas" className={styles.link}>Marcas</Link>
-              <Link to="/admin/produtos" className={styles.link}>Produtos</Link>
-              <Link to="/admin/utilizadores" className={styles.link}>Utilizadores</Link>
-              <Link to="/admin/mostrar-encomendas" className={styles.link}>Encomendas</Link>
-              <Link to="/admin/mostrar-pagamentos" className={styles.link}>Pagamentos</Link>
-              <button className={styles.logout} onClick={handleLogout}>Logout</button>
-            </nav>
+      <NavbarAdmin handleLogout={handleLogout} user={user} />
 
       <div className={stylesUtilizadores.container}>
-        <h1>Registo</h1>
+        <h1>Registo Colaborador</h1>
       <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} />
       {errors.primeiro_nome && <p style={{ color: 'red' }}>{errors.primeiro_nome}</p>}
 

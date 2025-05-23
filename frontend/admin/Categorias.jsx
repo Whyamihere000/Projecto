@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "../css/Global.module.css";
 import stylesCategorias from "../css/AdminCategorias.module.css";
 import NavbarAdmin from "../componentes/NavbarAdmin";
@@ -10,6 +10,8 @@ function Categorias() {
     const [categoria, setCategoria] = useState('');
     const [mensagem, setMensagem] = useState('');
     const [mensagemTipo, setMensagemTipo] = useState(''); // success ou error
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -48,9 +50,16 @@ function Categorias() {
         }
     }
 
+    useEffect(() => {
+                document.body.className = styles.bodyHomeAdmin;
+                return () => {
+                    document.body.className = '';
+                };
+            }, []);
+
     const handleLogout = () => {
     localStorage.removeItem('user');
-    navigater('/');
+    navigate('/');
   };
 
   useEffect(() => {
@@ -65,7 +74,6 @@ function Categorias() {
             <NavbarAdmin handleLogout={handleLogout} user={user} />
 
             <div className={stylesCategorias.container}>
-                <Link to="/admin">Voltar</Link>
                <h1>Adicionar Categoria</h1>
                 <input
                     type="text"

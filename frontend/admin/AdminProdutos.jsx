@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import ModalErro from "../componentes/ModalErro";
+import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
 import stylesProdutos from "../css/AdminProdutos.module.css";
@@ -33,6 +34,8 @@ function Produtos() {
     const [produtoSelecionado, setProdutoSelecionado] = useState(null);
     const [jsonEspecificacoesEditado, setJsonEspecificacoesEditado] = useState('');
     const [mostrarModal, setMostrarModal] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -330,9 +333,16 @@ function Produtos() {
         }
     };
 
+    useEffect(() => {
+                document.body.className = styles.bodyHomeAdmin;
+                return () => {
+                    document.body.className = '';
+                };
+            }, []);
+
     const handleLogout = () => {
     localStorage.removeItem('user');
-    navigater('/');
+    navigate('/');
   };
 
   useEffect(() => {

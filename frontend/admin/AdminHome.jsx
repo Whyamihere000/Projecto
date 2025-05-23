@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "../componentes/NavbarAdmin";
-import stylesAdminHome from "../css/Global.module.css";
+import styles from "../css/Global.module.css";
 
 function AdminHome() {
   const [user, setUser] = useState(null);
@@ -30,15 +30,15 @@ function AdminHome() {
 
   const handleLogout = () => {
     localStorage.removeItem('user');
-    navigater('/');
+    navigate('/');
   };
 
   useEffect(() => {
-        document.body.className = stylesAdminHome.bodyHome;
-        return () => {
-            document.body.className = ''; // Remove ao sair
-        };
-    }, []);
+              document.body.className = styles.bodyHomeAdmin;
+              return () => {
+                  document.body.className = '';
+              };
+          }, []);
     
   return (
     <>
