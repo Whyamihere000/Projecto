@@ -20,6 +20,7 @@ import ProdutoDetalhe from '../componentes/ProdutoDetalhe.jsx';
 import MostrarEncomendas from '../admin/MostrarEncomendas.jsx';
 import MostrarPagamentos from '../admin/MostrarPagamentos.jsx';
 import Favoritos from '../public/Favoritos.jsx';
+import Contactos from '../public/ContactosRoute.jsx';
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/perfil-encomendas" element={<PerfilEncomendas />} />
             <Route path="/produto/:id" element={<ProdutoDetalhe />} />
             <Route path="/perfil-favoritos" element={<Favoritos />} />
+            <Route path="/perfil-contactos" element={<Contactos/>} />
 
             {/* Routas admin */}
             
