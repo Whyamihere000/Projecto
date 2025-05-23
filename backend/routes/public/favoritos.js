@@ -50,9 +50,9 @@ routerFavoritos.get('/:id_utilizador', (req, res) => {
   const { id_utilizador } = req.params;
 
   db.query(
-    `SELECT p.* FROM favoritos f 
-     JOIN produtos p ON f.id_produto = p.id 
-     WHERE f.id_utilizador = ?`,
+    `SELECT produtos.* FROM favoritos 
+     JOIN produtos ON favoritos.id_produto = produtos.id 
+     WHERE favoritos.id_utilizador = ?`,
     [id_utilizador],
     (err, results) => {
       if (err) return res.status(500).json({ error: 'Erro ao carregar favoritos' });
