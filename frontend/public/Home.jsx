@@ -66,7 +66,7 @@ function Home() {
                 alt={produto.nome}
                 style={{
                   width: "100%",
-                  height: "auto",
+                  height: "35%",
                   marginBottom: "10px",
                 }}
               />
