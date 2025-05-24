@@ -180,7 +180,14 @@ function Produtos() {
                   
                     <Link key={produto.id} to={`/produto/${produto.id}`}
                     style={{
-                      textDecoration: "none", color: "inherit", border: "1px solid #ccc", padding: "10px", width: "250px", margin: "10px", display: "flex", flexDirection: "column",
+                      textDecoration: "none",
+                      color: "inherit",
+                      border: "1px solid #ccc",
+                      padding: "10px",
+                      width: "fit-content",
+                      margin: "10px",
+                      display: "flex",
+                      flexDirection: "column",
                     }}>
                         <h3>{produto.nome}</h3>
                         <p>{produto.sku}</p>
