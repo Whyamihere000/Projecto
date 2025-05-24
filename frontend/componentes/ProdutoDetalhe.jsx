@@ -142,8 +142,8 @@ const toggleFavorito = async () => {
         <div className={styles.left}>
           <h2 className={styles.titulo}>{produto.nome}</h2>
           <p className={styles.preco}>€{produto.preco}</p>
-          <p className={styles.stock}>
-            {produto.stock > 0 ? "Em stock" : "Sem stock"}
+          <p style={{color: produto.stock === 0 ? "red" : produto.stock < 10 ? "orange" : "green", margin: "10px 0", fontWeight: "600"}}>
+            {produto.stock === 0 ? "Sem stock" : produto.stock < 10 ? "Poucas Unidades" : "Em stock"} 
           </p>
           <p className={styles.descricao}>{produto.descricao}</p>
 

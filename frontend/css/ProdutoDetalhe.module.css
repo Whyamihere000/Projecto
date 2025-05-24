@@ -47,11 +47,22 @@
   font-weight: bold;
 }
 
-.stock {
+/* .sem-stock, .poucas-unidades, .em-stock {
   margin: 10px 0;
-  color: green;
   font-weight: 600;
 }
+
+.sem-stock {
+  color: #ff0000 !important;
+}
+
+.poucas-unidades {
+  color: #ff9900 !important;
+}
+
+.em-stock {
+  color: #00ff00 !important;
+} */
 
 .descricao {
   color: #555;
