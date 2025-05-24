@@ -294,7 +294,20 @@ routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
           return res.status(500).json({ success: false, message: 'Erro ao atualizar produtos.' });
         }
 
-      res.json({ success: true, message: 'Pagamento registado com sucesso.' });
+        db.query(
+            `UPDATE carrinhos SET estado = 'finalizado'
+             WHERE id = (SELECT id_carrinho FROM encomendas WHERE id = ?) AND estado = 'ativo'`,
+            [id_encomenda],
+            (err) => {
+              if (err) {
+                console.error(err);
+                return res.status(500).json({ success: false, message: 'Erro ao finalizar o carrinho.' });
+              }
+
+            
+              res.json({ success: true, message: 'Pagamento registado e carrinho finalizado com sucesso.' });
+            }
+          );
     });
   });
   });
