@@ -35,6 +35,9 @@ function Produtos() {
     const [jsonEspecificacoesEditado, setJsonEspecificacoesEditado] = useState('');
     const [mostrarModal, setMostrarModal] = useState(false);
 
+    const [mostrarModalImagem, setMostrarModalImagem] = useState(false);
+    const [imagemUrlEditada, setImagemUrlEditada] = useState('');
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -239,14 +242,38 @@ function Produtos() {
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'sku', headerName: 'SKU', width: 130, editable: true },
         { field: 'nome', headerName: 'Nome', width: 130, editable: true },
-        { field: 'imagem_url', headerName: 'Imagem', width: 200, 
-            renderCell: (params) => (
-                <img
-                    src={params.row.imagem_url ? `http://localhost:3001/${params.row.imagem_url}` : {imagem_url}}
-                    style={{ width: '200px', height: '200px' }}
-                />
-            )
-        },
+        {
+  field: 'imagem_url',
+  headerName: 'Imagem',
+  width: 200,
+  renderCell: (params) => (
+    <img
+      src={
+        params.row.imagem_url
+          ? params.row.imagem_url.startsWith('http://') || params.row.imagem_url.startsWith('https://')
+            ? params.row.imagem_url
+            : `http://localhost:3001${params.row.imagem_url}`
+          : ''
+      }
+      alt="Imagem do produto"
+      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+    />
+  ),
+},
+{
+  field: 'editarImagem',
+  headerName: 'Editar Imagem',
+  width: 130,
+  renderCell: (params) => (
+    <button onClick={() => {
+      setProdutoSelecionado(params.row);
+      setImagemUrlEditada(params.row.imagem_url);
+      setMostrarModalImagem(true);
+    }}>
+      Editar
+    </button>
+  )
+},
         { field: 'tipo_produto', headerName: 'Tipo de Produto', width: 150 },
         {field: 'especificacoes',
     headerName: 'Especificações',
@@ -435,6 +462,34 @@ function Produtos() {
   </div>
 )}
 
+{mostrarModalImagem && (
+  <div className={stylesProdutos.modalOverlayImagem}>
+    <div className={stylesProdutos.modalContentImagem}>
+      <h3>Editar URL da Imagem</h3>
+      <input 
+        type="text" 
+        value={imagemUrlEditada} 
+        onChange={(e) => setImagemUrlEditada(e.target.value)} 
+        style={{ width: '100%' }}
+      />
+      <div className={stylesProdutos.modalButtonsImagem}>
+        <button onClick={() => {
+          if (!imagemUrlEditada.trim()) {
+            alert('URL não pode estar vazio!');
+            return;
+          }
+          atualizarProduto({ ...produtoSelecionado, imagem_url: imagemUrlEditada });
+          setMostrarModalImagem(false);
+        }}>
+          Guardar
+        </button>
+        <button onClick={() => setMostrarModalImagem(false)}>Cancelar</button>
+      </div>
+    </div>
+  </div>
+)}
+
+
             <NavbarAdmin handleLogout={handleLogout} user={user} />
 
             <div className={stylesProdutos.container}>
@@ -544,4 +599,4 @@ function Produtos() {
     );
 }
 
-export default Produtos;
+export default Produtos
