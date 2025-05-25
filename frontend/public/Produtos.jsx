@@ -150,10 +150,10 @@ function Produtos() {
           </div>
 
           <div className={stylesProdutos.produtosPublic}>
-            <h1>Produtos</h1>
+            <h1 className={stylesProdutos.TitleProdutos}>Produtos</h1>
             {produtosFiltrados.length > 0 ? (
               produtosFiltrados.map((produto) => (
-                <Link
+                <Link className={stylesProdutos.divalink}
                   key={produto.id}
                   to={`/produto/${produto.id}`}
                   style={{
