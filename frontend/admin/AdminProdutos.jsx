@@ -328,6 +328,61 @@ function Produtos() {
               { nome: 'GPU', campo: 'gpu' }
             ])
             break;
+            case 'Processador':
+      setCamposEspecificacoes([
+        { nome: 'Número de Núcleos', campo: 'nucleos' },
+        { nome: 'Número de Threads', campo: 'threads' },
+        { nome: 'Frequência Base', campo: 'frequencia_base' },
+        { nome: 'Frequência Turbo', campo: 'frequencia_turbo' },
+        { nome: 'Cache', campo: 'cache' },
+      ]);
+      break;
+    case 'Motherboard':
+      setCamposEspecificacoes([
+        { nome: 'Socket', campo: 'socket' },
+        { nome: 'Chipset', campo: 'chipset' },
+        { nome: 'Formato', campo: 'formato' },
+        { nome: 'Memória Máxima Suportada', campo: 'memoria_maxima' },
+      ]);
+      break;
+    case 'Armazenamento':
+      setCamposEspecificacoes([
+        { nome: 'Tipo', campo: 'tipo' },
+        { nome: 'Capacidade', campo: 'capacidade' },
+        { nome: 'Interface', campo: 'interface' },
+        { nome: 'Velocidade de Leitura', campo: 'leitura' },
+        { nome: 'Velocidade de Escrita', campo: 'escrita' },
+      ]);
+      break;
+    case 'Fonte de Alimentação':
+      setCamposEspecificacoes([
+        { nome: 'Potência', campo: 'potencia' },
+        { nome: 'Certificação', campo: 'certificacao' },
+        { nome: 'Modular', campo: 'modular' },
+      ]);
+      break;
+    case 'Caixa':
+      setCamposEspecificacoes([
+        { nome: 'Formato', campo: 'formato' },
+        { nome: 'Cor', campo: 'cor' },
+        { nome: 'Tipo de Painel Lateral', campo: 'painel_lateral' },
+      ]);
+      break;
+    case 'Monitor':
+      setCamposEspecificacoes([
+        { nome: 'Tamanho', campo: 'tamanho' },
+        { nome: 'Resolução', campo: 'resolucao' },
+        { nome: 'Taxa de Atualização', campo: 'taxa_atualizacao' },
+        { nome: 'Tipo de Painel', campo: 'tipo_painel' },
+      ]);
+      break;
+    case 'Periféricos':
+      setCamposEspecificacoes([
+        { nome: 'Tipo', campo: 'tipo' },
+        { nome: 'Conetividade', campo: 'conetividade' },
+        { nome: 'Compatibilidade', campo: 'compatibilidade' },
+      ]);
+      break;
           default:
             setCamposEspecificacoes([])
         }
