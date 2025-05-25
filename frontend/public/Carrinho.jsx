@@ -164,15 +164,12 @@ const handleLogout = () => {
                           onClick={(e) => {
                             e.preventDefault();
                             handleRemoverItem(item.id_produto);
-                          }}
-                        >
-                          Remover
+                          }}>Remover
                         </button>
                       </div>     
                     </Link>
                   ))}
                 </div>
-
                 {/* Finalizar compra e total */}
                 <div className={stylesCarrinho.total}> 
                   <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
