@@ -139,6 +139,7 @@ const toggleFavorito = async () => {
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
+      <div style={{ flex: 1 }}>
       <div className={styles.container}>
         <div className={styles.left}>
           <h2 className={styles.titulo}>{produto.nome}</h2>
@@ -184,6 +185,7 @@ const toggleFavorito = async () => {
             />
           )}
         </div>
+      </div>
       </div>
       {openModal && (
           <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
