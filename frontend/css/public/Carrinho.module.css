@@ -128,10 +128,12 @@
   text-decoration: none;
   color: inherit;
 }
-.itemlink:hover {
+
+.itemLink:hover {
   text-decoration: none;
-    color: inherit;
+  color: inherit;
 }
+
 .itensCarrinhoContainer {
   display: grid;
   grid-template-columns: repeat(5, 300px);

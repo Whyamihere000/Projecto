@@ -1,8 +1,3 @@
-.bodyHome {
-    background-color: #1A1A1D;
-    background-repeat: no-repeat;  
-}
-
 .home {
     font-family: Arial, sans-serif;
     text-align: left;
@@ -98,4 +93,9 @@
   text-decoration: none;
   color: inherit;
   display: flex;
+}
+
+.cardLink:hover {
+  text-decoration: none;
+  color: inherit;
 }
