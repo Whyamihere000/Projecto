@@ -271,11 +271,13 @@ routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
   db.query(`
     INSERT INTO pagamentos (id_encomenda, metodo, estado, informacoes_adicionais)
     VALUES (?, ?, 'pendente', ?)
-  `, [id_encomenda, metodoPagamento, detalhesPagamento || null], (err) => {
+  `, [id_encomenda, metodoPagamento, detalhesPagamento || null], (err, resultado) => {
     if (err) {
       console.error(err);
       return res.status(500).json({ success: false, message: 'Erro ao registar pagamento.' });
     }
+
+    const id_pagamento = resultado.insertId;
 
     db.query(`UPDATE encomendas SET estado = 'pago' WHERE id = ?`, [id_encomenda], (err) => {
       if (err) {
@@ -304,10 +306,17 @@ routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
                 return res.status(500).json({ success: false, message: 'Erro ao finalizar o carrinho.' });
               }
 
-            
-              res.json({ success: true, message: 'Pagamento registado e carrinho finalizado com sucesso.' });
+            db.query(`UPDATE pagamentos SET estado = 'pago' WHERE id = ?`, [id_pagamento], (err) => {
+                if (err) {
+                  console.error(err);
+                  return res.status(500).json({ success: false, message: 'Erro ao atualizar estado do pagamento.' });
+                }
+
+                res.json({ success: true, message: 'Pagamento registado e carrinho finalizado com sucesso.' });
+              });
             }
           );
+          
     });
   });
   });
