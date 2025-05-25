@@ -127,7 +127,7 @@ const handleLogout = () => {
       <Navbar user={user} handleLogout={handleLogout} />
       <main className={stylesCarrinho.mainCarrinho}>
         <br />
-        <h1>Carrinho</h1>
+        <h1 className={stylesCarrinho.Carrinhoh1}>Carrinho</h1>
         {mensagem && (
         <p style={{ color: mensagem.includes("Erro") ? "red" : "green" }}>
           {mensagem}
@@ -135,15 +135,16 @@ const handleLogout = () => {
         )}
         {carrinho ? (
           <div>
-            {carrinho.items.length > 0 ? (
-              <div>
-               {carrinho.items.map((item) => (
-                  <Link
-                    key={item.id_produto}
-                    to={`/produto/${item.id_produto}`}
-                    className={stylesCarrinho.itemLink}
-                  >
-                    <div className={stylesCarrinho.itemCarrinho}>
+           {carrinho.items.length > 0 ? (
+              <>
+                <div className={stylesCarrinho.itensCarrinhoContainer}>
+                  {carrinho.items.map((item) => (
+                    <Link
+                      key={item.id_produto}
+                      to={`/produto/${item.id_produto}`}
+                      className={stylesCarrinho.itemLink}
+                    >
+                      <div className={stylesCarrinho.itemCarrinho}>
                         <h3>{item.nome}</h3>
                         {item.imagem_url && (
                           <img
@@ -158,7 +159,6 @@ const handleLogout = () => {
                         )}
                         <p>Quantidade: {item.quantidade}</p>
                         <p>Preço: {item.preco}€</p>
-
                         <button
                           className={stylesCarrinho.removerItem}
                           onClick={(e) => {
@@ -169,21 +169,24 @@ const handleLogout = () => {
                           Remover
                         </button>
                       </div>     
-                  </Link>
-                ))}
-                <div className={stylesCarrinho.total}>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Finalizar compra e total */}
+                <div className={stylesCarrinho.total}> 
                   <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
                   <button onClick={handleFinalizarCompra}>Finalizar Compra</button>
                 </div>
-              </div>
+              </>
             ) : (
               <p>O seu carrinho está vazio.</p>
             )}
-          </div>
+          </div>          
         ) : (
           <p>Carregando carrinho...</p>
-        )}
-      </main>
+        )}       
+      </main>  
     </>
   );
 }
