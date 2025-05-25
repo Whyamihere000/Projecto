@@ -31,7 +31,13 @@
     border-radius: 8px;
     color: white;
 }
-
+.carrosselContainer {
+  width: 100%;
+  margin: 20px auto;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0 0 10px 10px;
+}
 .produtosPublic {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     flex: 4;

@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+
 import Home from '../public/Home.jsx';
 import Perfil from '../public/Perfil.jsx';
 import Login from '../public/Login.jsx';
@@ -22,6 +23,7 @@ import MostrarPagamentos from '../admin/MostrarPagamentos.jsx';
 import Favoritos from '../public/Favoritos.jsx';
 import Contactos from '../public/ContactosRoute.jsx';
 import MostrarContactos from '../admin/MostrarContactos.jsx';
+import ContactoLoja from '../public/ContactoLoja.jsx';
 
 function App() {
     return (
@@ -42,6 +44,7 @@ function App() {
             <Route path="/produto/:id" element={<ProdutoDetalhe />} />
             <Route path="/perfil-favoritos" element={<Favoritos />} />
             <Route path="/perfil-contactos" element={<Contactos/>} />
+            <Route path="/contacto-loja" element={<ContactoLoja />} />
 
             {/* Routas admin */}
             

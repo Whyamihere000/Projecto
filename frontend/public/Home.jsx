@@ -71,7 +71,7 @@ function Home() {
                 alt={produto.nome}
                 style={{
                   width: "100%",
-                  height: "35%",
+                  height: "250px",
                   marginBottom: "10px",
                 }}
               />
@@ -97,8 +97,8 @@ function Home() {
     <div className={styles.home}>
       <Navbar user={user} handleLogout={handleLogout} />
 
-      <section className={styles.carrosselContainer}>
-        <Carousel
+      <section>
+        <Carousel className={styles.carrosselContainer}
           autoPlay
           infiniteLoop
           showThumbs={false}
@@ -123,6 +123,10 @@ function Home() {
           <ComponentesNav/>
           <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
           {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
+        </section>
+
+        <section className={styles.tituloSecao}> 
+          <img src="https://img.globaldata.pt/cms/images/block/global-1banner-produtosemana25_1219-desktop.png" alt="imagem promoção" />
         </section>
 
         <section>
