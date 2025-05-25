@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "../css/public/Contactos.module.css";
 import Navbar from "../componentes/Navbar";
 import SubNavbar from "../componentes/SubNavbar";
+import { Link } from "react-router-dom";
 
 function Contactos() {
   const [user, setUser] = useState(null);
@@ -93,6 +94,7 @@ function Contactos() {
             ></textarea>
           </div>
           <button type="submit" className={styles.submitButton}>Enviar</button>
+           <Link to="/contacto-loja" className={styles.subNavLink}>Informações</Link>
           {status === "success" && (
             <p className={styles.successMessage}>Mensagem enviada com sucesso!</p>
           )}
@@ -101,6 +103,7 @@ function Contactos() {
           )}
         </form>
       </div>
+
     </>
   );
 }
