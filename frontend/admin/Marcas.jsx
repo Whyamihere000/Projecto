@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styles from "../css/Global.module.css";
-import stylesMarcas from "../css/AdminMarcas.module.css";
+import stylesMarcas from "../css/adm/AdminMarcas.module.css";
 import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function Marcas() {

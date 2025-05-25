@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import styles from '../css/Registo.module.css'
+import styles from '../css/public/Registo.module.css'
 import Navbar from '../componentes/Navbar'
 
 function Registo() {

@@ -27,8 +27,8 @@ function Navbar({ user, handleLogout, pesquisa}) {
   return (
     <nav className={styles.nav}>
       <div className={styles.navLeft}>
-        <img src="../icons/logo.png" alt="Logo" className={styles.logoIcon} />
-        <Link to="/" className={styles.navHome}>Home</Link>
+        
+        <Link to="/" className={styles.navHome}><img src="../icons/logo.png" alt="Logo" className={styles.logoIcon} /></Link>
         {/* <Link to="/produtos" className={styles.navProdutos}>Produtos</Link> */}
 
         <div className={styles.dropdown}>
@@ -69,9 +69,18 @@ function Navbar({ user, handleLogout, pesquisa}) {
         {user ? (
           <>
             <Link to="/perfil-favoritos" className={styles.navCarrinho}>♥️</Link>
-            <Link to={'/perfil'} className={styles.navPerfil}>{user.primeiro_nome}</Link>
+            <div className={styles.dropdown}>
+            <Link to="/perfil"><button className={styles.dropbtn}>👤▾</button></Link>
+            <div className={styles.dropdownContent}>
+            <Link to="/perfil">Bem Vindo!: {user.primeiro_nome}</Link>
+            <Link to="/perfil-encomendas">Encomendas</Link>
+            <Link to="/perfil-favoritos">Favoritos</Link>
+            <Link to="/perfil-contactos">Contactos</Link>
             <button onClick={handleLogout}>Logout</button>
-            <Link to="/carrinho" className={styles.navCarrinho}>Carrinho</Link>
+          </div>
+        </div>              
+            <button onClick={handleLogout}>Logout</button>
+            <Link to="/carrinho" className={styles.navCarrinho}>🛒</Link>
           </>
         ) : (
           <Link to="/login" className={styles.navLogin} onClick={() => {localStorage.setItem('redirectAfterLogin', window.location.pathname)}}>Login</Link>

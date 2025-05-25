@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import stylesCarrinho from "../css/Carrinho.module.css";
+import stylesCarrinho from "../css/public/Carrinho.module.css";
 import styles from "../css/Global.module.css";
 import Navbar from "../componentes/Navbar";
 
@@ -137,29 +137,39 @@ const handleLogout = () => {
           <div>
             {carrinho.items.length > 0 ? (
               <div>
-                {carrinho.items.map((item) => (
-                  <div key={item.id_produto} className={stylesCarrinho.itemCarrinho}>
-                    <h3>{item.nome}</h3>
-                    {item.imagem_url && (
+               {carrinho.items.map((item) => (
+                  <Link
+                    key={item.id_produto}
+                    to={`/produto/${item.id_produto}`}
+                    className={stylesCarrinho.itemLink}
+                  >
+                    <div className={stylesCarrinho.itemCarrinho}>
+                        <h3>{item.nome}</h3>
+                        {item.imagem_url && (
                           <img
                             src={
-                              item.imagem_url.startsWith("http://") ||
-                              item.imagem_url.startsWith("https://")
+                              item.imagem_url.startsWith("http://") || item.imagem_url.startsWith("https://")
                                 ? item.imagem_url
                                 : `http://localhost:3001${item.imagem_url}`
                             }
                             alt={item.nome}
-                            style={{
-                              width: "100%",
-                              height: "auto",
-                              marginBottom: "10px",
-                            }}
+                            className={stylesCarrinho.imagemProduto}
                           />
                         )}
-                    <p>Quantidade: {item.quantidade}</p>
-                    <p>Preço: {item.preco}€</p>
-                    <button onClick={() => handleRemoverItem(item.id_produto)}>Remover</button>
-                  </div>
+                        <p>Quantidade: {item.quantidade}</p>
+                        <p>Preço: {item.preco}€</p>
+
+                        <button
+                          className={stylesCarrinho.removerItem}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleRemoverItem(item.id_produto);
+                          }}
+                        >
+                          Remover
+                        </button>
+                      </div>     
+                  </Link>
                 ))}
                 <div className={stylesCarrinho.total}>
                   <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>

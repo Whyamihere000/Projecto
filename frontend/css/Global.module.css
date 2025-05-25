@@ -87,7 +87,9 @@ body.bodyHomeAdmin {
     color: #ffffff;
     text-decoration: none;
     padding: 10px;
-    border-radius: 5px
+    border-radius: 5px;
+    size: 20px;
+    font-size: 16px;
 }
 
 .navHome:hover, .navProdutos:hover {
@@ -202,7 +204,7 @@ body.bodyHomeAdmin {
 }
 
 .logoIcon {
-  width: 32px;
+  width: 182px;
   height: 32px;
   margin-right: 10px;
 }

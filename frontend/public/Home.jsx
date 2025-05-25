@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import styles from '../css/Home.module.css';
+
+import styles from '../css/public/Home.module.css';
 import stylesGlobal from '../css/Global.module.css';
+
+import ComponentesNav from "../componentes/ComponentesNav";
 import Navbar from '../componentes/Navbar';
 import Footer from '../componentes/Footer';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
+
+
 
 function Home() {
   const [user, setUser] = useState(null);
@@ -115,6 +120,7 @@ function Home() {
 
       <main className={styles.mainHome}>
         <section className={styles.secaoProdutos}>
+          <ComponentesNav/>
           <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
           {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
         </section>

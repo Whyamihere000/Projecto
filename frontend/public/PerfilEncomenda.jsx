@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
-import styles from "../css/PerfilEncomendas.module.css";
+import styles from "../css/public/PerfilEncomendas.module.css";
 
 import Navbar from "../componentes/Navbar";
 import SubNavbar from "../componentes/SubNavbar";

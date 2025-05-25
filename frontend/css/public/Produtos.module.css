@@ -33,26 +33,30 @@
 }
 
 .produtosPublic {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     flex: 4;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: flex-start;
+    background-color: #ffffff; /* fundo branco */
+    padding: 20px;
+    border-radius: 10px;
 }
 
+
 .produtosPublic > div {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    width: calc(25% - 20px);
-    box-sizing: border-box;
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-    box-sizing: border-box;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  width: calc(25% - 20px);
+  box-sizing: border-box;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
 }
 
 .produtosPublic > div:hover {
@@ -61,9 +65,8 @@
 }
 
 .produtosPublic h1 {
-  
-    font-size: 2rem;
-    color: #ffffff;
+   font-size: 2rem;
+    color: #222; /* cor escura para fundo branco */
     margin-bottom: 20px;
     width: 100%;
 }

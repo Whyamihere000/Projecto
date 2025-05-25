@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import stylesNav from "../css/Global.module.css";
-import styles from "../css/MostrarPagamentos.module.css";
+import styles from "../css/adm/MostrarPagamentos.module.css";
 import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function MostrarPagamentos() {

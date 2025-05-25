@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../css/Perfil.module.css";
+import styles from "../css/public/Perfil.module.css";
 import { Navigate, useLocation, Link } from "react-router-dom";
 
 import Navbar from "../componentes/Navbar";

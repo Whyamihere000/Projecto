@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "../css/SucessoPagamento.module.css";
+import styles from "../css/public/SucessoPagamento.module.css";
 
 function SucessoPagamento() {
   return (

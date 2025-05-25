@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../css/Contactos.module.css";
+import styles from "../css/public/Contactos.module.css";
 import Navbar from "../componentes/Navbar";
 import SubNavbar from "../componentes/SubNavbar";
 

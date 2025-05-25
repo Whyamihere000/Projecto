@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
-import stylesUtilizadores from "../css/Utilizadores.module.css";
+import stylesUtilizadores from "../css/adm/Utilizadores.module.css";
 import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function Utilizadores() {

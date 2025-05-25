@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
-import stylesEncomendas from "../css/MostrarEncomendas.module.css";
+import stylesEncomendas from "../css/adm/MostrarEncomendas.module.css";
 import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function MostrarContactos() {

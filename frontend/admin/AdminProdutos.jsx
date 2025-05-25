@@ -4,7 +4,7 @@ import ModalErro from "../componentes/ModalErro";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
-import stylesProdutos from "../css/AdminProdutos.module.css";
+import stylesProdutos from "../css/adm/AdminProdutos.module.css";
 import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function Produtos() {

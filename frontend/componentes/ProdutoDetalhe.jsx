@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ModalErro from "./ModalErro";
 import axios from "axios";
-import styles from "../css/ProdutoDetalhe.module.css";
+import styles from "../css/public/ProdutoDetalhe.module.css";
 import Navbar from "./Navbar";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import ModalErro from '../componentes/ModalGlobal'
-import Styles from '../css/Login.module.css'
+import Styles from '../css/public/Login.module.css'
 import Navbar from "../componentes/Navbar";
 
 function Login() {

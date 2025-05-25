@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-//import stylesEncomendas from "../css/Encomendas.module.css";
+import stylesEncomendas from "../css/public/Encomendas.module.css";
 import styles from "../css/Global.module.css";
 
 function Encomendas() {

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import classNames from "classnames";
-import styles from "../css/FinalizarEncomenda.module.css";
+import styles from "../css/public/FinalizarEncomenda.module.css";
 import Navbar from "../componentes/Navbar";
 
 function FinalizarEncomenda() {

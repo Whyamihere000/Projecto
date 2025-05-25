@@ -4,7 +4,7 @@ import ModalErro from "../componentes/ModalErro";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../componentes/Navbar";
 import SubNavbar from "../componentes/SubNavbar";
-import styles from "../css/Favoritos.module.css";
+import styles from "../css/public/Favoritos.module.css";
 
 function Favoritos() {
   const [favoritos, setFavoritos] = useState([]);

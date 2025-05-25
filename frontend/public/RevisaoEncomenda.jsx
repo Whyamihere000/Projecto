@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 //import styles from "../css/Global.module.css";
-import styles from "../css/RevisaoEncomenda.module.css";
+import styles from "../css/public/RevisaoEncomenda.module.css";
 import Navbar from "../componentes/Navbar";
 
 
