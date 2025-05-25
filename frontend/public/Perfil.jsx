@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "../css/public/Perfil.module.css";
-import { Navigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import Navbar from "../componentes/Navbar";
 import SubNavbar from "../componentes/SubNavbar";
@@ -16,6 +16,8 @@ function Perfil() {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
+  const Navigate = useNavigate();
+
   useEffect(() => {
     document.body.className = styles.bodyHome;
     return () => {
@@ -29,6 +31,7 @@ function Perfil() {
       const user = JSON.parse(storedUser);
       if (user.tipo_utilizador === 'cliente') {
         setUser(user);
+        fetchDadosUser(user.id);
       }
     }
   }, []);
