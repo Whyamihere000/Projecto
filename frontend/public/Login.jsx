@@ -92,6 +92,13 @@ function Login() {
     }
   }
 
+  useEffect(() => {
+                  document.body.className = Styles.bodyHome;
+                  return () => {
+                      document.body.className = '';
+                  };
+              }, []);
+
   const closeModal = () => {
     setOpenModal(false);
   };

@@ -1,117 +1,159 @@
 import { useState, useEffect } from "react";
-import axios from 'axios'
-import { Link } from 'react-router-dom'
-import styles from '../css/public/Registo.module.css'
-import Navbar from '../componentes/Navbar'
+import axios from "axios";
+import { Link } from "react-router-dom";
+import styles from "../css/public/Registo.module.css";
+import Navbar from "../componentes/Navbar";
 
 function Registo() {
-  const [primeiro_nome, setPrimeiroNome] = useState('')
-  const [ultimo_nome, setUltimoNome] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [password_confirmation, setPasswordConfirmation] = useState('')
+  const [formData, setFormData] = useState({
+    primeiro_nome: "",
+    ultimo_nome: "",
+    email: "",
+    password: "",
+    password_confirmation: ""
+  });
 
-  const [message, setMessage] = useState('')
-  const [messageType, setMessageType] = useState('')
-  const [errors, setErrors] = useState({})
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
+  const [errors, setErrors] = useState({});
 
-  const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validarPassword = (password) =>
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/.test(password)
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/.test(password);
 
   const handleRegisto = async () => {
-    const errors = {}
+    const errors = {};
 
-    if (!primeiro_nome) errors.primeiro_nome = 'O primeiro nome é obrigatório.'
-    if (!ultimo_nome) errors.ultimo_nome = 'O último nome é obrigatório.'
-    if (!email) {
-      errors.email = 'O email é obrigatório.'
-    } else if (!validarEmail(email)) {
-      errors.email = 'Formato de email inválido.'
+    if (!formData.primeiro_nome) errors.primeiro_nome = "O primeiro nome é obrigatório.";
+    if (!formData.ultimo_nome) errors.ultimo_nome = "O último nome é obrigatório.";
+    if (!formData.email) {
+      errors.email = "O email é obrigatório.";
+    } else if (!validarEmail(formData.email)) {
+      errors.email = "Formato de email inválido.";
     }
 
-    if (!password) {
-      errors.password = 'A palavra-passe é obrigatória.'
-    } else if (!validarPassword(password)) {
-      errors.password = 'A palavra-passe deve ter pelo menos 8 caracteres, uma maiúscula, uma minúscula, um número e um símbolo.'
+    if (!formData.password) {
+      errors.password = "A palavra-passe é obrigatória.";
+    } else if (!validarPassword(formData.password)) {
+      errors.password = "A palavra-passe deve ter pelo menos 8 caracteres, uma maiúscula, uma minúscula, um número e um símbolo.";
     }
 
-    if (password !== password_confirmation) {
-      errors.password_confirmation = 'A palavra-passe e a confirmação não coincidem.'
+    if (formData.password !== formData.password_confirmation) {
+      errors.password_confirmation = "A palavra-passe e a confirmação não coincidem.";
     }
 
     if (Object.keys(errors).length > 0) {
-      setErrors(errors)
-      setMessage('Verifique os erros.')
-      setMessageType('error')
-      return
+      setErrors(errors);
+      setMessage("Verifique os erros.");
+      setMessageType("error");
+      return;
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/api/auth/registo', {
-        primeiro_nome,
-        ultimo_nome,
-        email,
-        password
-      })
+      const response = await axios.post("http://localhost:3001/api/auth/registo", {
+        primeiro_nome: formData.primeiro_nome,
+        ultimo_nome: formData.ultimo_nome,
+        email: formData.email,
+        password: formData.password,
+      });
 
       if (response.data.success) {
-        localStorage.setItem('user', JSON.stringify(response.data.user))
-        setMessage('Registo efetuado com sucesso.')
-        setMessageType('success')
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        setMessage("Registo efetuado com sucesso.");
+        setMessageType("success");
 
-        if (response.data.user.tipo_utilizador === 'admin') {
-          window.location.href = '/admin'
+        if (response.data.user.tipo_utilizador === "admin") {
+          window.location.href = "/admin";
         } else {
-          window.location.href = '/'
+          window.location.href = "/";
         }
       } else {
-        setMessage(response.data.message)
-        setMessageType('error')
+        setMessage(response.data.message);
+        setMessageType("error");
       }
     } catch (error) {
-      console.error('Erro no registo:', error.response?.data || error.message)
-      setMessage(error.response?.data?.message || 'Ocorreu um erro ao fazer o registo.')
-      setMessageType('error')
+      console.error("Erro no registo:", error.response?.data || error.message);
+      setMessage(error.response?.data?.message || "Ocorreu um erro ao fazer o registo.");
+      setMessageType("error");
     }
-  }
+  };
+
+  useEffect(() => {
+    document.body.className = styles.bodyHome;
+    return () => {
+      document.body.className = "";
+    };
+  }, []);
 
   return (
     <>
+      <div className={styles.container}>
+        <Navbar user={null} handleLogout={null} pesquisa={null} setPesquisa={null} />
 
+        <h1 className={styles.title}>Registo</h1>
 
-    <div className={styles.container}>
-      <Navbar user={null} handleLogout={null} pesquisa={null} setPesquisa={null} />
+        <input
+          type="text"
+          name="primeiro_nome"
+          placeholder="Primeiro Nome"
+          onChange={handleChange}
+          className={styles.input}
+        />
+        {errors.primeiro_nome && <p className={styles.errorText}>{errors.primeiro_nome}</p>}
 
-      <h1 className={styles.title}>Registo</h1>
+        <input
+          type="text"
+          name="ultimo_nome"
+          placeholder="Último Nome"
+          onChange={handleChange}
+          className={styles.input}
+        />
+        {errors.ultimo_nome && <p className={styles.errorText}>{errors.ultimo_nome}</p>}
 
-      <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} className={styles.input} />
-      {errors.primeiro_nome && <p className={styles.errorText}>{errors.primeiro_nome}</p>}
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={handleChange}
+          className={styles.input}
+        />
+        {errors.email && <p className={styles.errorText}>{errors.email}</p>}
 
-      <input type="text" placeholder="Último Nome" onChange={(e) => setUltimoNome(e.target.value)} className={styles.input} />
-      {errors.ultimo_nome && <p className={styles.errorText}>{errors.ultimo_nome}</p>}
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={handleChange}
+          className={styles.input}
+        />
+        {errors.password && <p className={styles.errorText}>{errors.password}</p>}
 
-      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} className={styles.input} />
-      {errors.email && <p className={styles.errorText}>{errors.email}</p>}
+        <input
+          type="password"
+          name="password_confirmation"
+          placeholder="Confirmar Password"
+          onChange={handleChange}
+          className={styles.input}
+        />
+        {errors.password_confirmation && <p className={styles.errorText}>{errors.password_confirmation}</p>}
 
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} className={styles.input} />
-      {errors.password && <p className={styles.errorText}>{errors.password}</p>}
+        <button onClick={handleRegisto} className={styles.button}>Registar</button>
 
-      <input type="password" placeholder="Confirmar Password" onChange={(e) => setPasswordConfirmation(e.target.value)} className={styles.input} />
-      {errors.password_confirmation && <p className={styles.errorText}>{errors.password_confirmation}</p>}
+        {message && (
+          <div className={styles.message} style={{ color: messageType === "error" ? "red" : "green" }}>
+            {message}
+          </div>
+        )}
 
-      <button onClick={handleRegisto} className={styles.button}>Registar</button>
-
-      {message && (
-        <div className={styles.message} style={{ color: messageType === 'error' ? 'red' : 'green' }}>
-          {message}
-        </div>
-      )}
-
-      <Link to="/" style={{ marginTop: '10px', textAlign: 'center', color: '#007bff' }}>Voltar</Link>
-    </div>
+        <Link to="/" style={{ marginTop: "10px", textAlign: "center", color: "#007bff" }}>Voltar</Link>
+      </div>
     </>
-  )
+  );
 }
 
-export default Registo
+export default Registo;
