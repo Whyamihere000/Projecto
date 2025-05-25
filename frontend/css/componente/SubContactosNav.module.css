@@ -1,0 +1,29 @@
+.subNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  background: linear-gradient(to bottom, #111111, #222222);
+  background-color: #000000;
+  color: #fff;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 50px; /* Distância da navbar principal */
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 60px; /* Assumindo que a navbar principal tem ~60px */
+  z-index: 999;
+}
+
+.subNavLink {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.subNavLink:hover {
+  background-color: #0033a0;
+}

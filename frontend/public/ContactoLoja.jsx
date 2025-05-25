@@ -1,8 +1,11 @@
 // contactoloja.jsx
 import styles from "../css/public/ContactoLoja.module.css";
-import Navbar from "../componentes/Navbar";
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import Navbar from "../componentes/Navbar";
+import SubContactosNav from "../componentes/SubContactosNav";
 
 function ContactoLoja({ user, handleLogout }) {
   const [formData, setFormData] = useState({
@@ -25,6 +28,7 @@ function ContactoLoja({ user, handleLogout }) {
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
+      <SubContactosNav/>
       <main className={styles.contactoContainer}>
         <section className={styles.heroSection}>
           <h1>Fale Connosco</h1>
