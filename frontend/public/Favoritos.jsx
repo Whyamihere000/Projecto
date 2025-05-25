@@ -3,6 +3,7 @@ import axios from "axios";
 import ModalErro from "../componentes/ModalErro";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../componentes/Navbar";
+import Footer from "../componentes/Footer";
 import SubNavbar from "../componentes/SubNavbar";
 import styles from "../css/public/Favoritos.module.css";
 
@@ -147,6 +148,7 @@ function Favoritos() {
     {openModal && (
           <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
         )}  
+        <Footer />
     </>
   );
 }

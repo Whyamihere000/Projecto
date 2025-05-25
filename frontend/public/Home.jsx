@@ -34,13 +34,6 @@ function Home() {
   };
 
   useEffect(() => {
-    document.body.className = styles.bodyHome;
-    return () => {
-      document.body.className = '';
-    };
-  }, []);
-
-  useEffect(() => {
     const fetchProdutos = async () => {
       try {
         const resDestaque = await axios.get('http://localhost:3001/api/produtos/buscar/destaque');
@@ -94,6 +87,7 @@ function Home() {
   );
 
   return (
+    <>
     <div className={styles.home}>
       <Navbar user={user} handleLogout={handleLogout} />
 
@@ -134,9 +128,11 @@ function Home() {
           {novidades.length > 0 ? renderProdutos(novidades) : <p>Sem novidades no momento.</p>}
         </section>
 
-        <Footer />
+        
       </main>
     </div>
+    <Footer />
+    </>
   );
 }
 

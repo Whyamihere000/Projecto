@@ -4,8 +4,8 @@ import { useLocation, Link } from "react-router-dom";
 import stylesProdutos from "../css/public/Produtos.module.css";
 import ModalErro from "../componentes/ModalErro";
 import Navbar from "../componentes/Navbar";
+import Footer from "../componentes/Footer";
 import FiltrosProdutos from "../componentes/Filtragem";
-
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
@@ -115,13 +115,6 @@ function Produtos() {
     localStorage.removeItem("user");
     window.location.reload();
   };
-
-  useEffect(() => {
-    document.body.className = stylesProdutos.bodyHomePublic;
-    return () => {
-      document.body.className = "";
-    };
-  }, []);
 
   const closeModal = () => {
     setOpenModal(false);
@@ -267,8 +260,9 @@ function Produtos() {
 
         {openModal && (
           <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
-        )}
+        )}        
       </div>
+      <Footer />
     </>
   );
 }

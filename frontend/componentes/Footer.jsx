@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className={styles.footer}>
+    <div className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.brand}>
-          <h2>PCG alaxy</h2>
+          <h2>PCGalaxy</h2>
           <p>A tua loja de confiança em tecnologia.</p>
         </div>
 
@@ -34,7 +34,7 @@ function Footer() {
       <div className={styles.bottomBar}>
         <p>&copy; {new Date().getFullYear()} PCG axaly. Todos os direitos reservados.</p>
       </div>
-    </footer>
+    </div>
   );
 }
 

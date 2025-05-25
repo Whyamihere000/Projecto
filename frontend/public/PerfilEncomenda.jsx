@@ -4,18 +4,12 @@ import axios from "axios";
 import styles from "../css/public/PerfilEncomendas.module.css";
 
 import Navbar from "../componentes/Navbar";
+import Footer from "../componentes/Footer";
 import SubNavbar from "../componentes/SubNavbar";
 
 function PerfilEncomendas() {
   const [user, setUser] = useState(null);
   const [encomendas, setEncomendas] = useState([]);
-
-  useEffect(() => {
-    document.body.className = styles.bodyHome;
-    return () => {
-      document.body.className = '';
-    };
-  }, []);
   
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -77,6 +71,7 @@ function PerfilEncomendas() {
   ];
 
   return (
+    <>
     <div>    
       <Navbar user={user} handleLogout={handleLogout} /> 
       <SubNavbar />
@@ -104,6 +99,8 @@ function PerfilEncomendas() {
        
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
 

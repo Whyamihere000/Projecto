@@ -76,13 +76,6 @@ function Registo() {
     }
   }
 
-     useEffect(() => {
-        document.body.className = styles.bodysHome;
-        return () => {
-          document.body.className = "";
-        };
-      }, []);
-
   return (
     <>
 

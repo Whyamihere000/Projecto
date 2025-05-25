@@ -4,6 +4,7 @@ import styles from "../css/public/Perfil.module.css";
 import { useNavigate, Link } from "react-router-dom";
 
 import Navbar from "../componentes/Navbar";
+import Footer from "../componentes/Footer";
 import SubNavbar from "../componentes/SubNavbar";
 
 
@@ -189,6 +190,7 @@ function Perfil() {
         <Link to="/perfil-encomendas">Ver as minhas encomendas</Link>
       </div>
     </div>
+    <Footer />
     </>
   );
 }

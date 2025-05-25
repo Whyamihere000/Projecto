@@ -62,13 +62,6 @@ function Categorias() {
     navigate('/');
   };
 
-  useEffect(() => {
-          document.body.className = styles.bodyHome;
-          return () => {
-              document.body.className = ''; // Remove ao sair
-          };
-      }, []);
-
     return (
         <>
             <NavbarAdmin handleLogout={handleLogout} user={user} />

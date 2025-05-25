@@ -29,13 +29,6 @@ function Contactos() {
     window.location.reload();
   };
 
-  useEffect(() => {
-    document.body.className = styles.bodyHome;
-    return () => {
-      document.body.className = "";
-    };
-  }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("");

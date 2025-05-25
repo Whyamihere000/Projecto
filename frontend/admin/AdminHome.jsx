@@ -32,13 +32,6 @@ function AdminHome() {
     localStorage.removeItem('user');
     navigate('/');
   };
-
-  useEffect(() => {
-              document.body.className = styles.bodyHomeAdmin;
-              return () => {
-                  document.body.className = '';
-              };
-          }, []);
     
   return (
     <>

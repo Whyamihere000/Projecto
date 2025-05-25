@@ -4,6 +4,7 @@ import ModalErro from "./ModalErro";
 import axios from "axios";
 import styles from "../css/public/ProdutoDetalhe.module.css";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 function ProdutoDetalhe() {
@@ -186,7 +187,8 @@ const toggleFavorito = async () => {
       </div>
       {openModal && (
           <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
-        )}  
+        )}
+        <Footer />  
     </>
   );
 }

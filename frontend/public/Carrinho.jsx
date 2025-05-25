@@ -4,13 +4,13 @@ import axios from "axios";
 import stylesCarrinho from "../css/public/Carrinho.module.css";
 import styles from "../css/Global.module.css";
 import Navbar from "../componentes/Navbar";
+import Footer from "../componentes/Footer";
 
 function Carrinho() {
   const [user, setUser] = useState(null);
   const [carrinho, setCarrinho] = useState({ items: [] });
   const [mensagem, setMensagem] = useState("");
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -184,6 +184,7 @@ const handleLogout = () => {
           <p>Carregando carrinho...</p>
         )}       
       </main>  
+      <Footer />
     </>
   );
 }

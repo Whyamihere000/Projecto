@@ -61,13 +61,6 @@ function MostrarEncomendas() {
     { field: "estado", headerName: "Estado", width: 120 }
   ];
 
-  useEffect(() => {
-              document.body.className = styles.bodyHomeAdmin;
-              return () => {
-                  document.body.className = '';
-              };
-          }, []);
-
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/');
