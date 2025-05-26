@@ -66,21 +66,28 @@ function Utilizadores() {
 
   const atualizarUtilizador = async (utilizador) => {
     try {
+      const primeiro_nome_normalizado = normalizarEspacos(utilizador.primeiro_nome);
+      const ultimo_nome_normalizado = normalizarEspacos(utilizador.ultimo_nome);
+      const email_normalizado = normalizarEspacos(utilizador.email);
+      const telefone_normalizado = normalizarEspacos(utilizador.telefone);
+      const rua_normalizada = normalizarEspacos(utilizador.rua);
+      const cidade_normalizada = normalizarEspacos(utilizador.cidade);
+      const codigo_postal_normalizado = normalizarEspacos(utilizador.codigo_postal);
+      const pais_normalizado = normalizarEspacos(utilizador.pais);
+
       const res = await axios.put(
         `http://localhost:3001/api/utilizadores/atualizar/${utilizador.id}`,
         {
-          primeiro_nome: utilizador.primeiro_nome,
-          ultimo_nome: utilizador.ultimo_nome,
-          email: utilizador.email,
+          primeiro_nome: primeiro_nome_normalizado,
+          ultimo_nome: ultimo_nome_normalizado,
+          email: email_normalizado,
           password_hash: utilizador.password_hash,
-          telefone: utilizador.telefone,
-          //data_registo: utilizador.data_registo,
-          //data_atualizacao: utilizador.data_atualizacao,
+          telefone: telefone_normalizado,
           tipo_utilizador: utilizador.tipo_utilizador,
-          rua: utilizador.rua,
-          cidade: utilizador.cidade,
-          codigo_postal: utilizador.codigo_postal,
-          pais: utilizador.pais,
+          rua: rua_normalizada,
+          cidade: cidade_normalizada,
+          codigo_postal: codigo_postal_normalizado,
+          pais: pais_normalizado,
         }
       );
 
@@ -165,18 +172,33 @@ function Utilizadores() {
   },
 ];
 
+function normalizarEspacos(str) {
+  return str
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
 const handleRegisto = async () => {
     const errors = {}
 
-    if (!primeiro_nome) {
+    const primeiro_nome_normalizado = normalizarEspacos(primeiro_nome);
+    const ultimo_nome_normalizado = normalizarEspacos(ultimo_nome);
+    const email_normalizado = normalizarEspacos(email);
+    const rua_normalizada = normalizarEspacos(rua);
+    const cidade_normalizada = normalizarEspacos(cidade);
+    const pais_normalizado = normalizarEspacos(pais);
+    const codigo_postal_normalizado = normalizarEspacos(codigo_postal);
+    const telefone_normalizado = normalizarEspacos(telefone);
+
+    if (!primeiro_nome_normalizado) {
       errors.primeiro_nome = 'O primeiro nome é obrigatório.'
     }
 
-    if (!ultimo_nome) {
+    if (!ultimo_nome_normalizado) {
       errors.ultimo_nome = 'O ultimo nome é obrigatório.'
     }
 
-    if (!email) {
+    if (!email_normalizado) {
       errors.email = 'O email é obrigatório.'
     } else if (!validarEmail(email)) {
       errors.email = 'Formato de email inválido.'
@@ -192,23 +214,23 @@ const handleRegisto = async () => {
       errors.password_confirmation = 'A palavra-passe e a confirmação não coincidem.'
     }
 
-    if (!telefone) {
+    if (!telefone_normalizado) {
       errors.telefone = 'O telefone é obrigatório.'
     }
 
-    if (!rua) {
+    if (!rua_normalizada) {
       errors.rua = 'A rua é obrigatória.'
     }
 
-    if (!cidade) {
+    if (!cidade_normalizada) {
       errors.cidade = 'A cidade é obrigatória.'
     }
 
-    if (!codigo_postal) {
+    if (!codigo_postal_normalizado) {
       errors.codigo_postal = 'O codigo postal é obrigatório.'
     }
 
-    if (!pais) {
+    if (!pais_normalizado) {
       errors.pais = 'O pais é obrigatório.'
     }
 
@@ -222,7 +244,7 @@ const handleRegisto = async () => {
     }
     
     const regexCodigoPostal = /^[0-9]{4}-[0-9]{3}$/;
-    if (!regexCodigoPostal.test(codigo_postal)) {
+    if (!regexCodigoPostal.test(codigo_postal_normalizado)) {
       setMensagem('Código postal inválido.');
       setMensagemTipo('error');
       return;
@@ -230,15 +252,15 @@ const handleRegisto = async () => {
 
     try {
       const response = await axios.post('http://localhost:3001/api/utilizadores/registo', {
-        primeiro_nome: primeiro_nome,
-        ultimo_nome: ultimo_nome,
-        email: email,
+        primeiro_nome: primeiro_nome_normalizado,
+        ultimo_nome: ultimo_nome_normalizado,
+        email: email_normalizado,
         password: password,
-        telefone: telefone,
-        rua: rua,
-        cidade: cidade,
-        codigo_postal: codigo_postal,
-        pais: pais
+        telefone: telefone_normalizado,
+        rua: rua_normalizada,
+        cidade: cidade_normalizada,
+        codigo_postal: codigo_postal_normalizado,
+        pais: pais_normalizado
       })
 
       if (response.data.success) {
