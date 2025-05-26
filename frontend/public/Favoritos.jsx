@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import ModalErro from "../componentes/ModalErro";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../componentes/Navbar";
 import Footer from "../componentes/Footer";
 import SubNavbar from "../componentes/SubNavbar";
@@ -125,10 +126,17 @@ function Favoritos() {
         ) : (
         <div className={styles.grid}>
       {favoritos.map((produto) => (
+            <Link
+              key={produto.id_produto}
+              to={`/produto/${produto.id_produto}`}
+            >
             <div key={produto.id} className={styles.card}>
               <button
                 className={styles.favorito}
-                onClick={() => handleRemoverFavorito(produto.id)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleRemoverFavorito(produto.id)}
+                }
               >
                 X
               </button>
@@ -136,11 +144,16 @@ function Favoritos() {
               <h3>{produto.nome}</h3>
               <p>€{produto.preco}</p>
               <div style={{ marginTop: "auto", textAlign: "center" }}>
-                <button onClick={() => handleAdicionarAoCarrinho(produto)}>
+                <button onClick={(e) => {
+                  e.preventDefault();
+                  handleAdicionarAoCarrinho(produto)}
+                  }
+                  >                
                   Adicionar ao carrinho
                 </button>
               </div>
             </div>
+            </Link>
           ))}
         </div>
       )}
