@@ -156,11 +156,11 @@ const toggleFavorito = async () => {
     setOpenModal(false);
   };
 
-  const renderProdutos = (produtos) => (
-    <div className={stylesHome.listaProdutos}>
+  const renderProdutos = (produtos) => (  
+    <div className={stylesHome.listaProdutos}>     
       {produtos.map((produto) => (
         <Link key={produto.id} to={`/produto/${produto.id}`} className={stylesHome.cardLink}>
-          <div className={stylesHome.cardProduto}>
+          <div className={stylesHome.cardProduto}>        
             <h3>{produto.nome}</h3>
             {produto.imagem_url && (
               <img
@@ -196,12 +196,12 @@ const toggleFavorito = async () => {
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
+      
       <div style={{ flex: 1 }}>
       <div className={styles.produtoContainer}>
+      <ComponentesNav/>
+      <div className={styles.infoFlutuante}>
 
-
-
-  <div className={styles.infoFlutuante}>
     <h2 className={styles.titulo}>{produto.nome}</h2>
     <p className={styles.preco}>€{produto.preco}</p>
     <p className={styles.stock}>
@@ -269,7 +269,7 @@ const toggleFavorito = async () => {
       </section>
 
         <section className={styles.secaoProdutos}>
-          <ComponentesNav/>
+          
           <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
           {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
         </section>
