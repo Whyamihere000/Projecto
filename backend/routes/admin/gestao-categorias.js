@@ -24,5 +24,26 @@ routerAdminCategorias.get('/buscar', (req, res) => {
     });
 });
 
+routerAdminCategorias.put('/atualizar/:id', (req, res) => {
+  const { id } = req.params;
+  const { nome } = req.body;
+
+  if (!nome) {
+    return res.status(400).json({ success: false, message: 'O nome da categoria é obrigatório.' });
+  }
+
+  db.query('UPDATE categorias SET nome = ? WHERE id = ?', [nome, id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ success: false, message: 'Erro ao atualizar a categoria.' });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Categoria não encontrada.' });
+    }
+
+    return res.json({ success: true, message: 'Categoria atualizada com sucesso.' });
+  });
+});
 
 export default routerAdminCategorias;
