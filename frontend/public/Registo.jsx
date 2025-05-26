@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "../css/public/Registo.module.css";
 import Navbar from "../componentes/Navbar";
+import ModalGlobal from "../componentes/ModalGlobal";
 
 function Registo() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ function Registo() {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
   const [errors, setErrors] = useState({});
+  const [openModal, setOpenModal] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,6 +53,7 @@ function Registo() {
       setErrors(errors);
       setMessage("Verifique os erros.");
       setMessageType("error");
+      setOpenModal(true);
       return;
     }
 
@@ -66,6 +69,7 @@ function Registo() {
         localStorage.setItem("user", JSON.stringify(response.data.user));
         setMessage("Registo efetuado com sucesso.");
         setMessageType("success");
+        setOpenModal(true);
 
         if (response.data.user.tipo_utilizador === "admin") {
           window.location.href = "/admin";
@@ -75,11 +79,13 @@ function Registo() {
       } else {
         setMessage(response.data.message);
         setMessageType("error");
+        setOpenModal(true);
       }
     } catch (error) {
       console.error("Erro no registo:", error.response?.data || error.message);
       setMessage(error.response?.data?.message || "Ocorreu um erro ao fazer o registo.");
       setMessageType("error");
+      setOpenModal(true);
     }
   };
 
@@ -89,6 +95,10 @@ function Registo() {
       document.body.className = "";
     };
   }, []);
+
+  const closeModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <>
@@ -148,6 +158,10 @@ function Registo() {
           <div className={styles.message} style={{ color: messageType === "error" ? "red" : "green" }}>
             {message}
           </div>
+        )}
+
+        {openModal && (
+          <ModalGlobal mensagem={message} onClose={closeModal} />
         )}
 
         <Link to="/" style={{ marginTop: "10px", textAlign: "center", color: "#007bff" }}>Voltar</Link>
