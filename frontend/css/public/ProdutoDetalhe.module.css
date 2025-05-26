@@ -7,12 +7,14 @@
   max-width: 1200px;
   margin: 0 auto;
 }
+
 .tituloSecao {
   margin-top: 30px;
   font-size: 24px;
   color: #ffffff;
   text-align: center;
 }
+
 .imagemContainer {
   float: left;
   padding-right: 20px;
@@ -127,7 +129,7 @@
 }
 
 .colunaEsquerda {
-  width: 60%;
+  width: 55%;
 }
 
 .detalhesSection {

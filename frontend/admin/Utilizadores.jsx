@@ -27,16 +27,16 @@ function Utilizadores() {
 
   const navigate = useNavigate();
 
-  // const validarEmail = (email) => {
-  //   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //   return regex.test(email);
-  // };
+  const validarEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
 
-  // const validarPassword = (password) => {
-  //   // Pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial
-  //   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
-  //   return regex.test(password);
-  // };
+  const validarPassword = (password) => {
+    // Pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&_])[A-Za-z\d@$!%*?#&_]{8,}$/;
+    return regex.test(password);
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -165,56 +165,56 @@ function Utilizadores() {
 const handleRegisto = async () => {
     const errors = {}
 
-    // if (!primeiro_nome) {
-    //   errors.primeiro_nome = 'O primeiro nome é obrigatório.'
-    // }
+    if (!primeiro_nome) {
+      errors.primeiro_nome = 'O primeiro nome é obrigatório.'
+    }
 
-    // if (!ultimo_nome) {
-    //   errors.ultimo_nome = 'O ultimo nome é obrigatório.'
-    // }
+    if (!ultimo_nome) {
+      errors.ultimo_nome = 'O ultimo nome é obrigatório.'
+    }
 
-    // if (!email) {
-    //   errors.email = 'O email é obrigatório.'
-    // } else if (!validarEmail(email)) {
-    //   errors.email = 'Formato de email inválido.'
-    // }
+    if (!email) {
+      errors.email = 'O email é obrigatório.'
+    } else if (!validarEmail(email)) {
+      errors.email = 'Formato de email inválido.'
+    }
 
-    // if (!password) {
-    //   errors.password = 'A palavra-passe é obrigatória.'
-    // } else if (!validarPassword(password)) {
-    //   errors.password = 'A palavra-passe deve ter pelo menos 8 caracteres, uma maiúscula, uma minúscula, um número e um símbolo.'
-    // }
+    if (!password) {
+      errors.password = 'A palavra-passe é obrigatória.'
+    } else if (!validarPassword(password)) {
+      errors.password = 'A palavra-passe deve ter pelo menos 8 caracteres, uma maiúscula, uma minúscula, um número e um símbolo.'
+    }
 
-    // if (password !== password_confirmation) {
-    //   errors.password_confirmation = 'A palavra-passe e a confirmação não coincidem.'
-    // }
+    if (password !== password_confirmation) {
+      errors.password_confirmation = 'A palavra-passe e a confirmação não coincidem.'
+    }
 
-    // if (!telefone) {
-    //   errors.telefone = 'O telefone é obrigatório.'
-    // }
+    if (!telefone) {
+      errors.telefone = 'O telefone é obrigatório.'
+    }
 
-    // if (!rua) {
-    //   errors.rua = 'A rua é obrigatória.'
-    // }
+    if (!rua) {
+      errors.rua = 'A rua é obrigatória.'
+    }
 
-    // if (!cidade) {
-    //   errors.cidade = 'A cidade é obrigatória.'
-    // }
+    if (!cidade) {
+      errors.cidade = 'A cidade é obrigatória.'
+    }
 
-    // if (!codigo_postal) {
-    //   errors.codigo_postal = 'O codigo postal é obrigatório.'
-    // }
+    if (!codigo_postal) {
+      errors.codigo_postal = 'O codigo postal é obrigatório.'
+    }
 
-    // if (!pais) {
-    //   errors.pais = 'O pais é obrigatório.'
-    // }
+    if (!pais) {
+      errors.pais = 'O pais é obrigatório.'
+    }
 
-    // if (Object.keys(errors).length > 0) {
-    //   setErrors(errors)
-    //   setMensagem('Verifique os erros.')
-    //   setMensagemTipo('error')
-    //   return
-    // }
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors)
+      setMensagem('Verifique os erros.')
+      setMensagemTipo('error')
+      return
+    }
     
     const regexCodigoPostal = /^[0-9]{4}-[0-9]{3}$/;
     if (!regexCodigoPostal.test(codigo_postal)) {

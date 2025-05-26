@@ -197,76 +197,76 @@ const toggleFavorito = async () => {
     <>
       <Navbar user={user} handleLogout={handleLogout} />
       
-      <div style={{ flex: 1 }}>
-      <div className={styles.produtoContainer}>
-      <ComponentesNav/>
-      <div className={styles.infoFlutuante}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div className={styles.produtoContainer}>
+          <ComponentesNav />
+          <div className={styles.infoFlutuante}>
+            <h2 className={styles.titulo}>{produto.nome}</h2>
+            <p className={styles.preco}>€{produto.preco}</p>
+            <p className={styles.stock}>
+              {produto.stock === 0 ? "Sem stock" : produto.stock < 10 ? "Poucas Unidades" : "Em stock"} 
+            </p>
+            <strong><p className={styles.descricao}>{produto.descricao}</p></strong>
+            <div className={styles.controls}>
+              <input
+                type="number"
+                min="1"
+                max="10"
+                value={quantidade}
+                onChange={(e) => setQuantidade(parseInt(e.target.value))}
+                className={styles.quantidadeInput}
+              />
+              
+              <button
+                onClick={() => handleAdicionarAoCarrinho(produto.id)}
+                className={styles.comprarBtn}
+                disabled={produto.stock === 0}
+              >
+                Comprar
+              </button>
+              <button onClick={toggleFavorito} className={styles.favoritoBtn}>
+                {favorito ? <FaHeart color="red" /> : <FaRegHeart />}
+              </button>
+            </div>
+          </div>
 
-    <h2 className={styles.titulo}>{produto.nome}</h2>
-    <p className={styles.preco}>€{produto.preco}</p>
-    <p className={styles.stock}>
-      {produto.stock === 0 ? "Sem stock" : produto.stock < 10 ? "Poucas Unidades" : "Em stock"} 
-    </p>
-    <strong><p className={styles.descricao}>{produto.descricao}</p></strong>
-    <div className={styles.controls}>
-      <input
-        type="number"
-        min="1"
-        max="10"
-        value={quantidade}
-        onChange={(e) => setQuantidade(parseInt(e.target.value))}
-        className={styles.quantidadeInput}
-      />
-      
-      <button
-        onClick={() => handleAdicionarAoCarrinho(produto.id)}
-        className={styles.comprarBtn}
-        disabled={produto.stock === 0}
-      >
-        Comprar
-      </button>
-      <button onClick={toggleFavorito} className={styles.favoritoBtn}>
-        {favorito ? <FaHeart color="red" /> : <FaRegHeart />}
-      </button>
-    </div>
-  </div>
-
-  <div className={styles.produtoContainer}>
-  <div className={styles.colunaEsquerda}>
-    <div className={styles.imagemContainer}>
-      {produto.imagem_url && (
-        <img src={produto.imagem_url} alt={produto.nome} className={styles.imagem} />
-      )}
-    </div>
+          <div className={styles.produtoContainer}>
+            <div className={styles.colunaEsquerda}>
+              <div className={styles.imagemContainer}>
+                {produto.imagem_url && (
+                  <img src={produto.imagem_url} alt={produto.nome} className={styles.imagem} />
+                )}
+              </div>
 
 
-  <section className={styles.detalhesSection}>
-      <h2 className={styles.descricao}>{produto.descricao}</h2>
-      <p><strong>Tipo de Produto:</strong> {produto.tipo_produto}</p>
-      <p><strong>Marca:</strong> {produto.nome_marca}</p>
-      {produto.especificacoes && (
-        <div>
-          <h4>Especificações:</h4>
-          <ul>
-            {Object.keys(produto.especificacoes).map((key) => (
-              <li key={key}>
-                <strong>{key}:</strong> {produto.especificacoes[key]}
-              </li>
-            ))}
-          </ul>
+              <section className={styles.detalhesSection}>
+                <h2 className={styles.descricao}>{produto.descricao}</h2>
+                <p><strong>Tipo de Produto:</strong> {produto.tipo_produto}</p>
+                <p><strong>Marca:</strong> {produto.nome_marca}</p>
+                {produto.especificacoes && (
+                  <div>
+                    <h4>Especificações:</h4>
+                    <ul>
+                      {Object.keys(produto.especificacoes).map((key) => (
+                        <li key={key}>
+                          <strong>{key}:</strong> {produto.especificacoes[key]}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </section>
+
+              
+            </div>
+            
+          </div>
+          
         </div>
-      )}
-    </section>
-
         
-    </div>
-    
-  </div>
-  
- </div>
-     <section className={styles.tituloSecao}> 
-        <img src="https://img.globaldata.pt/cms/images/block/global-1banner-produtosemana25_1219-desktop.png" alt="imagem promoção" />
-      </section>
+        <section className={styles.tituloSecao}> 
+          <img src="https://img.globaldata.pt/cms/images/block/global-1banner-produtosemana25_1219-desktop.png" alt="imagem promoção" />
+        </section>
 
         <section className={styles.secaoProdutos}>
           
@@ -274,15 +274,15 @@ const toggleFavorito = async () => {
           {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
         </section>
 
-      {openModal && (
+        {openModal && (
           <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
         )}
         <div id="conteudo">
           <div className={styles.produtoContainer}>
             {/* conteúdo todo */}
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
       </div>  
     </>
   );
