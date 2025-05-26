@@ -32,7 +32,7 @@ function Footer() {
       </div>
 
       <div className={styles.bottomBar}>
-        <p>&copy; {new Date().getFullYear()} PCG axaly. Todos os direitos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} PCGaxaly. Todos os direitos reservados.</p>
       </div>
     </div>
   );
