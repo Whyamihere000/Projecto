@@ -197,7 +197,7 @@ const toggleFavorito = async () => {
   <>
     <Navbar user={user} handleLogout={handleLogout} />
 
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div style={{ }}>
       <div className={styles.produtoContainer}>
         <div className={styles.colunaEsquerda}>
           <div className={styles.imagemContainer}>
