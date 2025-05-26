@@ -23,16 +23,26 @@ function Marcas() {
         }
       }, []);
 
+      function normalizarEspacos(str) {
+  return str
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
     const adicionarMarca = async () => {
-        if (!marca.trim()) {
+        const marcaNormalizada = normalizarEspacos(marca);
+
+        if (!marcaNormalizada) {
             setMensagem('O nome da marca é obrigatório.');
             setMensagemTipo('error');
             return;
         }
 
+        setMarca(marcaNormalizada);
+
         try {
             const res = await axios.post('http://localhost:3001/api/marcas/nova', {
-                nome: marca
+                nome: marcaNormalizada
             });
 
             if (res.data.success) {
