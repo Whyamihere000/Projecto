@@ -220,8 +220,8 @@ function Produtos() {
     }
 
     const atualizarProduto = async (produto) => {
-        const nomeNormalizado = normalizarEspacos(produto.nome);
-        const descricaoNormalizada = normalizarEspacos(produto.descricao);
+        const nome_normalizado = normalizarEspacos(produto.nome);
+        const descricao_normalizada = normalizarEspacos(produto.descricao);
 
         try {
             const especificacoesAtualizadas = typeof produto.especificacoes === 'string' 
@@ -230,8 +230,8 @@ function Produtos() {
 
             const res = await axios.put(`http://localhost:3001/api/produtos/atualizar/${produto.id}`, {
                 sku: produto.sku,
-                nome: nomeNormalizado,
-                descricao: descricaoNormalizada,
+                nome: nome_normalizado,
+                descricao: descricao_normalizada,
                 preco: produto.preco,
                 stock: produto.stock,
                 id_categoria: produto.id_categoria,

@@ -30,19 +30,17 @@ function Marcas() {
 }
 
     const adicionarMarca = async () => {
-        const marcaNormalizada = normalizarEspacos(marca);
+        const marca_normalizada = normalizarEspacos(marca);
 
-        if (!marcaNormalizada) {
+        if (!marca_normalizada) {
             setMensagem('O nome da marca é obrigatório.');
             setMensagemTipo('error');
             return;
         }
 
-        setMarca(marcaNormalizada);
-
         try {
             const res = await axios.post('http://localhost:3001/api/marcas/nova', {
-                nome: marcaNormalizada
+                nome: marca_normalizada
             });
 
             if (res.data.success) {

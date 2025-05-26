@@ -30,19 +30,19 @@ function Categorias() {
 }
 
     const adicionarCategoria = async () => {
-        const categoriaNormalizada = normalizarEspacos(categoria);
+        const categoria_normalizada = normalizarEspacos(categoria);
 
-  if (!categoriaNormalizada) {
+  if (!categoria_normalizada) {
     setMensagem('O nome da categoria é obrigatório.');
     setMensagemTipo('error');
     return;
   }
 
-  setCategoria(categoriaNormalizada);
+  setCategoria(categoria_normalizada);
 
         try {
             const res = await axios.post('http://localhost:3001/api/categorias/nova', {
-                nome: categoriaNormalizada
+                nome: categoria_normalizada
             });
 
             if (res.data.success) {
