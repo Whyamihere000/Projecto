@@ -1,8 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ModalErro from "./ModalErro";
 import axios from "axios";
 import styles from "../css/public/ProdutoDetalhe.module.css";
+import stylesHome from "../css/public/Home.module.css";
+import ComponentesNav from "../componentes/ComponentesNav";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -17,6 +19,7 @@ function ProdutoDetalhe() {
   const [quantidade, setQuantidade] = useState(1);
   const [favorito, setFavorito] = useState(false);
   const [produtosDestaque, setProdutosDestaque] = useState([]);
+  const [novidades, setNovidades] = useState([]);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -152,6 +155,43 @@ const toggleFavorito = async () => {
   const closeModal = () => {
     setOpenModal(false);
   };
+
+  const renderProdutos = (produtos) => (
+    <div className={stylesHome.listaProdutos}>
+      {produtos.map((produto) => (
+        <Link key={produto.id} to={`/produto/${produto.id}`} className={stylesHome.cardLink}>
+          <div className={stylesHome.cardProduto}>
+            <h3>{produto.nome}</h3>
+            {produto.imagem_url && (
+              <img
+                src={produto.imagem_url.startsWith("http://") || produto.imagem_url.startsWith("https://")
+                  ? produto.imagem_url
+                  : `http://localhost:3001${produto.imagem_url}`
+                }
+                alt={produto.nome}
+                style={{
+                  width: "100%",
+                  height: "250px",
+                  marginBottom: "10px",
+                }}
+              />
+            )}
+            <p><strong>Preço:</strong> {produto.preco}€</p>
+            {produto.especificacoes && (
+              <div>
+                <h4>Detalhes:</h4>
+                <ul>
+                  {Object.entries(produto.especificacoes).map(([key, value]) => (
+                    <li key={key}><strong>{key}:</strong> {value}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </Link>
+      ))}
+    </div>
+  );
 
   return (
     <>
