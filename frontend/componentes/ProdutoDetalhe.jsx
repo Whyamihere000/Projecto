@@ -16,6 +16,7 @@ function ProdutoDetalhe() {
   const [openModal, setOpenModal] = useState(false);
   const [quantidade, setQuantidade] = useState(1);
   const [favorito, setFavorito] = useState(false);
+  const [produtosDestaque, setProdutosDestaque] = useState([]);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -31,6 +32,22 @@ function ProdutoDetalhe() {
       .then((res) => setProduto(res.data))
       .catch((err) => console.error("Erro ao carregar produto", err));
   }, [id]);
+
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      try {
+        const resDestaque = await axios.get('http://localhost:3001/api/produtos/buscar/destaque');
+        setProdutosDestaque(resDestaque.data);
+
+        const resNovidade = await axios.get('http://localhost:3001/api/produtos/buscar/novidade');
+        setNovidades(resNovidade.data);
+      } catch (error) {
+        console.error('Erro ao buscar produtos:', error);
+      }
+    };
+
+    fetchProdutos();
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -140,57 +157,93 @@ const toggleFavorito = async () => {
     <>
       <Navbar user={user} handleLogout={handleLogout} />
       <div style={{ flex: 1 }}>
-      <div className={styles.container}>
-        <div className={styles.left}>
-          <h2 className={styles.titulo}>{produto.nome}</h2>
-          <p className={styles.preco}>€{produto.preco}</p>
-          <p style={{color: produto.stock === 0 ? "red" : produto.stock < 10 ? "orange" : "green", margin: "10px 0", fontWeight: "600"}}>
-            {produto.stock === 0 ? "Sem stock" : produto.stock < 10 ? "Poucas Unidades" : "Em stock"} 
-          </p>
-          <p className={styles.descricao}>{produto.descricao}</p>
+      <div className={styles.produtoContainer}>
 
-          <div className={styles.controls}>
-            <input
-              type="number"
-              min="1"
-              max="10"
-              value={quantidade}
-              onChange={(e) => setQuantidade(parseInt(e.target.value))}
-              className={styles.quantidadeInput}
-            />
 
-            <button
-              onClick={() => handleAdicionarAoCarrinho(produto.id)}
-              className={styles.comprarBtn}
-              disabled={produto.stock === 0}
-            >
-              Comprar
-            </button>
 
-            <button
-              onClick={toggleFavorito}
-              className={styles.favoritoBtn}
-            >
-              {favorito ? <FaHeart color="red" /> : <FaRegHeart />}
-            </button>
-          </div>
+  <div className={styles.infoFlutuante}>
+    <h2 className={styles.titulo}>{produto.nome}</h2>
+    <p className={styles.preco}>€{produto.preco}</p>
+    <p className={styles.stock}>
+      {produto.stock === 0 ? "Sem stock" : produto.stock < 10 ? "Poucas Unidades" : "Em stock"} 
+    </p>
+    <strong><p className={styles.descricao}>{produto.descricao}</p></strong>
+    <div className={styles.controls}>
+      <input
+        type="number"
+        min="1"
+        max="10"
+        value={quantidade}
+        onChange={(e) => setQuantidade(parseInt(e.target.value))}
+        className={styles.quantidadeInput}
+      />
+      
+      <button
+        onClick={() => handleAdicionarAoCarrinho(produto.id)}
+        className={styles.comprarBtn}
+        disabled={produto.stock === 0}
+      >
+        Comprar
+      </button>
+      <button onClick={toggleFavorito} className={styles.favoritoBtn}>
+        {favorito ? <FaHeart color="red" /> : <FaRegHeart />}
+      </button>
+    </div>
+  </div>
+
+  <div className={styles.produtoContainer}>
+  <div className={styles.colunaEsquerda}>
+    <div className={styles.imagemContainer}>
+      {produto.imagem_url && (
+        <img src={produto.imagem_url} alt={produto.nome} className={styles.imagem} />
+      )}
+    </div>
+
+
+  <section className={styles.detalhesSection}>
+      <h2 className={styles.descricao}>{produto.descricao}</h2>
+      <p><strong>Tipo de Produto:</strong> {produto.tipo_produto}</p>
+      <p><strong>Marca:</strong> {produto.nome_marca}</p>
+      {produto.especificacoes && (
+        <div>
+          <h4>Especificações:</h4>
+          <ul>
+            {Object.keys(produto.especificacoes).map((key) => (
+              <li key={key}>
+                <strong>{key}:</strong> {produto.especificacoes[key]}
+              </li>
+            ))}
+          </ul>
         </div>
+      )}
+    </section>
 
-        <div className={styles.right}>
-          {produto.imagem_url && (
-            <img
-              src={produto.imagem_url}
-              alt={produto.nome}
-              className={styles.imagem}
-            />
-          )}
-        </div>
-      </div>
-      </div>
+        
+    </div>
+    
+  </div>
+  
+ </div>
+     <section className={styles.tituloSecao}> 
+        <img src="https://img.globaldata.pt/cms/images/block/global-1banner-produtosemana25_1219-desktop.png" alt="imagem promoção" />
+      </section>
+
+        <section className={styles.secaoProdutos}>
+          <ComponentesNav/>
+          <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
+          {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
+        </section>
+
       {openModal && (
           <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
         )}
-        <Footer />  
+        <div id="conteudo">
+          <div className={styles.produtoContainer}>
+            {/* conteúdo todo */}
+        </div>
+        <Footer />
+      </div>
+      </div>  
     </>
   );
 }
