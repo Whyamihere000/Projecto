@@ -27,9 +27,9 @@ function MostrarContactos() {
         const res = await axios.get(`http://localhost:3001/api/contactos/tudo`);
         console.log("Resposta API:", res.data);
 
-        const dadosComId = res.data.map((linha, index) => ({
+        const dadosComId = res.data.map((linha) => ({
           ...linha,
-          id: index
+          id: linha.id
         }));
 
         setContactos(dadosComId);
@@ -46,7 +46,7 @@ function MostrarContactos() {
     { field: "nome", headerName: "Cliente", width: 130 },
     { field: "email", headerName: "Email", width: 130 },
     { field: "mensagem", headerName: "Mensagem", width: 130 },
-    { field: "data_envio", headerName: "Data Envio", width: 130 },    
+    { field: "data_envio", headerName: "Data Envio", width: 130 }
   ];
 
   useEffect(() => {

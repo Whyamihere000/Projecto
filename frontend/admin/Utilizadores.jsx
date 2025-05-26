@@ -215,6 +215,13 @@ const handleRegisto = async () => {
     //   setMensagemTipo('error')
     //   return
     // }
+    
+    const regexCodigoPostal = /^[0-9]{4}-[0-9]{3}$/;
+    if (!regexCodigoPostal.test(codigo_postal)) {
+      setMensagem('Código postal inválido.');
+      setMensagemTipo('error');
+      return;
+    }
 
     try {
       const response = await axios.post('http://localhost:3001/api/utilizadores/registo', {
