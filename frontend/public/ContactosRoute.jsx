@@ -4,6 +4,7 @@ import styles from "../css/public/Contactos.module.css";
 import Navbar from "../componentes/Navbar";
 import SubNavbar from "../componentes/SubNavbar";
 import { Link } from "react-router-dom";
+import Footer from "../componentes/Footer";
 
 function Contactos() {
   const [user, setUser] = useState(null);
@@ -96,6 +97,7 @@ function Contactos() {
           )}
         </form>
       </div>
+      <Footer />
 
     </>
   );
