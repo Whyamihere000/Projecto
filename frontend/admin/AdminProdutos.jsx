@@ -83,31 +83,31 @@ function Produtos() {
         fetchProdutos();
     }, []);
 
-    // useEffect(() => {
-    //     const verificarSku = async () => {
-    //         if (!produtoSku.trim()) {
-    //             setMensagem('');
-    //             return;
-    //         }
+    useEffect(() => {
+        const verificarSku = async () => {
+            if (!produtoSku.trim()) {
+                setMensagem('');
+                return;
+            }
 
-    //         try {
-    //             const res = await axios.get('http://localhost:3001/api/produtos/buscar');
-    //             const produtoExistente = res.data.some((produto) => produto.sku === produtoSku);
-    //             if (produtoExistente) {
-    //                 setMensagem('O SKU já existe. Por favor, escolha outro.');
-    //                 setMensagemTipo('error');
-    //             } else {
-    //                 setMensagem('');
-    //             }
-    //         } catch (error) {
-    //             console.error('Erro ao verificar SKU:', error);
-    //             setMensagem('Erro ao verificar SKU.');
-    //             setMensagemTipo('error');
-    //         }
-    //     };
+            try {
+                const res = await axios.get('http://localhost:3001/api/produtos/buscar');
+                const produtoExistente = res.data.some((produto) => produto.sku === produtoSku);
+                if (produtoExistente) {
+                    setMensagem('O SKU já existe. Por favor, escolha outro.');
+                    setMensagemTipo('error');
+                } else {
+                    setMensagem('');
+                }
+            } catch (error) {
+                console.error('Erro ao verificar SKU:', error);
+                setMensagem('Erro ao verificar SKU.');
+                setMensagemTipo('error');
+            }
+        };
 
-    //     verificarSku();
-    // }, [produtoSku]);
+        verificarSku();
+    }, [produtoSku]);
 
     const adicionarProduto = async () => {
         if (!produtoNome.trim()) {
@@ -201,6 +201,7 @@ function Produtos() {
                 id_categoria: produto.id_categoria,
                 id_marca: produto.id_marca,
                 imagem_url: produto.imagem_url,
+                tipo_produto: produto.tipo_produto,
                 especificacoes: especificacoesAtualizadas
             });
 
@@ -243,93 +244,131 @@ function Produtos() {
         { field: 'sku', headerName: 'SKU', width: 130, editable: true },
         { field: 'nome', headerName: 'Nome', width: 130, editable: true },
         {
-  field: 'imagem_url',
-  headerName: 'Imagem',
-  width: 200,
-  renderCell: (params) => (
-    <img
-      src={
-        params.row.imagem_url
-          ? params.row.imagem_url.startsWith('http://') || params.row.imagem_url.startsWith('https://')
-            ? params.row.imagem_url
-            : `http://localhost:3001${params.row.imagem_url}`
-          : ''
-      }
-      alt="Imagem do produto"
-      style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-    />
-  ),
-},
-{
-  field: 'editarImagem',
-  headerName: 'Editar Imagem',
-  width: 130,
-  renderCell: (params) => (
-    <button onClick={() => {
-      setProdutoSelecionado(params.row);
-      setImagemUrlEditada(params.row.imagem_url);
-      setMostrarModalImagem(true);
-    }}>
-      Editar
-    </button>
-  )
-},
-        { field: 'tipo_produto', headerName: 'Tipo de Produto', width: 150 },
-        {field: 'especificacoes',
-    headerName: 'Especificações',
-    width: 300,
-    editable: false,
-    renderCell: (params) => {
-      try {
-        const espec = typeof params.value === 'object' ? params.value : JSON.parse(params.value);
-        return (
-          <div style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}>
-            {Object.entries(espec).map(([key, val]) => (
-              <div key={key}><strong>{key}:</strong> {val}</div>
-            ))}
-          </div>
-        );
-      } catch {
-        return <div>Sem especificações</div>;
-      }
-    }
+            field: 'imagem_url',
+            headerName: 'Imagem',
+            width: 200,
+            renderCell: (params) => (
+                <img
+                    src={
+                        params.row.imagem_url
+                            ? params.row.imagem_url.startsWith('http://') || params.row.imagem_url.startsWith('https://')
+                                ? params.row.imagem_url
+                                : `http://localhost:3001${params.row.imagem_url}`
+                            : ''
+                    }
+                    alt="Imagem do produto"
+                    style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+                />
+            ),
+        },
+        {
+            field: 'editarImagem',
+            headerName: 'Editar Imagem',
+            width: 130,
+            renderCell: (params) => (
+                <button onClick={() => {
+                    setProdutoSelecionado(params.row);
+                    setImagemUrlEditada(params.row.imagem_url);
+                    setMostrarModalImagem(true);
+                }}>
+                    Editar
+                </button>
+            ),
+        },
+        {
+  field: 'tipo_produto',
+  headerName: 'Tipo de Produto',
+  width: 150,
+  editable: true,
+  renderEditCell: (params) => {
+    const handleChange = (event) => {
+      const newValue = event.target.value;
+      params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue });
+    };
+
+    return (
+      <select
+  value={params.value || ''}
+  onChange={handleChange}
+  style={{ width: '100%' }}
+>
+  <option value="">Selecione um tipo</option>
+  {tiposProduto.map((tipo) => (
+    <option key={tipo} value={tipo}>{tipo}</option>
+  ))}
+</select>
+    );
   },
-  {
-    field: 'editar',
-    headerName: 'Editar',
-    width: 100,
-    renderCell: (params) => (
-      <button onClick={() => {
-  const atual = typeof params.row.especificacoes === 'object'
-    ? params.row.especificacoes
-    : JSON.parse(params.row.especificacoes);
-  setProdutoSelecionado(params.row);
-  setJsonEspecificacoesEditado(JSON.stringify(atual, null, 2));
-  setMostrarModal(true);
-}}>Editar</button>
-    )
-  },
+},
+        {
+            field: 'especificacoes',
+            headerName: 'Especificações',
+            width: 300,
+            editable: false,
+            renderCell: (params) => {
+                try {
+                    const espec = typeof params.value === 'object' ? params.value : JSON.parse(params.value);
+                    return (
+                        <div style={{ whiteSpace: 'normal', overflowWrap: 'break-word' }}>
+                            {Object.entries(espec).map(([key, val]) => (
+                                <div key={key}><strong>{key}:</strong> {val}</div>
+                            ))}
+                        </div>
+                    );
+                } catch {
+                    return <div>Sem especificações</div>;
+                }
+            },
+        },
+        {
+            field: 'editar',
+            headerName: 'Editar',
+            width: 100,
+            renderCell: (params) => (
+                <button onClick={() => {
+                    const atual = typeof params.row.especificacoes === 'object'
+                        ? params.row.especificacoes
+                        : JSON.parse(params.row.especificacoes);
+                    setProdutoSelecionado(params.row);
+                    setJsonEspecificacoesEditado(JSON.stringify(atual, null, 2));
+                    setMostrarModal(true);
+                }}>Editar</button>
+            ),
+        },
         { field: 'descricao', headerName: 'Descrição', width: 130, editable: true },
         { field: 'preco', headerName: 'Preço', width: 130, editable: true },
         { field: 'stock', headerName: 'Stock', width: 130, editable: true },
-        { field: 'id_categoria', headerName: 'Categoria', width: 130, editable: true, 
+        {
+            field: 'id_categoria',
+            headerName: 'Categoria',
+            width: 130,
+            editable: true,
             renderCell: (params) => {
                 const categoria = categorias.find(cat => cat.id === params.row.id_categoria);
                 return categoria ? categoria.nome : '';
-            }
+            },
         },
-        { field: 'id_marca', headerName: 'Marca', width: 130, editable: true, 
+        {
+            field: 'id_marca',
+            headerName: 'Marca',
+            width: 130,
+            editable: true,
             renderCell: (params) => {
                 const marca = marcas.find(marca => marca.id === params.row.id_marca);
                 return marca ? marca.nome : '';
-            }
-        },    
-        { field: 'ações', headerName: 'Ações', width: 250, renderCell: (params) => (
-            <>
-                <button onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
-                <button onClick={() => atualizarProduto(params.row)}>Atualizar</button>
-            </>
-        )},
+            },
+        },
+        {
+            field: 'ações',
+            headerName: 'Ações',
+            width: 250,
+            renderCell: (params) => (
+                <>
+                    <button onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
+                    <button onClick={() => atualizarProduto(params.row)}>Atualizar</button>
+                </>
+            ),
+        },
     ];
 
     useEffect(() => {

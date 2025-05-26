@@ -90,6 +90,7 @@ routerAdminProdutos.put('/atualizar/:id', (req, res) => {
         id_categoria: id_categoria,
         id_marca: id_marca,
         imagem_url: imagem_url,
+        tipo_produto: tipo_produto,
         especificacoes: especificacoes
       }
     });
