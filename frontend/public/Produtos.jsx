@@ -6,6 +6,7 @@ import ModalErro from "../componentes/ModalErro";
 import Navbar from "../componentes/Navbar";
 import Footer from "../componentes/Footer";
 import FiltrosProdutos from "../componentes/Filtragem";
+
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 

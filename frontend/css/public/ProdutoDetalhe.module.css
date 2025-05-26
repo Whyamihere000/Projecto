@@ -13,6 +13,7 @@
 
 .imagemContainer {
   position: relative;
+  padding-top: 52px;
   margin-bottom: 20px;
 }
 
@@ -26,7 +27,8 @@
   position: sticky;
   top: 100px;
   flex: 0 0 35%;
-  background: white;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -83,7 +85,7 @@
 }
 
 .favoritoBtn {
-  background-color: transparent;
+  background-color: rgb(255, 89, 0);
   border: none;
   cursor: pointer;
   font-size: 22px;
@@ -92,6 +94,7 @@
 
 .favoritoBtn:hover {
   transform: scale(1.2);
+  background-color: #ff8400;
 }
 
 .detalhesSection {

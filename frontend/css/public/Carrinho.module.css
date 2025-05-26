@@ -4,7 +4,14 @@
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
+.carrosselContainer {
+  width: 60%;
+  height: 100%;
+  margin: 50px auto;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0 0 10px 10px;
+}
 .Carrinhoh1 {
   color: #ffffff;
   margin-bottom: 20px;

@@ -13,6 +13,13 @@
   text-align: center;
   color: #f5f5f5;
 }
+.carrosselContainer {
+  width: 80%;
+  margin: 80px auto;
+  overflow: hidden;
+  position: relative;
+  border-radius: 0 0 10px 10px;
+}
 
 .grid {
   display: grid;

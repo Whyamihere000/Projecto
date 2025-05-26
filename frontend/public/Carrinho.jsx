@@ -6,6 +6,10 @@ import styles from "../css/Global.module.css";
 import Navbar from "../componentes/Navbar";
 import Footer from "../componentes/Footer";
 
+
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+
 function Carrinho() {
   const [user, setUser] = useState(null);
   const [carrinho, setCarrinho] = useState({ items: [] });
@@ -175,6 +179,25 @@ const handleLogout = () => {
                   <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
                   <button onClick={handleFinalizarCompra}>Finalizar Compra</button>
                 </div>
+
+                 <Carousel className={stylesCarrinho.carrosselContainer}
+                                      autoPlay
+                                      infiniteLoop
+                                      showThumbs={false}
+                                      showStatus={false}
+                                      interval={5000}
+                                      dynamicHeight={false}
+                                    >
+                                      <div>
+                                        <img src="https://img.globaldata.pt/homepage/banner/desktop-raider-18-titan-18.png?auto=compress%2Cformat&fit=max&q=70&w=1946" alt="Promoção 1" />
+                                      </div>
+                                      <div>
+                                        <img src="https://img.globaldata.pt/homepage/banner/desktop-nvidia-rtx-5060.png?auto=compress%2Cformat&fit=max&q=70&w=1946" alt="Promoção 2" />
+                                      </div>
+                                      <div>
+                                        <img src="https://img.globaldata.pt/homepage/banner/desktop-kingmod2.png?auto=compress%2Cformat&fit=max&q=70&w=1446" alt="Promoção 3" />
+                                      </div>
+                                    </Carousel>
               </>
             ) : (
               <p>O seu carrinho está vazio.</p>

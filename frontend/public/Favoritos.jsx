@@ -8,6 +8,10 @@ import Footer from "../componentes/Footer";
 import SubNavbar from "../componentes/SubNavbar";
 import styles from "../css/public/Favoritos.module.css";
 
+
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+
 function Favoritos() {
   const [favoritos, setFavoritos] = useState([]);
   const [carrinho, setCarrinho] = useState(null);
@@ -156,6 +160,30 @@ function Favoritos() {
           ))}
         </div>
       )}
+       <Carousel className={styles.carrosselContainer}
+                            autoPlay
+                            infiniteLoop
+                            showThumbs={false}
+                            showStatus={false}
+                            interval={5000}
+                            dynamicHeight={false}
+                          >
+                            <div>
+                              <img src="https://strapi-sitecms-prod.s3.eu-west-1.amazonaws.com/Dias_Pcdiguianos_D_24_Maio_2_Junho_2025_701833c550.jpg" alt="Promoção 1" />
+                            </div>
+                            <div>
+                              <img src="https://eu2.flavedo.io/citrus/_j2Bcn7g4mWManBpxUGBv3E9MFvFdZaaqooJ9ZZ6rA4=" alt="Promoção 2" />
+                            </div>
+                            <div>
+                              <img src="https://eu2.flavedo.io/citrus/urWjsPy783cgzx0on844zJnzevia2UVGmjx8IeVWG0I=" alt="Promoção 3" />
+                            </div>
+                              <div>
+                              <img src="https://eu2.flavedo.io/citrus/lKM5XqdRD1aS2dgyWf-ye2iAP1koXscrNvFpH7W-VZQ=" alt="Promoção 4" />
+                            </div>
+                              <div>
+                              <img src="https://eu2.flavedo.io/citrus/1kTUcnIW5xROaQINZRDMLLTr8jqX1ZIOkTfTastyI4M=" alt="Promoção 5" />
+                            </div>
+                          </Carousel>
     </div>
     {openModal && (
           <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
