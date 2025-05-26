@@ -127,8 +127,8 @@ function Favoritos() {
         <div className={styles.grid}>
       {favoritos.map((produto) => (
             <Link
-              key={produto.id_produto}
-              to={`/produto/${produto.id_produto}`}
+              key={produto.id}
+              to={`/produto/${produto.id}`}
             >
             <div key={produto.id} className={styles.card}>
               <button
