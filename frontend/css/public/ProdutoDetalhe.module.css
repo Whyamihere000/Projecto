@@ -1,44 +1,37 @@
 .produtoContainer {
   display: flex;
-  flex-direction: column;
-  position: relative;
-  padding: 40px;
-  padding-top: 100px;
+  align-items: flex-start;
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 40px 20px;
 }
 
-.tituloSecao {
-  margin-top: 30px;
-  font-size: 24px;
-  color: #ffffff;
-  text-align: center;
+.colunaEsquerda {
+  flex: 1;
 }
 
 .imagemContainer {
-  float: left;
-  padding-right: 20px;
+  position: relative;
+  margin-bottom: 20px;
 }
 
 .imagem {
   width: 100%;
-  max-width: 100%;
-  height: auto;
   border-radius: 10px;
   object-fit: contain;
 }
 
 .infoFlutuante {
   position: sticky;
-  top: 80px;
-  width: 35%;
-  margin-left: auto;
+  top: 100px;
+  flex: 0 0 35%;
   background: white;
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  z-index: 10;
   height: fit-content;
+  z-index: 10;
 }
 
 .titulo {
@@ -96,22 +89,16 @@
   font-size: 22px;
   transition: transform 0.2s;
 }
-.comprarBtn, .favoritoBtn {
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
+
 .favoritoBtn:hover {
   transform: scale(1.2);
 }
 
 .detalhesSection {
-  clear: both;
-  margin-top: 380px; /* espaço para a imagem e a janela flutuante */
   background-color: #f9f9f9;
-  padding: 40px 20px;
+  padding: 20px;
   border-radius: 10px;
+  margin-top: 20px;
 }
 
 .descricao {
@@ -119,23 +106,10 @@
   margin-bottom: 20px;
   line-height: 1.6;
 }
-.produtoContainer {
-  display: flex;
-  justify-content: space-between;
-  gap: 40px;
-  padding: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
-.colunaEsquerda {
-  width: 55%;
+.tituloSecao {
+  margin: 40px 0;
+  font-size: 24px;
+  color: #ffffff;
+  text-align: center;
 }
-
-.detalhesSection {
-  margin-top: 40px;
-  background-color: #f9f9f9;
-  padding: 40px 20px;
-  border-radius: 10px;
-}
-
