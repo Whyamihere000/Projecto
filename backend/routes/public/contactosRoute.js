@@ -33,4 +33,16 @@ routerContactos.get("/tudo", (req, res) => {
   });
 });
 
+routerContactos.delete("/remover/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "DELETE FROM contactos WHERE id = ?";
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error("Erro ao eliminar contacto:", err);
+      return res.status(500).json({ error: "Erro no servidor." });
+    }
+    res.json({ message: "Contacto eliminado com sucesso!" });
+  });
+});
+
 export default routerContactos;

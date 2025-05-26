@@ -8,6 +8,7 @@ import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function MostrarContactos() {
   const [user, setUser] = useState(null);
+  const [mensagem, setMensagem] = useState('');
   const [contactos, setContactos] = useState([]);
   const navigate = useNavigate();
 
@@ -46,7 +47,8 @@ function MostrarContactos() {
     { field: "nome", headerName: "Cliente", width: 130 },
     { field: "email", headerName: "Email", width: 130 },
     { field: "mensagem", headerName: "Mensagem", width: 130 },
-    { field: "data_envio", headerName: "Data Envio", width: 130 }
+    { field: "data_envio", headerName: "Data Envio", width: 130 },
+    { field: "remover", headerName: "Remover", width: 130, renderCell: (params) => <button onClick={() => remover(params.row.id)}>Remover</button> },
   ];
 
   useEffect(() => {
@@ -59,6 +61,16 @@ function MostrarContactos() {
   const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/');
+  };
+
+  const remover = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/api/contactos/remover/${id}`);
+      setContactos(contactos.filter((contacto) => contacto.id !== id));
+    } catch (error) {
+      console.error("Erro ao remover contacto", error);
+      setMensagem("Erro ao remover contacto");
+    }
   };
 
   return (
@@ -75,7 +87,9 @@ function MostrarContactos() {
           pageSize={10}
         />
       )}
-    </div>    
+    </div>   
+    
+    {mensagem && <p style={{ marginLeft: "20rem" }}>{mensagem}</p>} 
     </>
   );
 }
