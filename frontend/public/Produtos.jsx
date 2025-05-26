@@ -85,7 +85,7 @@ function Produtos() {
       setOpenModal(true);
       return;
     }
-    setProdutoModal(produto.nome);
+    setProdutoModal(produto);
 
     try {
       await axios.post("http://localhost:3001/api/carrinhos/adicionar", {
@@ -103,7 +103,6 @@ function Produtos() {
         total: prevCarrinho.total + quantidade * produto.preco,
       }));
 
-      setTimeout(() => setOpenModal(false), 1000);
     } catch (error) {
       console.error("Erro ao adicionar ao carrinho", error);
       setMensagem("Erro ao adicionar ao carrinho.");

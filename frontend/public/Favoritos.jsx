@@ -97,8 +97,7 @@ function Favoritos() {
         ...prevCarrinho,
         total: prevCarrinho.total + quantidadeProduto * produto.preco,
       }));
-
-      setTimeout(() => setOpenModal(false), 1500);
+      
     } catch (error) {
       console.error("Erro ao adicionar ao carrinho", error);
       setMensagem("Erro ao adicionar ao carrinho.");
