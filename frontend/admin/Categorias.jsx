@@ -25,8 +25,8 @@ function Categorias() {
 
       function normalizarEspacos(str) {
   return str
-    .trim()                // remove espaços no início e fim
-    .replace(/\s+/g, ' '); // substitui múltiplos espaços por 1 só
+    .trim()
+    .replace(/\s+/g, ' ');
 }
 
     const adicionarCategoria = async () => {

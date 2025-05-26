@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ModalErro from "../componentes/ModalErro";
+import ModalGlobal from "../componentes/ModalGlobal";
 import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
@@ -34,6 +34,7 @@ function Produtos() {
     const [produtoSelecionado, setProdutoSelecionado] = useState(null);
     const [jsonEspecificacoesEditado, setJsonEspecificacoesEditado] = useState('');
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [editarModal, setEditarModal] = useState(false);
 
     const [mostrarModalImagem, setMostrarModalImagem] = useState(false);
     const [imagemUrlEditada, setImagemUrlEditada] = useState('');
@@ -96,6 +97,8 @@ function Produtos() {
                 if (produtoExistente) {
                     setMensagem('O SKU já existe. Por favor, escolha outro.');
                     setMensagemTipo('error');
+                    setMostrarModal(true);
+                    return;
                 } else {
                     setMensagem('');
                 }
@@ -109,30 +112,58 @@ function Produtos() {
         verificarSku();
     }, [produtoSku]);
 
+    function normalizarEspacos(str) {
+  return str
+    .trim()
+    .replace(/\s+/g, ' ');
+}
+
     const adicionarProduto = async () => {
-        if (!produtoNome.trim()) {
+        const produtoNomeFormatado = normalizarEspacos(produtoNome);
+        const produtoDescricaoFormatada = normalizarEspacos(produtoDescricao);
+
+        if (!produtoNomeFormatado) {
             setMensagem('O nome do produto é obrigatório.');
             setMensagemTipo('error');
+            setMostrarModal(true);
             return;
         }
+
+        setProdutos(produtoNomeFormatado);
+        
+        const skuFormatado = produtoSku.toUpperCase();
+        if (!/^SKU\d{4,16}$/.test(skuFormatado)) {
+            setMensagem('O SKU deve começar com "SKU" em maiúsculas e conter 4 a 16 dígitos.');
+            setMensagemTipo('error');
+            setMostrarModal(true);
+            return;
+        }
+
         if (!produtoPreco) {
             setMensagem('O preço do produto é obrigatório.');
             setMensagemTipo('error');
+            setMostrarModal(true);
             return;
         }
+
         if (!produtoStock) {
             setMensagem('O stock do produto é obrigatório.');
             setMensagemTipo('error');
+            setMostrarModal(true);
             return;
         }
+
         if (!produtoCategoria) {
             setMensagem('A categoria do produto é obrigatória.');
             setMensagemTipo('error');
+            setMostrarModal(true);
             return;
         }
+
         if (!produtoMarca) {
             setMensagem('A marca do produto é obrigatória.');
             setMensagemTipo('error');
+            setMostrarModal(true);
             return;
         }
 
@@ -142,13 +173,14 @@ function Produtos() {
             if (produtoExistente) {
                 setMensagem('O SKU já existe. Por favor, escolha outro.');
                 setMensagemTipo('error');
+                setMostrarModal(true);
                 return;
             }
 
             const formData = new FormData();
             formData.append('sku', produtoSku);
-            formData.append('nome', produtoNome);
-            formData.append('descricao', produtoDescricao);
+            formData.append('nome', produtoNomeFormatado);
+            formData.append('descricao', produtoDescricaoFormatada);
             formData.append('preco', produtoPreco);
             formData.append('stock', produtoStock);
             formData.append('id_categoria', produtoCategoria);
@@ -178,6 +210,7 @@ function Produtos() {
             } else {
                 setMensagem(resAdd.data.message);
                 setMensagemTipo('error');
+                setMostrarModal(true);
             }
         } catch (error) {
             console.error(error);
@@ -187,6 +220,9 @@ function Produtos() {
     }
 
     const atualizarProduto = async (produto) => {
+        const nomeNormalizado = normalizarEspacos(produto.nome);
+        const descricaoNormalizada = normalizarEspacos(produto.descricao);
+
         try {
             const especificacoesAtualizadas = typeof produto.especificacoes === 'string' 
             ? produto.especificacoes 
@@ -194,8 +230,8 @@ function Produtos() {
 
             const res = await axios.put(`http://localhost:3001/api/produtos/atualizar/${produto.id}`, {
                 sku: produto.sku,
-                nome: produto.nome,
-                descricao: produto.descricao,
+                nome: nomeNormalizado,
+                descricao: descricaoNormalizada,
                 preco: produto.preco,
                 stock: produto.stock,
                 id_categoria: produto.id_categoria,
@@ -209,9 +245,11 @@ function Produtos() {
                 setProdutos(produtos.map(p => p.id === produto.id ? { ...p, ...produto } : p));
                 setMensagem('Produto atualizado com sucesso.');
                 setMensagemTipo('success');
+                setMostrarModal(true);
             } else {
                 setMensagem('Erro ao atualizar o produto.');
                 setMensagemTipo('error');
+                setMostrarModal(true);
             }
         } catch (error) {
             console.error(error);
@@ -228,9 +266,11 @@ function Produtos() {
                 setProdutos(produtos.filter(produto => produto.id !== id));
                 setMensagem('Produto eliminado com sucesso.');
                 setMensagemTipo('success');
+                setMostrarModal(true);
             } else {
                 setMensagem('Erro ao eliminar produto.');
                 setMensagemTipo('error');
+                setMostrarModal(true);
             }
         } catch (error) {
             console.error('Erro na requisição Axios:', error);
@@ -276,30 +316,30 @@ function Produtos() {
             ),
         },
         {
-  field: 'tipo_produto',
-  headerName: 'Tipo de Produto',
-  width: 150,
-  editable: true,
-  renderEditCell: (params) => {
-    const handleChange = (event) => {
-      const newValue = event.target.value;
-      params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue });
-    };
+            field: 'tipo_produto',
+            headerName: 'Tipo de Produto',
+            width: 150,
+            editable: true,
+            renderEditCell: (params) => {
+                const handleChange = (event) => {
+                    const newValue = event.target.value;
+                    params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue });
+                };
 
-    return (
-      <select
-  value={params.value || ''}
-  onChange={handleChange}
-  style={{ width: '100%' }}
->
-  <option value="">Selecione um tipo</option>
-  {tiposProduto.map((tipo) => (
-    <option key={tipo} value={tipo}>{tipo}</option>
-  ))}
-</select>
-    );
-  },
-},
+                return (
+                    <select
+                        value={params.value || ''}
+                        onChange={handleChange}
+                        style={{ width: '100%' }}
+                    >
+                        <option value="">Selecione um tipo</option>
+                        {tiposProduto.map((tipo) => (
+                            <option key={tipo} value={tipo}>{tipo}</option>
+                        ))}
+                    </select>
+                );
+            },
+        },
         {
             field: 'especificacoes',
             headerName: 'Especificações',
@@ -331,7 +371,7 @@ function Produtos() {
                         : JSON.parse(params.row.especificacoes);
                     setProdutoSelecionado(params.row);
                     setJsonEspecificacoesEditado(JSON.stringify(atual, null, 2));
-                    setMostrarModal(true);
+                    setEditarModal(true);
                 }}>Editar</button>
             ),
         },
@@ -364,7 +404,7 @@ function Produtos() {
             width: 250,
             renderCell: (params) => (
                 <>
-                    <button onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
+                    <button style={{ backgroundColor: 'red', color: 'white' }} onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
                     <button onClick={() => atualizarProduto(params.row)}>Atualizar</button>
                 </>
             ),
@@ -462,64 +502,72 @@ function Produtos() {
             }, []);
 
     const handleLogout = () => {
-    localStorage.removeItem('user');
-    navigate('/');
-  };
+      localStorage.removeItem('user');
+      navigate('/');
+    };
+
+    const closeModal = () => {
+      setMostrarModal(false);
+    };
 
     return (
         <>
-                {mostrarModal && (
-  <div className={stylesProdutos.modalOverlay}>
-    <div className={stylesProdutos.modalContent}>
-      <h3>Editar Especificações (JSON)</h3>
-      <textarea
-        rows={10}
-        cols={50}
-        value={jsonEspecificacoesEditado}
-        onChange={(e) => setJsonEspecificacoesEditado(e.target.value)}
-      />
-      <div className={stylesProdutos.modalButtons}>
-        <button onClick={() => {
-          try {
-            const json = JSON.parse(jsonEspecificacoesEditado);
-            atualizarProduto({ ...produtoSelecionado, especificacoes: json });
-            setMostrarModal(false);
-          } catch {
-            alert('JSON inválido!');
-          }
-        }}>Guardar</button>
-        <button onClick={() => setMostrarModal(false)}>Cancelar</button>
-      </div>
-    </div>
-  </div>
-)}
+            {mostrarModal && (
+                <ModalGlobal mensagem={mensagem} onClose={closeModal} />
+            )}
 
-{mostrarModalImagem && (
-  <div className={stylesProdutos.modalOverlayImagem}>
-    <div className={stylesProdutos.modalContentImagem}>
-      <h3>Editar URL da Imagem</h3>
-      <input 
-        type="text" 
-        value={imagemUrlEditada} 
-        onChange={(e) => setImagemUrlEditada(e.target.value)} 
-        style={{ width: '100%' }}
-      />
-      <div className={stylesProdutos.modalButtonsImagem}>
-        <button onClick={() => {
-          if (!imagemUrlEditada.trim()) {
-            alert('URL não pode estar vazio!');
-            return;
-          }
-          atualizarProduto({ ...produtoSelecionado, imagem_url: imagemUrlEditada });
-          setMostrarModalImagem(false);
-        }}>
-          Guardar
-        </button>
-        <button onClick={() => setMostrarModalImagem(false)}>Cancelar</button>
-      </div>
-    </div>
-  </div>
-)}
+            {editarModal && (
+                <div className={stylesProdutos.modalOverlay}>
+                    <div className={stylesProdutos.modalContent}>
+                        <h3>Editar Especificações (JSON)</h3>
+                        <textarea
+                            rows={10}
+                            cols={50}
+                            value={jsonEspecificacoesEditado}
+                            onChange={(e) => setJsonEspecificacoesEditado(e.target.value)}
+                        />
+                        <div className={stylesProdutos.modalButtons}>
+                            <button onClick={() => {
+                                try {
+                                    const json = JSON.parse(jsonEspecificacoesEditado);
+                                    atualizarProduto({ ...produtoSelecionado, especificacoes: json });
+                                    setEditarModal(false);
+                                } catch {
+                                    alert('JSON inválido!');
+                                }
+                            }}>Guardar</button>
+                            <button onClick={() => setEditarModal(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {mostrarModalImagem && (
+                <div className={stylesProdutos.modalOverlayImagem}>
+                    <div className={stylesProdutos.modalContentImagem}>
+                        <h3>Editar URL da Imagem</h3>
+                        <input
+                            type="text"
+                            value={imagemUrlEditada}
+                            onChange={(e) => setImagemUrlEditada(e.target.value)}
+                            style={{ width: '100%' }}
+                        />
+                        <div className={stylesProdutos.modalButtonsImagem}>
+                            <button onClick={() => {
+                                if (!imagemUrlEditada.trim()) {
+                                    alert('URL não pode estar vazio!');
+                                    return;
+                                }
+                                atualizarProduto({ ...produtoSelecionado, imagem_url: imagemUrlEditada });
+                                setMostrarModalImagem(false);
+                            }}>
+                                Guardar
+                            </button>
+                            <button onClick={() => setMostrarModalImagem(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
 
             <NavbarAdmin handleLogout={handleLogout} user={user} />
@@ -601,7 +649,6 @@ function Produtos() {
                     </div>
                 ))}
                 <button onClick={adicionarProduto}>Adicionar Produto</button>
-                {mensagem && <p className={mensagemTipo}>{mensagem}</p>}
                 <br />
                 <br />
                 <br />
@@ -616,14 +663,14 @@ function Produtos() {
                         getRowHeight={() => 'auto'}
                         rowHeight={null}
                         sx={{
-    '& .MuiDataGrid-columnHeaders': {
-      '& .MuiDataGrid-columnHeader': {
-        backgroundColor: '#1976d2',
-        color: '#ffffff',
-        fontWeight: 'bold',
-      },
-    },
-  }}
+                            '& .MuiDataGrid-columnHeaders': {
+                                '& .MuiDataGrid-columnHeader': {
+                                    backgroundColor: '#1976d2',
+                                    color: '#ffffff',
+                                    fontWeight: 'bold',
+                                },
+                            },
+                        }}
                     />
                 </div>
             </div>
