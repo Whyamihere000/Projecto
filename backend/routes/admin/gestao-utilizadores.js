@@ -67,20 +67,53 @@ routerAdminUtilizadores.put('/atualizar/:id', (req, res) => {
     )
 })
 
-routerAdminUtilizadores.get('/eliminar/:id', (req, res) => {
-    console.log('Eliminação na tabela utilizadores realizada na data:', new Date());   
-    db.query(
-        'DELETE FROM utilizadores WHERE id = ?',
-        [req.params.id],
-        (err, results) => {
-            if (err) {
-                console.error(err);
-                return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
-            }
-            return res.status(200).send({ success: true, message: 'Utilizador eliminado com sucesso.' });
+// routerAdminUtilizadores.delete('/eliminar/:id', (req, res) => {
+//     console.log('Eliminação na tabela utilizadores realizada na data:', new Date());   
+//     db.query(
+//         'DELETE FROM utilizadores WHERE id = ?',
+//         [req.params.id],
+//         (err, results) => {
+//             if (err) {
+//                 console.error(err);
+//                 return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
+//             }
+//             return res.status(200).send({ success: true, message: 'Utilizador eliminado com sucesso.' });
+//         }
+//     )
+// })
+
+routerAdminUtilizadores.delete('/eliminar/:id', (req, res) => {
+  const id = req.params.id;
+
+  const sqlEliminarItens = `
+    DELETE items_carrinhos FROM items_carrinhos
+    JOIN carrinhos ON items_carrinhos.id_carrinho = carrinhos.id
+    WHERE carrinhos.id_utilizador = ?
+  `;
+
+  db.query(sqlEliminarItens, [id], (err) => {
+    if (err) {
+      console.error('Erro ao eliminar itens dos carrinhos:', err);
+      return res.status(500).send({ success: false, message: 'Erro ao eliminar itens dos carrinhos' });
+    }
+
+    db.query('DELETE FROM carrinhos WHERE id_utilizador = ?', [id], (err2) => {
+      if (err2) {
+        console.error('Erro ao eliminar carrinhos:', err2);
+        return res.status(500).send({ success: false, message: 'Erro ao eliminar carrinhos' });
+      }
+
+      db.query('DELETE FROM utilizadores WHERE id = ?', [id], (err3) => {
+        if (err3) {
+          console.error('Erro ao eliminar utilizador:', err3);
+          return res.status(500).send({ success: false, message: 'Erro ao eliminar utilizador' });
         }
-    )
-})
+
+        return res.status(200).send({ success: true, message: 'Utilizador eliminado com sucesso.' });
+      });
+    });
+  });
+});
 
 routerAdminUtilizadores.post('/registo', async (req, res) => {
   const { primeiro_nome, ultimo_nome, email, password, telefone, rua, cidade, codigo_postal, pais } = req.body;

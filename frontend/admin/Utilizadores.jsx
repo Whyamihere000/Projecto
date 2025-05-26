@@ -4,11 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import styles from "../css/Global.module.css";
 import stylesUtilizadores from "../css/adm/Utilizadores.module.css";
+import ModalGlobal from "../componentes/ModalGlobal";
 import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function Utilizadores() {
   const [user, setUser] = useState(null);
   const [utilizadores, setUtilizadores] = useState([]);
+
+  const [mostrarModal, setMostrarModal] = useState(false);
 
   const [primeiro_nome, setPrimeiroNome] = useState('')
   const [ultimo_nome, setUltimoNome] = useState('')
@@ -103,7 +106,7 @@ function Utilizadores() {
 
   const eliminarUtilizador = async (id) => {
     try {
-      const response = await axios.get(
+      const response = await axios.delete(
         `http://localhost:3001/api/utilizadores/eliminar/${id}`
       );
 
@@ -155,7 +158,7 @@ function Utilizadores() {
     minWidth: 220,
     renderCell: (params) => (
       <>
-        <button onClick={() => eliminarUtilizador(params.row.id)}>Eliminar</button>
+        <button style={{ backgroundColor: "red", color: "white" }} onClick={() => eliminarUtilizador(params.row.id)}>Eliminar</button>
         <button onClick={() => atualizarUtilizador(params.row)}>Atualizar</button>
       </>
     ),
@@ -211,8 +214,10 @@ const handleRegisto = async () => {
 
     if (Object.keys(errors).length > 0) {
       setErrors(errors)
-      setMensagem('Verifique os erros.')
-      setMensagemTipo('error')
+      const primeiroErro = Object.values(errors)[0];
+    setMensagem(primeiroErro);
+    setMensagemTipo('error');
+    setMostrarModal(true);
       return
     }
     
@@ -274,41 +279,49 @@ useEffect(() => {
     navigate('/');
   };
 
+  const closeModal = () => {
+    setMostrarModal(false);
+  };
+
   return (
     <>
+    {mostrarModal && (
+        <ModalGlobal mensagem={mensagem} onClose={closeModal} />
+      )}
+
       <NavbarAdmin handleLogout={handleLogout} user={user} />
 
       <div className={stylesUtilizadores.container}>
         <h1>Registo Colaborador</h1>
       <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} />
-      {errors.primeiro_nome && <p style={{ color: 'red' }}>{errors.primeiro_nome}</p>}
+      {/* {errors.primeiro_nome && <p style={{ color: 'red' }}>{errors.primeiro_nome}</p>} */}
 
       <input type="text" placeholder="Ultimo Nome" onChange={(e) => setUltimoNome(e.target.value)} />
-      {errors.ultimo_nome && <p style={{ color: 'red' }}>{errors.ultimo_nome}</p>}
+      {/* {errors.ultimo_nome && <p style={{ color: 'red' }}>{errors.ultimo_nome}</p>} */}
 
       <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+      {/* {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>} */}
 
       <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
+      {/* {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>} */}
 
       <input type="password" placeholder="Confirm Password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
-      {errors.password_confirmation && <p style={{ color: 'red' }}>{errors.password_confirmation}</p>}
+      {/* {errors.password_confirmation && <p style={{ color: 'red' }}>{errors.password_confirmation}</p>} */}
 
       <input type="text" placeholder="Telefone" onChange={(e) => setTelefone(e.target.value)} />
-      {errors.telefone && <p style={{ color: 'red' }}>{errors.telefone}</p>}
+      {/* {errors.telefone && <p style={{ color: 'red' }}>{errors.telefone}</p>} */}
 
       <input type="text" placeholder="Rua" onChange={(e) => setRua(e.target.value)} />
-      {errors.rua && <p style={{ color: 'red' }}>{errors.rua}</p>}
+      {/* {errors.rua && <p style={{ color: 'red' }}>{errors.rua}</p>} */}
 
       <input type="text" placeholder="Cidade" onChange={(e) => setCidade(e.target.value)} />
-      {errors.cidade && <p style={{ color: 'red' }}>{errors.cidade}</p>}
+      {/* {errors.cidade && <p style={{ color: 'red' }}>{errors.cidade}</p>} */}
 
       <input type="text" placeholder="Codigo Postal" onChange={(e) => setCodigoPostal(e.target.value)} />
-      {errors.codigo_postal && <p style={{ color: 'red' }}>{errors.codigo_postal}</p>}
+      {/* {errors.codigo_postal && <p style={{ color: 'red' }}>{errors.codigo_postal}</p>} */}
 
       <input type="text" placeholder="Pais" onChange={(e) => setPais(e.target.value)} />
-      {errors.pais && <p style={{ color: 'red' }}>{errors.pais}</p>}
+      {/* {errors.pais && <p style={{ color: 'red' }}>{errors.pais}</p>} */}
 
       <button onClick={handleRegisto}>Registar</button>
       <br />
@@ -321,17 +334,6 @@ useEffect(() => {
             getRowId={(row) => row.id}
           />
         </div>
-        {mensagem && (
-          <p
-            className={
-              mensagemTipo === "success"
-                ? stylesUtilizadores.success
-                : stylesUtilizadores.error
-            }
-          >
-            {mensagem}
-          </p>
-        )}
       </div>
     </>
   );
