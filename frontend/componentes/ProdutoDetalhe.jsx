@@ -2,8 +2,10 @@ import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ModalErro from "./ModalErro";
 import axios from "axios";
+
 import styles from "../css/public/ProdutoDetalhe.module.css";
 import stylesHome from "../css/public/Home.module.css";
+
 import ComponentesNav from "../componentes/ComponentesNav";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -197,7 +199,9 @@ const toggleFavorito = async () => {
   <>
     <Navbar user={user} handleLogout={handleLogout} />
 
-    <div style={{ }}>
+    <ComponentesNav/>
+
+    <div style={{ }}> 
       <div className={styles.produtoContainer}>
         <div className={styles.colunaEsquerda}>
           <div className={styles.imagemContainer}>
