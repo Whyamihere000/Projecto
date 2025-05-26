@@ -23,16 +23,26 @@ function Categorias() {
         }
       }, []);
 
+      function normalizarEspacos(str) {
+  return str
+    .trim()                // remove espaços no início e fim
+    .replace(/\s+/g, ' '); // substitui múltiplos espaços por 1 só
+}
+
     const adicionarCategoria = async () => {
-        if (!categoria.trim()) {
-            setMensagem('O nome da categoria é obrigatório.');
-            setMensagemTipo('error');
-            return;
-        }
+        const categoriaNormalizada = normalizarEspacos(categoria);
+
+  if (!categoriaNormalizada) {
+    setMensagem('O nome da categoria é obrigatório.');
+    setMensagemTipo('error');
+    return;
+  }
+
+  setCategoria(categoriaNormalizada);
 
         try {
             const res = await axios.post('http://localhost:3001/api/categorias/nova', {
-                nome: categoria
+                nome: categoriaNormalizada
             });
 
             if (res.data.success) {
