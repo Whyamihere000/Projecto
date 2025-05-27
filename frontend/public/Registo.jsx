@@ -148,6 +148,7 @@ function Registo() {
           name="password_confirmation"
           placeholder="Confirmar Password"
           onChange={handleChange}
+          onKeyDown={(e) => e.key === 'Enter' && handleRegisto()}
           className={styles.input}
         />
         {errors.password_confirmation && <p className={styles.errorText}>{errors.password_confirmation}</p>}
