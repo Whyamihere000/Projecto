@@ -199,7 +199,7 @@ const toggleFavorito = async () => {
   <>
     <Navbar user={user} handleLogout={handleLogout} />
 
-    <ComponentesNav/>
+    <div style= {{ marginTop: "50px" }}><ComponentesNav /></div>
 
     <div style={{ }}> 
       <div className={styles.produtoContainer}>
