@@ -6,12 +6,12 @@ function SubNavbar() {
   const location = useLocation();
 
   return (
-  <div className={styles.subNav}>
-    <Link to="/perfil" className={styles.subNavLink}>Perfil</Link>
-    <Link to="/perfil-encomendas" className={styles.subNavLink}>Encomendas</Link>
-    <Link to="/perfil-favoritos" className={styles.subNavLink}>Favoritos</Link>
-    <Link to="/perfil-contactos" className={styles.subNavLink}>Contactos</Link>
-  </div>
+    <div className={styles.subNav}>
+      <Link to="/perfil" className={styles.subNavLink}>Perfil</Link>
+      <Link to="/perfil-encomendas" className={styles.subNavLink}>Encomendas</Link>
+      <Link to="/perfil-favoritos" className={styles.subNavLink}>Favoritos</Link>
+      <Link to="/perfil-contactos" className={styles.subNavLink}>Contactos</Link>
+    </div>
   );
 }
 

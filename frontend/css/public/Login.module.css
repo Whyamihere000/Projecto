@@ -1,6 +1,6 @@
 .login {
   background-color: rgba(255, 255, 255, 0.199);
-  backdrop-filter: blur(0,1px);
+  backdrop-filter: blur(0, 1px);
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
 }
 
 .input:focus {
- outline: none;
+  outline: none;
   border-color: #ff540b;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
@@ -67,16 +67,19 @@
   color: rgb(255, 255, 255);
   margin-top: 15px;
 }
+
 .errorMessage {
   color: rgb(255, 255, 255);
   margin-top: 15px;
 }
+
 .label {
   font-weight: 500;
   margin-top: 10px;
   margin-bottom: 5px;
   color: #ffffff;
 }
+
 .input {
   width: 100%;
   padding: 10px;
@@ -84,10 +87,11 @@
   border-radius: 5px;
   margin-bottom: 15px;
 }
+
 /* 
 Falta ajudatar o css do link para ficar no center 
 */
-link{
+link {
   color: #007bff;
   text-decoration: none;
   align-items: center;
@@ -107,11 +111,12 @@ link{
 
 .checklist li {
   display: flex;
-  align-items: center; 
-  margin: 5px; 
+  align-items: center;
+  margin: 5px;
   position: relative;
   padding-left: 25px;
 }
+
 .checklist li::before {
   content: "";
   position: absolute;
@@ -121,12 +126,15 @@ link{
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #27ff01; /* Cor da bola (pode ser qualquer cor) */
+  background-color: #27ff01;
+  /* Cor da bola (pode ser qualquer cor) */
 }
 
 .checklist li.invalid::before {
-  background-color: #ffffff; /* Cor para inválido */
+  background-color: #ffffff;
+  /* Cor para inválido */
 }
+
 .valid {
   color: #27ff01;
 }

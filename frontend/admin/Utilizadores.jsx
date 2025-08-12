@@ -25,7 +25,7 @@ function Utilizadores() {
   const [pais, setPais] = useState('')
 
   const [mensagem, setMensagem] = useState("");
-  const [mensagemTipo, setMensagemTipo] = useState("");  
+  const [mensagemTipo, setMensagemTipo] = useState("");
   const [errors, setErrors] = useState({})
 
   const navigate = useNavigate();
@@ -135,50 +135,51 @@ function Utilizadores() {
   };
 
   const colunas = [
-  { field: "id", headerName: "ID", minWidth: 70 },
-  { field: "primeiro_nome", headerName: "Primeiro Nome", minWidth: 150, editable: true },
-  { field: "ultimo_nome", headerName: "Ultimo Nome", minWidth: 150, editable: true },
-  { field: "email", headerName: "Email", minWidth: 200, editable: true },
-  { field: "password_hash", headerName: "Password", minWidth: 200, },
-  { field: "telefone", headerName: "Telefone", minWidth: 150, editable: true,     
-    renderEditCell: (params) => (
-      <input
-        type="text"
-        value={params.value}
-        onChange={(e) => {
-          const newValue = e.target.value.slice(0, 9); // Limita diretamente a 9 caracteres
-          params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue });
-        }}
-      />
-    ),
-  },
-  { field: "data_registo", headerName: "Data Registo", minWidth: 150 },
-  { field: "data_atualizacao", headerName: "Data Atualizacao", minWidth: 150 },
-  { field: "tipo_utilizador", headerName: "Tipo", minWidth: 100, editable: true },
-  { field: "rua", headerName: "Rua", minWidth: 200, flex: 1, editable: true },
-  { field: "cidade", headerName: "Cidade", minWidth: 150, editable: true },
-  { field: "codigo_postal", headerName: "Codigo Postal", minWidth: 150, editable: true },
-  { field: "pais", headerName: "Pais", minWidth: 150, editable: true },
-  {
-    field: "ações",
-    headerName: "Ações",
-    minWidth: 220,
-    renderCell: (params) => (
-      <>
-        <button style={{ backgroundColor: "red", color: "white" }} onClick={() => eliminarUtilizador(params.row.id)}>Eliminar</button>
-        <button onClick={() => atualizarUtilizador(params.row)}>Atualizar</button>
-      </>
-    ),
-  },
-];
+    { field: "id", headerName: "ID", minWidth: 70 },
+    { field: "primeiro_nome", headerName: "Primeiro Nome", minWidth: 150, editable: true },
+    { field: "ultimo_nome", headerName: "Ultimo Nome", minWidth: 150, editable: true },
+    { field: "email", headerName: "Email", minWidth: 200, editable: true },
+    { field: "password_hash", headerName: "Password", minWidth: 200, },
+    {
+      field: "telefone", headerName: "Telefone", minWidth: 150, editable: true,
+      renderEditCell: (params) => (
+        <input
+          type="text"
+          value={params.value}
+          onChange={(e) => {
+            const newValue = e.target.value.slice(0, 9); // Limita diretamente a 9 caracteres
+            params.api.setEditCellValue({ id: params.id, field: params.field, value: newValue });
+          }}
+        />
+      ),
+    },
+    { field: "data_registo", headerName: "Data Registo", minWidth: 150 },
+    { field: "data_atualizacao", headerName: "Data Atualizacao", minWidth: 150 },
+    { field: "tipo_utilizador", headerName: "Tipo", minWidth: 100, editable: true },
+    { field: "rua", headerName: "Rua", minWidth: 200, flex: 1, editable: true },
+    { field: "cidade", headerName: "Cidade", minWidth: 150, editable: true },
+    { field: "codigo_postal", headerName: "Codigo Postal", minWidth: 150, editable: true },
+    { field: "pais", headerName: "Pais", minWidth: 150, editable: true },
+    {
+      field: "ações",
+      headerName: "Ações",
+      minWidth: 220,
+      renderCell: (params) => (
+        <>
+          <button style={{ backgroundColor: "red", color: "white" }} onClick={() => eliminarUtilizador(params.row.id)}>Eliminar</button>
+          <button onClick={() => atualizarUtilizador(params.row)}>Atualizar</button>
+        </>
+      ),
+    },
+  ];
 
-function normalizarEspacos(str) {
-  return str
-    .trim()
-    .replace(/\s+/g, ' ');
-}
+  function normalizarEspacos(str) {
+    return str
+      .trim()
+      .replace(/\s+/g, ' ');
+  }
 
-const handleRegisto = async () => {
+  const handleRegisto = async () => {
     const errors = {}
 
     const primeiro_nome_normalizado = normalizarEspacos(primeiro_nome);
@@ -237,12 +238,12 @@ const handleRegisto = async () => {
     if (Object.keys(errors).length > 0) {
       setErrors(errors)
       const primeiroErro = Object.values(errors)[0];
-    setMensagem(primeiroErro);
-    setMensagemTipo('error');
-    setMostrarModal(true);
+      setMensagem(primeiroErro);
+      setMensagemTipo('error');
+      setMostrarModal(true);
       return
     }
-    
+
     const regexCodigoPostal = /^[0-9]{4}-[0-9]{3}$/;
     if (!regexCodigoPostal.test(codigo_postal_normalizado)) {
       setMensagem('Código postal inválido.');
@@ -276,27 +277,27 @@ const handleRegisto = async () => {
         setCidade('')
         setCodigoPostal('')
         setPais('')
-        
+
         setUtilizadores((prevUtilizadores) => [...prevUtilizadores, response.data.user]);
       } else {
         setMensagem(response.data.message)
         setMensagemTipo('error')
       }
     } catch (error) {
-        console.error('Erro no registo:', error.response?.data || error.message)
-        setMensagem(error.response?.data?.message || 'Ocorreu um erro ao fazer o registo.')
-        setMensagemTipo('error')
+      console.error('Erro no registo:', error.response?.data || error.message)
+      setMensagem(error.response?.data?.message || 'Ocorreu um erro ao fazer o registo.')
+      setMensagemTipo('error')
     }
   }
 
-useEffect(() => {
-            document.body.className = styles.bodyHomeAdmin;
-            return () => {
-                document.body.className = '';
-            };
-        }, []);
+  useEffect(() => {
+    document.body.className = styles.bodyHomeAdmin;
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
-    const handleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/');
   };
@@ -307,7 +308,7 @@ useEffect(() => {
 
   return (
     <>
-    {mostrarModal && (
+      {mostrarModal && (
         <ModalGlobal mensagem={mensagem} onClose={closeModal} />
       )}
 
@@ -315,38 +316,38 @@ useEffect(() => {
 
       <div className={stylesUtilizadores.container}>
         <h1>Registo Colaborador</h1>
-      <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} />
-      {/* {errors.primeiro_nome && <p style={{ color: 'red' }}>{errors.primeiro_nome}</p>} */}
+        <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} />
+        {/* {errors.primeiro_nome && <p style={{ color: 'red' }}>{errors.primeiro_nome}</p>} */}
 
-      <input type="text" placeholder="Ultimo Nome" onChange={(e) => setUltimoNome(e.target.value)} />
-      {/* {errors.ultimo_nome && <p style={{ color: 'red' }}>{errors.ultimo_nome}</p>} */}
+        <input type="text" placeholder="Ultimo Nome" onChange={(e) => setUltimoNome(e.target.value)} />
+        {/* {errors.ultimo_nome && <p style={{ color: 'red' }}>{errors.ultimo_nome}</p>} */}
 
-      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      {/* {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>} */}
+        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+        {/* {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>} */}
 
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      {/* {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>} */}
+        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+        {/* {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>} */}
 
-      <input type="password" placeholder="Confirm Password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
-      {/* {errors.password_confirmation && <p style={{ color: 'red' }}>{errors.password_confirmation}</p>} */}
+        <input type="password" placeholder="Confirm Password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
+        {/* {errors.password_confirmation && <p style={{ color: 'red' }}>{errors.password_confirmation}</p>} */}
 
-      <input type="text" placeholder="Telefone" onChange={(e) => setTelefone(e.target.value)} />
-      {/* {errors.telefone && <p style={{ color: 'red' }}>{errors.telefone}</p>} */}
+        <input type="text" placeholder="Telefone" onChange={(e) => setTelefone(e.target.value)} />
+        {/* {errors.telefone && <p style={{ color: 'red' }}>{errors.telefone}</p>} */}
 
-      <input type="text" placeholder="Rua" onChange={(e) => setRua(e.target.value)} />
-      {/* {errors.rua && <p style={{ color: 'red' }}>{errors.rua}</p>} */}
+        <input type="text" placeholder="Rua" onChange={(e) => setRua(e.target.value)} />
+        {/* {errors.rua && <p style={{ color: 'red' }}>{errors.rua}</p>} */}
 
-      <input type="text" placeholder="Cidade" onChange={(e) => setCidade(e.target.value)} />
-      {/* {errors.cidade && <p style={{ color: 'red' }}>{errors.cidade}</p>} */}
+        <input type="text" placeholder="Cidade" onChange={(e) => setCidade(e.target.value)} />
+        {/* {errors.cidade && <p style={{ color: 'red' }}>{errors.cidade}</p>} */}
 
-      <input type="text" placeholder="Codigo Postal" onChange={(e) => setCodigoPostal(e.target.value)} />
-      {/* {errors.codigo_postal && <p style={{ color: 'red' }}>{errors.codigo_postal}</p>} */}
+        <input type="text" placeholder="Codigo Postal" onChange={(e) => setCodigoPostal(e.target.value)} />
+        {/* {errors.codigo_postal && <p style={{ color: 'red' }}>{errors.codigo_postal}</p>} */}
 
-      <input type="text" placeholder="Pais" onChange={(e) => setPais(e.target.value)} />
-      {/* {errors.pais && <p style={{ color: 'red' }}>{errors.pais}</p>} */}
+        <input type="text" placeholder="Pais" onChange={(e) => setPais(e.target.value)} />
+        {/* {errors.pais && <p style={{ color: 'red' }}>{errors.pais}</p>} */}
 
-      <button onClick={handleRegisto}>Registar</button>
-      <br />
+        <button onClick={handleRegisto}>Registar</button>
+        <br />
 
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid

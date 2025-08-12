@@ -6,30 +6,30 @@ const router = express.Router();
 
 // LOGIN
 router.post('/login', (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    db.query('SELECT * FROM utilizadores WHERE email = ?', [email], async (err, results) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
-        }
+  db.query('SELECT * FROM utilizadores WHERE email = ?', [email], async (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
+    }
 
-        if (results.length === 0) {
-            return res.status(401).send({ success: false, message: 'Email ou password incorretos' });
-        }
+    if (results.length === 0) {
+      return res.status(401).send({ success: false, message: 'Email ou password incorretos' });
+    }
 
-        const user = results[0];
-        const passwordMatch = await bcrypt.compare(password, user.password_hash);
-        console.log('Password fornecida:', password);
-        console.log('Hash da base de dados:', user.password_hash);
+    const user = results[0];
+    const passwordMatch = await bcrypt.compare(password, user.password_hash);
+    console.log('Password fornecida:', password);
+    console.log('Hash da base de dados:', user.password_hash);
 
 
-        if (!passwordMatch) {
-            return res.status(401).send({ success: false, message: 'Email ou password incorretos' });
-        }
+    if (!passwordMatch) {
+      return res.status(401).send({ success: false, message: 'Email ou password incorretos' });
+    }
 
-        res.status(200).send({ success: true, user });
-    });
+    res.status(200).send({ success: true, user });
+  });
 });
 
 // REGISTO

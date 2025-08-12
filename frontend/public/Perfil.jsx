@@ -132,65 +132,65 @@ function Perfil() {
 
   return (
     <>
-    <div>
+      <div>
         <Navbar
-         user={user} 
-         handleLogout={handleLogout}
+          user={user}
+          handleLogout={handleLogout}
         />
         <SubNavbar />
-    </div>
-
-
-    <br />
-
-    <div className={styles.container}>
-      <h2>Perfil do Utilizador</h2>
-
-      <div className={styles.section}>
-        <h3>Dados Pessoais</h3>
-        <div className={styles.fieldGroup}>
-          <input type="text" name="nome" value={user.nome || ''} onChange={handleInputChange} placeholder="Nome" />
-          <input type="email" name="email" value={user.email || ''} onChange={handleInputChange} placeholder="Email" />
-          <input type="text" name="telefone" value={user.telefone || ''} onChange={handleInputChange} placeholder="Telefone" />
-        </div>
       </div>
 
-      <div className={styles.section}>
-        <h3>Morada</h3>
-        <div className={styles.fieldGroup}>
-          <input type="text" name="rua" value={user.rua || ''} onChange={handleInputChange} placeholder="Rua" />
-          <input type="text" name="cidade" value={user.cidade || ''} onChange={handleInputChange} placeholder="Cidade" />
-          <input type="text" name="codigo_postal" value={user.codigo_postal || ''} onChange={handleInputChange} placeholder="Código Postal" />
-          <input type="text" name="pais" value={user.pais || ''} onChange={handleInputChange} placeholder="País" />
-        </div>
-      </div>
 
-      <button onClick={handleSave}>Guardar Alterações</button>
+      <br />
 
-      <div className={styles.section}>
-        <h3>Alterar Password</h3>
-        <div className={styles.fieldGroup}>
-          <input type="password" placeholder="Password atual" value={passwordAtual} onChange={(e) => setPasswordAtual(e.target.value)} />
-          <input type="password" placeholder="Nova password" value={novaPassword} onChange={(e) => setNovaPassword(e.target.value)} />
-          <div className={styles.passwordStrength}>
-            <div
-              className={styles.strengthBar}
-              style={{
-                width: percentuais[forca - 1] || "0%",
-                backgroundColor: cores[forca - 1] || "#333"
-              }}
-            />
+      <div className={styles.container}>
+        <h2>Perfil do Utilizador</h2>
+
+        <div className={styles.section}>
+          <h3>Dados Pessoais</h3>
+          <div className={styles.fieldGroup}>
+            <input type="text" name="nome" value={user.nome || ''} onChange={handleInputChange} placeholder="Nome" />
+            <input type="email" name="email" value={user.email || ''} onChange={handleInputChange} placeholder="Email" />
+            <input type="text" name="telefone" value={user.telefone || ''} onChange={handleInputChange} placeholder="Telefone" />
           </div>
-          <input type="password" placeholder="Confirmar nova password" value={confirmarPassword} onChange={(e) => setConfirmarPassword(e.target.value)} />
         </div>
-        <button className={styles.button} onClick={handleMudarPassword}>Guardar Password</button>
-        <br />
-        <p style={{ color: messageType === "success" ? "green" : "red" }}>{message}</p>
-        <br />
-        <Link to="/perfil-encomendas">Ver as minhas encomendas</Link>
+
+        <div className={styles.section}>
+          <h3>Morada</h3>
+          <div className={styles.fieldGroup}>
+            <input type="text" name="rua" value={user.rua || ''} onChange={handleInputChange} placeholder="Rua" />
+            <input type="text" name="cidade" value={user.cidade || ''} onChange={handleInputChange} placeholder="Cidade" />
+            <input type="text" name="codigo_postal" value={user.codigo_postal || ''} onChange={handleInputChange} placeholder="Código Postal" />
+            <input type="text" name="pais" value={user.pais || ''} onChange={handleInputChange} placeholder="País" />
+          </div>
+        </div>
+
+        <button onClick={handleSave}>Guardar Alterações</button>
+
+        <div className={styles.section}>
+          <h3>Alterar Password</h3>
+          <div className={styles.fieldGroup}>
+            <input type="password" placeholder="Password atual" value={passwordAtual} onChange={(e) => setPasswordAtual(e.target.value)} />
+            <input type="password" placeholder="Nova password" value={novaPassword} onChange={(e) => setNovaPassword(e.target.value)} />
+            <div className={styles.passwordStrength}>
+              <div
+                className={styles.strengthBar}
+                style={{
+                  width: percentuais[forca - 1] || "0%",
+                  backgroundColor: cores[forca - 1] || "#333"
+                }}
+              />
+            </div>
+            <input type="password" placeholder="Confirmar nova password" value={confirmarPassword} onChange={(e) => setConfirmarPassword(e.target.value)} />
+          </div>
+          <button className={styles.button} onClick={handleMudarPassword}>Guardar Password</button>
+          <br />
+          <p style={{ color: messageType === "success" ? "green" : "red" }}>{message}</p>
+          <br />
+          <Link to="/perfil-encomendas">Ver as minhas encomendas</Link>
+        </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 }

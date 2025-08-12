@@ -16,12 +16,12 @@ function Produtos() {
     const [produtoStock, setProdutoStock] = useState('');
     const [produtoCategoria, setProdutoCategoria] = useState('');
     const [categorias, setCategorias] = useState([]);
-    const [produtoMarca, setProdutoMarca] = useState('');  
-    const [marcas, setMarcas] = useState([]);  
+    const [produtoMarca, setProdutoMarca] = useState('');
+    const [marcas, setMarcas] = useState([]);
     const [produtoTipo, setProdutoTipo] = useState('');
     const tiposProduto = [
-        "Memória", "Processador", "Placa Gráfica", 
-        "Motherboard", "Armazenamento", "Fonte de Alimentação", 
+        "Memória", "Processador", "Placa Gráfica",
+        "Motherboard", "Armazenamento", "Fonte de Alimentação",
         "Caixa", "Monitor", "Periféricos"
     ];
     const [produtoImagem, setProdutoImagem] = useState('');
@@ -42,14 +42,14 @@ function Produtos() {
     const navigate = useNavigate();
 
     useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser && storedUser !== 'undefined') {
-      const user = JSON.parse(storedUser);
-      if (user.tipo_utilizador === 'admin') {
-        setUser(user);
-      }
-    }
-  }, []);
+        const storedUser = localStorage.getItem('user');
+        if (storedUser && storedUser !== 'undefined') {
+            const user = JSON.parse(storedUser);
+            if (user.tipo_utilizador === 'admin') {
+                setUser(user);
+            }
+        }
+    }, []);
 
     useEffect(() => {
         const fetchCategorias = async () => {
@@ -72,7 +72,7 @@ function Produtos() {
 
         const fetchProdutos = async () => {
             try {
-                const res = await axios.get('http://localhost:3001/api/produtos/buscar');        
+                const res = await axios.get('http://localhost:3001/api/produtos/buscar');
                 setProdutos(res.data);
             } catch (error) {
                 console.error('Erro ao carregar produtos', error);
@@ -113,10 +113,10 @@ function Produtos() {
     }, [produtoSku]);
 
     function normalizarEspacos(str) {
-  return str
-    .trim()
-    .replace(/\s+/g, ' ');
-}
+        return str
+            .trim()
+            .replace(/\s+/g, ' ');
+    }
 
     const adicionarProduto = async () => {
         const produtoNomeFormatado = normalizarEspacos(produtoNome);
@@ -130,7 +130,7 @@ function Produtos() {
         }
 
         setProdutos(produtoNomeFormatado);
-        
+
         const skuFormatado = produtoSku.toUpperCase();
         if (!/^SKU\d{4,16}$/.test(skuFormatado)) {
             setMensagem('O SKU deve começar com "SKU" em maiúsculas e conter 4 a 16 dígitos.');
@@ -224,9 +224,9 @@ function Produtos() {
         const descricao_normalizada = normalizarEspacos(produto.descricao);
 
         try {
-            const especificacoesAtualizadas = typeof produto.especificacoes === 'string' 
-            ? produto.especificacoes 
-            : JSON.stringify(produto.especificacoes);
+            const especificacoesAtualizadas = typeof produto.especificacoes === 'string'
+                ? produto.especificacoes
+                : JSON.stringify(produto.especificacoes);
 
             const res = await axios.put(`http://localhost:3001/api/produtos/atualizar/${produto.id}`, {
                 sku: produto.sku,
@@ -261,7 +261,7 @@ function Produtos() {
     const eliminarProduto = async (id) => {
         try {
             const response = await axios.delete(`http://localhost:3001/api/produtos/eliminar/${id}`);
-            
+
             if (response.status === 200) {
                 setProdutos(produtos.filter(produto => produto.id !== id));
                 setMensagem('Produto eliminado com sucesso.');
@@ -421,93 +421,93 @@ function Produtos() {
     const handleTipoProdutoChange = (event) => {
         setProdutoTipo(event.target.value);
         switch (event.target.value) {
-          case 'Memória':
-            setCamposEspecificacoes([
-              { nome: 'Tipo', campo: 'tipo' },
-              { nome: 'Capacidade', campo: 'capacidade' },
-              { nome: 'Frequência', campo: 'frequencia' },
-            ])
-            break;
-          case 'Placa Gráfica':
-            setCamposEspecificacoes([
-              { nome: 'Memória', campo: 'memoria' },
-              { nome: 'GPU', campo: 'gpu' }
-            ])
-            break;
+            case 'Memória':
+                setCamposEspecificacoes([
+                    { nome: 'Tipo', campo: 'tipo' },
+                    { nome: 'Capacidade', campo: 'capacidade' },
+                    { nome: 'Frequência', campo: 'frequencia' },
+                ])
+                break;
+            case 'Placa Gráfica':
+                setCamposEspecificacoes([
+                    { nome: 'Memória', campo: 'memoria' },
+                    { nome: 'GPU', campo: 'gpu' }
+                ])
+                break;
             case 'Processador':
-      setCamposEspecificacoes([
-        { nome: 'Número de Núcleos', campo: 'nucleos' },
-        { nome: 'Número de Threads', campo: 'threads' },
-        { nome: 'Frequência Base', campo: 'frequencia_base' },
-        { nome: 'Frequência Turbo', campo: 'frequencia_turbo' },
-        { nome: 'Cache', campo: 'cache' },
-      ]);
-      break;
-    case 'Motherboard':
-      setCamposEspecificacoes([
-        { nome: 'Socket', campo: 'socket' },
-        { nome: 'Chipset', campo: 'chipset' },
-        { nome: 'Formato', campo: 'formato' },
-        { nome: 'Memória Máxima Suportada', campo: 'memoria_maxima' },
-      ]);
-      break;
-    case 'Armazenamento':
-      setCamposEspecificacoes([
-        { nome: 'Tipo', campo: 'tipo' },
-        { nome: 'Capacidade', campo: 'capacidade' },
-        { nome: 'Interface', campo: 'interface' },
-        { nome: 'Velocidade de Leitura', campo: 'leitura' },
-        { nome: 'Velocidade de Escrita', campo: 'escrita' },
-      ]);
-      break;
-    case 'Fonte de Alimentação':
-      setCamposEspecificacoes([
-        { nome: 'Potência', campo: 'potencia' },
-        { nome: 'Certificação', campo: 'certificacao' },
-        { nome: 'Modular', campo: 'modular' },
-      ]);
-      break;
-    case 'Caixa':
-      setCamposEspecificacoes([
-        { nome: 'Formato', campo: 'formato' },
-        { nome: 'Cor', campo: 'cor' },
-        { nome: 'Tipo de Painel Lateral', campo: 'painel_lateral' },
-      ]);
-      break;
-    case 'Monitor':
-      setCamposEspecificacoes([
-        { nome: 'Tamanho', campo: 'tamanho' },
-        { nome: 'Resolução', campo: 'resolucao' },
-        { nome: 'Taxa de Atualização', campo: 'taxa_atualizacao' },
-        { nome: 'Tipo de Painel', campo: 'tipo_painel' },
-      ]);
-      break;
-    case 'Periféricos':
-      setCamposEspecificacoes([
-        { nome: 'Tipo', campo: 'tipo' },
-        { nome: 'Conetividade', campo: 'conetividade' },
-        { nome: 'Compatibilidade', campo: 'compatibilidade' },
-      ]);
-      break;
-          default:
-            setCamposEspecificacoes([])
+                setCamposEspecificacoes([
+                    { nome: 'Número de Núcleos', campo: 'nucleos' },
+                    { nome: 'Número de Threads', campo: 'threads' },
+                    { nome: 'Frequência Base', campo: 'frequencia_base' },
+                    { nome: 'Frequência Turbo', campo: 'frequencia_turbo' },
+                    { nome: 'Cache', campo: 'cache' },
+                ]);
+                break;
+            case 'Motherboard':
+                setCamposEspecificacoes([
+                    { nome: 'Socket', campo: 'socket' },
+                    { nome: 'Chipset', campo: 'chipset' },
+                    { nome: 'Formato', campo: 'formato' },
+                    { nome: 'Memória Máxima Suportada', campo: 'memoria_maxima' },
+                ]);
+                break;
+            case 'Armazenamento':
+                setCamposEspecificacoes([
+                    { nome: 'Tipo', campo: 'tipo' },
+                    { nome: 'Capacidade', campo: 'capacidade' },
+                    { nome: 'Interface', campo: 'interface' },
+                    { nome: 'Velocidade de Leitura', campo: 'leitura' },
+                    { nome: 'Velocidade de Escrita', campo: 'escrita' },
+                ]);
+                break;
+            case 'Fonte de Alimentação':
+                setCamposEspecificacoes([
+                    { nome: 'Potência', campo: 'potencia' },
+                    { nome: 'Certificação', campo: 'certificacao' },
+                    { nome: 'Modular', campo: 'modular' },
+                ]);
+                break;
+            case 'Caixa':
+                setCamposEspecificacoes([
+                    { nome: 'Formato', campo: 'formato' },
+                    { nome: 'Cor', campo: 'cor' },
+                    { nome: 'Tipo de Painel Lateral', campo: 'painel_lateral' },
+                ]);
+                break;
+            case 'Monitor':
+                setCamposEspecificacoes([
+                    { nome: 'Tamanho', campo: 'tamanho' },
+                    { nome: 'Resolução', campo: 'resolucao' },
+                    { nome: 'Taxa de Atualização', campo: 'taxa_atualizacao' },
+                    { nome: 'Tipo de Painel', campo: 'tipo_painel' },
+                ]);
+                break;
+            case 'Periféricos':
+                setCamposEspecificacoes([
+                    { nome: 'Tipo', campo: 'tipo' },
+                    { nome: 'Conetividade', campo: 'conetividade' },
+                    { nome: 'Compatibilidade', campo: 'compatibilidade' },
+                ]);
+                break;
+            default:
+                setCamposEspecificacoes([])
         }
     };
 
     useEffect(() => {
-                document.body.className = styles.bodyHomeAdmin;
-                return () => {
-                    document.body.className = '';
-                };
-            }, []);
+        document.body.className = styles.bodyHomeAdmin;
+        return () => {
+            document.body.className = '';
+        };
+    }, []);
 
     const handleLogout = () => {
-      localStorage.removeItem('user');
-      navigate('/');
+        localStorage.removeItem('user');
+        navigate('/');
     };
 
     const closeModal = () => {
-      setMostrarModal(false);
+        setMostrarModal(false);
     };
 
     return (

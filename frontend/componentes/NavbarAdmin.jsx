@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/Global.module.css";
 
 function NavbarAdmin({ handleLogout, user }) {
-    return (
+  return (
     <>
       <nav className={styles.navegacao_admin}>
         <Link to="/admin/categorias" ><button className={styles.linkAdmin}>Categorias</button></Link>
@@ -17,7 +17,7 @@ function NavbarAdmin({ handleLogout, user }) {
         <button className={styles.logoutAdmin} onClick={handleLogout}>Logout</button>
       </nav>
     </>
-);
+  );
 }
 
 export default NavbarAdmin;

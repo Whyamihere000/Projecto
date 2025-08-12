@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "../css/Global.module.css";
 
-function Navbar({ user, handleLogout, pesquisa}) {
+function Navbar({ user, handleLogout, pesquisa }) {
   const navigate = useNavigate();
 
   // Estado local para o input
@@ -27,7 +27,7 @@ function Navbar({ user, handleLogout, pesquisa}) {
   return (
     <nav className={styles.nav}>
       <div className={styles.navLeft}>
-        
+
         <Link to="/" className={styles.navHome}><img src="../icons/logo.png" alt="Logo" className={styles.logoIcon} /></Link>
         {/* <Link to="/produtos" className={styles.navProdutos}>Produtos</Link> */}
 
@@ -53,7 +53,7 @@ function Navbar({ user, handleLogout, pesquisa}) {
           type="text"
           placeholder="Pesquisar produto..."
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}          
+          onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
           className={styles.inputPesquisa}
         />
@@ -71,20 +71,20 @@ function Navbar({ user, handleLogout, pesquisa}) {
           <>
             <Link to="/perfil-favoritos" className={styles.navCarrinho}>♥️</Link>
             <div className={styles.dropdown}>
-            <Link to="/perfil"><button className={styles.dropbtn}>👤▾</button></Link>
-            <div className={styles.dropdownContent}>
-            <Link to="/perfil">Bem Vindo!: {user.primeiro_nome}</Link>
-            <Link to="/perfil-encomendas">Encomendas</Link>
-            <Link to="/perfil-favoritos">Favoritos</Link>
-            <Link to="/perfil-contactos">Contactos</Link>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-        </div>              
+              <Link to="/perfil"><button className={styles.dropbtn}>👤▾</button></Link>
+              <div className={styles.dropdownContent}>
+                <Link to="/perfil">Bem Vindo!: {user.primeiro_nome}</Link>
+                <Link to="/perfil-encomendas">Encomendas</Link>
+                <Link to="/perfil-favoritos">Favoritos</Link>
+                <Link to="/perfil-contactos">Contactos</Link>
+                <button onClick={handleLogout}>Logout</button>
+              </div>
+            </div>
             <button onClick={handleLogout}>Logout</button>
             <Link to="/carrinho" className={styles.navCarrinho}>🛒</Link>
           </>
         ) : (
-          <Link to="/login" className={styles.navLogin} onClick={() => {localStorage.setItem('redirectAfterLogin', window.location.pathname)}}>Login</Link>
+          <Link to="/login" className={styles.navLogin} onClick={() => { localStorage.setItem('redirectAfterLogin', window.location.pathname) }}>Login</Link>
         )}
       </div>
     </nav>

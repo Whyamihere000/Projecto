@@ -1,6 +1,6 @@
 .container {
   background-color: rgba(255, 255, 255, 0.199);
-  backdrop-filter: blur(0,1px);
+  backdrop-filter: blur(0, 1px);
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
@@ -56,6 +56,7 @@
   margin-top: -10px;
   margin-bottom: 10px;
 }
+
 .successText {
   color: green;
   font-size: 14px;

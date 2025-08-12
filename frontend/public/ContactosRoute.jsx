@@ -88,7 +88,7 @@ function Contactos() {
             ></textarea>
           </div>
           <button type="submit" className={styles.submitButton}>Enviar</button>
-           <Link to="/contacto-loja" className={styles.subNavLink}>Informações</Link>
+          <Link to="/contacto-loja" className={styles.subNavLink}>Informações</Link>
           {status === "success" && (
             <p className={styles.successMessage}>Mensagem enviada com sucesso!</p>
           )}

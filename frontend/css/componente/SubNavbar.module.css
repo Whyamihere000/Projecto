@@ -8,11 +8,13 @@
   color: #fff;
   padding: 12px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 50px; /* Distância da navbar principal */
+  margin-top: 50px;
+  /* Distância da navbar principal */
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: sticky;
-  top: 60px; /* Assumindo que a navbar principal tem ~60px */
+  top: 60px;
+  /* Assumindo que a navbar principal tem ~60px */
   z-index: 999;
 }
 

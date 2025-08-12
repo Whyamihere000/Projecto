@@ -51,46 +51,46 @@ function Carrinho() {
   }, [user]);
 
   const handleRemoverItem = async (id_produto) => {
-  if (!carrinho) {
-    setMensagem("Carrinho não encontrado.");
-    return;
-  }
+    if (!carrinho) {
+      setMensagem("Carrinho não encontrado.");
+      return;
+    }
 
-  try {
-    console.log("Remover item:", {
-      id_carrinho: carrinho.id,
-      id_produto,
-    });
-
-    // Primeiro remove do backend
-    const resposta = await axios.post(
-      `http://localhost:3001/api/carrinhos/remover`,
-      {
+    try {
+      console.log("Remover item:", {
         id_carrinho: carrinho.id,
         id_produto,
-      }
-    );
+      });
 
-    console.log("Resposta do servidor:", resposta.data);
+      // Primeiro remove do backend
+      const resposta = await axios.post(
+        `http://localhost:3001/api/carrinhos/remover`,
+        {
+          id_carrinho: carrinho.id,
+          id_produto,
+        }
+      );
 
-    // Depois atualiza o estado local
-    const updateCarrinho = carrinho.items.filter(
-      (item) => item.id_produto !== id_produto
-    );
-    const total = updateCarrinho.reduce(
-      (acc, item) => acc + item.quantidade * item.preco,
-      0
-    );
+      console.log("Resposta do servidor:", resposta.data);
 
-    setCarrinho({ ...carrinho, items: updateCarrinho, total });
+      // Depois atualiza o estado local
+      const updateCarrinho = carrinho.items.filter(
+        (item) => item.id_produto !== id_produto
+      );
+      const total = updateCarrinho.reduce(
+        (acc, item) => acc + item.quantidade * item.preco,
+        0
+      );
 
-    setMensagem(""); // Limpa a mensagem de erro se tudo correr bem
+      setCarrinho({ ...carrinho, items: updateCarrinho, total });
 
-  } catch (error) {
-    console.error("Erro ao remover item do carrinho:", error);
-    setMensagem("Erro ao remover item do carrinho.");
-  }
-};
+      setMensagem(""); // Limpa a mensagem de erro se tudo correr bem
+
+    } catch (error) {
+      console.error("Erro ao remover item do carrinho:", error);
+      setMensagem("Erro ao remover item do carrinho.");
+    }
+  };
 
   // const handleFinalizarCompra = async () => {
   //   if (!carrinho || carrinho.items.length === 0) {
@@ -112,16 +112,16 @@ function Carrinho() {
   //   }
   // };
   const handleFinalizarCompra = () => {
-  if (!carrinho || carrinho.items.length === 0) {
-    setMensagem("Carrinho vazio.");
-    return;
-  }  
+    if (!carrinho || carrinho.items.length === 0) {
+      setMensagem("Carrinho vazio.");
+      return;
+    }
 
-  // Passar o id do carrinho para a página de finalizar encomenda
-  navigate("/finalizar-encomenda", { state: { idCarrinho: carrinho.id } });  
-};  
+    // Passar o id do carrinho para a página de finalizar encomenda
+    navigate("/finalizar-encomenda", { state: { idCarrinho: carrinho.id } });
+  };
 
-const handleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('user');
     window.location.reload();
   };
@@ -133,13 +133,13 @@ const handleLogout = () => {
         <br />
         <h1 className={stylesCarrinho.Carrinhoh1}>Carrinho</h1>
         {mensagem && (
-        <p style={{ color: mensagem.includes("Erro") ? "red" : "green" }}>
-          {mensagem}
-        </p>
+          <p style={{ color: mensagem.includes("Erro") ? "red" : "green" }}>
+            {mensagem}
+          </p>
         )}
         {carrinho ? (
           <div>
-           {carrinho.items.length > 0 ? (
+            {carrinho.items.length > 0 ? (
               <>
                 <div className={stylesCarrinho.itensCarrinhoContainer}>
                   {carrinho.items.map((item) => (
@@ -170,43 +170,43 @@ const handleLogout = () => {
                             handleRemoverItem(item.id_produto);
                           }}>Remover
                         </button>
-                      </div>     
+                      </div>
                     </Link>
                   ))}
                 </div>
                 {/* Finalizar compra e total */}
-                <div className={stylesCarrinho.total}> 
+                <div className={stylesCarrinho.total}>
                   <p><strong>Total: {carrinho.total.toFixed(2)}€</strong></p>
                   <button onClick={handleFinalizarCompra}>Finalizar Compra</button>
                 </div>
 
-                 <Carousel className={stylesCarrinho.carrosselContainer}
-                                      autoPlay
-                                      infiniteLoop
-                                      showThumbs={false}
-                                      showStatus={false}
-                                      interval={5000}
-                                      dynamicHeight={false}
-                                    >
-                                      <div>
-                                        <img src="https://img.globaldata.pt/homepage/banner/desktop-raider-18-titan-18.png?auto=compress%2Cformat&fit=max&q=70&w=1946" alt="Promoção 1" />
-                                      </div>
-                                      <div>
-                                        <img src="https://img.globaldata.pt/homepage/banner/desktop-nvidia-rtx-5060.png?auto=compress%2Cformat&fit=max&q=70&w=1946" alt="Promoção 2" />
-                                      </div>
-                                      <div>
-                                        <img src="https://img.globaldata.pt/homepage/banner/desktop-kingmod2.png?auto=compress%2Cformat&fit=max&q=70&w=1446" alt="Promoção 3" />
-                                      </div>
-                                    </Carousel>
+                <Carousel className={stylesCarrinho.carrosselContainer}
+                  autoPlay
+                  infiniteLoop
+                  showThumbs={false}
+                  showStatus={false}
+                  interval={5000}
+                  dynamicHeight={false}
+                >
+                  <div>
+                    <img src="https://img.globaldata.pt/homepage/banner/desktop-raider-18-titan-18.png?auto=compress%2Cformat&fit=max&q=70&w=1946" alt="Promoção 1" />
+                  </div>
+                  <div>
+                    <img src="https://img.globaldata.pt/homepage/banner/desktop-nvidia-rtx-5060.png?auto=compress%2Cformat&fit=max&q=70&w=1946" alt="Promoção 2" />
+                  </div>
+                  <div>
+                    <img src="https://img.globaldata.pt/homepage/banner/desktop-kingmod2.png?auto=compress%2Cformat&fit=max&q=70&w=1446" alt="Promoção 3" />
+                  </div>
+                </Carousel>
               </>
             ) : (
               <p>O seu carrinho está vazio.</p>
             )}
-          </div>          
+          </div>
         ) : (
           <p>Carregando carrinho...</p>
-        )}       
-      </main>  
+        )}
+      </main>
       <Footer />
     </>
   );

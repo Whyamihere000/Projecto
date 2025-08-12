@@ -2,17 +2,20 @@
   padding: 20px 40px;
   background-color: #111;
   min-height: 100vh;
-  color: white; 
+  color: white;
 }
-.bodyHome{
-    background-color: #1e1e1e;
+
+.bodyHome {
+  background-color: #1e1e1e;
 }
+
 .titulo {
   font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
   color: #f5f5f5;
 }
+
 .carrosselContainer {
   width: 80%;
   margin: 80px auto;
@@ -27,7 +30,7 @@
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 70px;
   justify-items: center;
-  
+
 }
 
 .card {
@@ -39,9 +42,10 @@
   width: 100%;
   max-width: 240px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
   transition: transform 0.2s ease;
 }
+
 .favorito {
   position: absolute;
   top: 15px;
@@ -58,6 +62,7 @@
   transition: background 0.3s ease;
   z-index: 1;
 }
+
 .favorito:hover {
   background: rgb(204, 204, 204);
 }

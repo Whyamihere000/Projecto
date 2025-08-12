@@ -70,42 +70,42 @@ function ProdutoDetalhe() {
   }, [user]);
 
   useEffect(() => {
-  if (user && produto) {
-    axios
-      .get(`http://localhost:3001/api/favoritos/verificar/${user.id}/${produto.id}`)
-      .then((res) => {
-        setFavorito(res.data.favorito);
-      })
-      .catch((err) => console.error("Erro ao verificar favorito", err));
-  }
-}, [user, produto]);
-
-const toggleFavorito = async () => {
-  if (!user) {
-    setMensagem("Faça login para guardar favoritos.");
-    setOpenModal(true);
-    return;
-  }
-
-  try {
-    if (favorito) {
-      await axios.delete("http://localhost:3001/api/favoritos/remover", {
-        data: { id_utilizador: user.id, id_produto: produto.id }
-      });
-      setFavorito(false);
-    } else {
-      await axios.post("http://localhost:3001/api/favoritos/adicionar", {
-        id_utilizador: user.id,
-        id_produto: produto.id
-      });
-      setFavorito(true);
+    if (user && produto) {
+      axios
+        .get(`http://localhost:3001/api/favoritos/verificar/${user.id}/${produto.id}`)
+        .then((res) => {
+          setFavorito(res.data.favorito);
+        })
+        .catch((err) => console.error("Erro ao verificar favorito", err));
     }
-  } catch (err) {
-    console.error("Erro ao atualizar favorito", err);
-    setMensagem("Erro ao atualizar favorito.");
-    setOpenModal(true);
-  }
-};
+  }, [user, produto]);
+
+  const toggleFavorito = async () => {
+    if (!user) {
+      setMensagem("Faça login para guardar favoritos.");
+      setOpenModal(true);
+      return;
+    }
+
+    try {
+      if (favorito) {
+        await axios.delete("http://localhost:3001/api/favoritos/remover", {
+          data: { id_utilizador: user.id, id_produto: produto.id }
+        });
+        setFavorito(false);
+      } else {
+        await axios.post("http://localhost:3001/api/favoritos/adicionar", {
+          id_utilizador: user.id,
+          id_produto: produto.id
+        });
+        setFavorito(true);
+      }
+    } catch (err) {
+      console.error("Erro ao atualizar favorito", err);
+      setMensagem("Erro ao atualizar favorito.");
+      setOpenModal(true);
+    }
+  };
 
 
   if (!produto) return <p>A carregar produto...</p>;
@@ -127,8 +127,8 @@ const toggleFavorito = async () => {
       setMensagem("Produto não encontrado.");
       setOpenModal(true);
       return;
-    } 
-    setProdutoModal(produto.nome); 
+    }
+    setProdutoModal(produto.nome);
 
     try {
       await axios.post("http://localhost:3001/api/carrinhos/adicionar", {
@@ -158,11 +158,11 @@ const toggleFavorito = async () => {
     setOpenModal(false);
   };
 
-  const renderProdutos = (produtos) => (  
-    <div className={stylesHome.listaProdutos}>     
+  const renderProdutos = (produtos) => (
+    <div className={stylesHome.listaProdutos}>
       {produtos.map((produto) => (
         <Link key={produto.id} to={`/produto/${produto.id}`} className={stylesHome.cardLink}>
-          <div className={stylesHome.cardProduto}>        
+          <div className={stylesHome.cardProduto}>
             <h3>{produto.nome}</h3>
             {produto.imagem_url && (
               <img
@@ -196,89 +196,89 @@ const toggleFavorito = async () => {
   );
 
   return (
-  <>
-    <Navbar user={user} handleLogout={handleLogout} />
+    <>
+      <Navbar user={user} handleLogout={handleLogout} />
 
-    <div style= {{ marginTop: "50px" }}><ComponentesNav /></div>
+      <div style={{ marginTop: "50px" }}><ComponentesNav /></div>
 
-    <div style={{ }}> 
-      <div className={styles.produtoContainer}>
-        <div className={styles.colunaEsquerda}>
-          <div className={styles.imagemContainer}>
-            {produto.imagem_url && (
-              <img src={produto.imagem_url} alt={produto.nome} className={styles.imagem} />
-            )}
+      <div style={{}}>
+        <div className={styles.produtoContainer}>
+          <div className={styles.colunaEsquerda}>
+            <div className={styles.imagemContainer}>
+              {produto.imagem_url && (
+                <img src={produto.imagem_url} alt={produto.nome} className={styles.imagem} />
+              )}
+            </div>
+
+            <section className={styles.detalhesSection}>
+              <h2 className={styles.descricao}>{produto.descricao}</h2>
+              <p><strong>Tipo de Produto:</strong> {produto.tipo_produto}</p>
+              <p><strong>Marca:</strong> {produto.nome_marca}</p>
+              {produto.especificacoes && (
+                <div>
+                  <h4>Especificações:</h4>
+                  <ul>
+                    {Object.keys(produto.especificacoes).map((key) => (
+                      <li key={key}>
+                        <strong>{key}:</strong> {produto.especificacoes[key]}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
           </div>
 
-          <section className={styles.detalhesSection}>
-            <h2 className={styles.descricao}>{produto.descricao}</h2>
-            <p><strong>Tipo de Produto:</strong> {produto.tipo_produto}</p>
-            <p><strong>Marca:</strong> {produto.nome_marca}</p>
-            {produto.especificacoes && (
-              <div>
-                <h4>Especificações:</h4>
-                <ul>
-                  {Object.keys(produto.especificacoes).map((key) => (
-                    <li key={key}>
-                      <strong>{key}:</strong> {produto.especificacoes[key]}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </section>
-        </div>
-
-        <div className={styles.infoFlutuante}>
-          <h2 className={styles.titulo}>{produto.nome}</h2>
-          <p className={styles.preco}>€{produto.preco}</p>
-          <p className={styles.stock}>
-            {produto.stock === 0 ? "Sem stock" : produto.stock < 10 ? "Poucas Unidades" : "Em stock"}
-          </p>
-          <strong><p className={styles.descricao}>{produto.descricao}</p></strong>
-          <div className={styles.controls}>
-            <input
-              type="number"
-              min="1"
-              max="10"
-              value={quantidade}
-              onChange={(e) => setQuantidade(parseInt(e.target.value))}
-              className={styles.quantidadeInput}
-            />
-            <button
-              onClick={() => handleAdicionarAoCarrinho(produto.id)}
-              className={styles.comprarBtn}
-              disabled={produto.stock === 0}
-            >
-              Comprar
-            </button>
-            <button onClick={toggleFavorito} className={styles.favoritoBtn}>
-              {favorito ? <FaHeart color="red" /> : <FaRegHeart />}
-            </button>
+          <div className={styles.infoFlutuante}>
+            <h2 className={styles.titulo}>{produto.nome}</h2>
+            <p className={styles.preco}>€{produto.preco}</p>
+            <p className={styles.stock}>
+              {produto.stock === 0 ? "Sem stock" : produto.stock < 10 ? "Poucas Unidades" : "Em stock"}
+            </p>
+            <strong><p className={styles.descricao}>{produto.descricao}</p></strong>
+            <div className={styles.controls}>
+              <input
+                type="number"
+                min="1"
+                max="10"
+                value={quantidade}
+                onChange={(e) => setQuantidade(parseInt(e.target.value))}
+                className={styles.quantidadeInput}
+              />
+              <button
+                onClick={() => handleAdicionarAoCarrinho(produto.id)}
+                className={styles.comprarBtn}
+                disabled={produto.stock === 0}
+              >
+                Comprar
+              </button>
+              <button onClick={toggleFavorito} className={styles.favoritoBtn}>
+                {favorito ? <FaHeart color="red" /> : <FaRegHeart />}
+              </button>
+            </div>
           </div>
         </div>
+
+        <section className={styles.tituloSecao}>
+          <img
+            src="https://img.globaldata.pt/cms/images/block/global-1banner-produtosemana25_1219-desktop.png"
+            alt="imagem promoção"
+          />
+        </section>
+
+        <section className={styles.secaoProdutos}>
+          <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
+          {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
+        </section>
+
+        {openModal && (
+          <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
+        )}
+
+        <Footer />
       </div>
-
-      <section className={styles.tituloSecao}>
-        <img
-          src="https://img.globaldata.pt/cms/images/block/global-1banner-produtosemana25_1219-desktop.png"
-          alt="imagem promoção"
-        />
-      </section>
-
-      <section className={styles.secaoProdutos}>
-        <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
-        {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
-      </section>
-
-      {openModal && (
-        <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
-      )}
-
-      <Footer />
-    </div>
-  </>
-);
+    </>
+  );
 }
 
 export default ProdutoDetalhe;

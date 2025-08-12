@@ -6,31 +6,31 @@ import stylesMarcas from "../css/adm/AdminMarcas.module.css";
 import NavbarAdmin from "../componentes/NavbarAdmin";
 
 function Marcas() {
-    const [user, setUser] = useState('');
-    const [marca, setMarca] = useState('');
-    const [marcas, setMarcas] = useState([]);
-    const [mensagem, setMensagem] = useState('');
-    const [mensagemTipo, setMensagemTipo] = useState(''); // success ou error
+  const [user, setUser] = useState('');
+  const [marca, setMarca] = useState('');
+  const [marcas, setMarcas] = useState([]);
+  const [mensagem, setMensagem] = useState('');
+  const [mensagemTipo, setMensagemTipo] = useState(''); // success ou error
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser && storedUser !== 'undefined') {
-          const user = JSON.parse(storedUser);
-          if (user.tipo_utilizador === 'admin') {
-            setUser(user);
-          }
-        }
-      }, []);
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser && storedUser !== 'undefined') {
+      const user = JSON.parse(storedUser);
+      if (user.tipo_utilizador === 'admin') {
+        setUser(user);
+      }
+    }
+  }, []);
 
-      function normalizarEspacos(str) {
-  return str
-    .trim()
-    .replace(/\s+/g, ' ');
-}
+  function normalizarEspacos(str) {
+    return str
+      .trim()
+      .replace(/\s+/g, ' ');
+  }
 
-const buscarMarcas = async () => {
+  const buscarMarcas = async () => {
     try {
       const res = await axios.get("http://localhost:3001/api/marcas/buscar");
       setMarcas(res.data);
@@ -41,41 +41,41 @@ const buscarMarcas = async () => {
     }
   };
 
-   useEffect(() => {
+  useEffect(() => {
     buscarMarcas();
   }, []);
 
-    const adicionarMarca = async () => {
-        const marca_normalizada = normalizarEspacos(marca);
+  const adicionarMarca = async () => {
+    const marca_normalizada = normalizarEspacos(marca);
 
-        if (!marca_normalizada) {
-            setMensagem('O nome da marca é obrigatório.');
-            setMensagemTipo('error');
-            return;
-        }
-
-        try {
-            const res = await axios.post('http://localhost:3001/api/marcas/nova', {
-                nome: marca_normalizada
-            });
-
-            if (res.data.success) {
-                setMensagem('Marca adicionada com sucesso.');
-                setMensagemTipo('success');
-                setMarca('');
-                buscarMarcas();
-            } else {
-                setMensagem('Erro ao adicionar a marca.');
-                setMensagemTipo('error');
-            }
-        } catch (error) {
-            console.error(error);
-            setMensagem('Erro ao comunicar com o servidor.');
-            setMensagemTipo('error');
-        }
+    if (!marca_normalizada) {
+      setMensagem('O nome da marca é obrigatório.');
+      setMensagemTipo('error');
+      return;
     }
 
-    const atualizarMarca = async (id, nome) => {
+    try {
+      const res = await axios.post('http://localhost:3001/api/marcas/nova', {
+        nome: marca_normalizada
+      });
+
+      if (res.data.success) {
+        setMensagem('Marca adicionada com sucesso.');
+        setMensagemTipo('success');
+        setMarca('');
+        buscarMarcas();
+      } else {
+        setMensagem('Erro ao adicionar a marca.');
+        setMensagemTipo('error');
+      }
+    } catch (error) {
+      console.error(error);
+      setMensagem('Erro ao comunicar com o servidor.');
+      setMensagemTipo('error');
+    }
+  }
+
+  const atualizarMarca = async (id, nome) => {
     const nome_normalizado = normalizarEspacos(nome);
 
     if (!nome_normalizado) {
@@ -94,8 +94,8 @@ const buscarMarcas = async () => {
         setMensagem("Marca atualizada com sucesso.");
         setMensagemTipo("success");
         setMarcas((prevMarcas) =>
-        prevMarcas.map((m) => (m.id === id ? { ...m, nome: nome_normalizado } : m))
-      );
+          prevMarcas.map((m) => (m.id === id ? { ...m, nome: nome_normalizado } : m))
+        );
       } else {
         setMensagem(res.data.message || "Erro ao atualizar a marca.");
         setMensagemTipo("error");
@@ -107,19 +107,19 @@ const buscarMarcas = async () => {
     }
   };
 
-    useEffect(() => {
-            document.body.className = styles.bodyHomeAdmin;
-            return () => {
-                document.body.className = '';
-            };
-        }, []);
+  useEffect(() => {
+    document.body.className = styles.bodyHomeAdmin;
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
-    const handleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('user');
     navigate('/');
   };
 
-    return (
+  return (
     <>
       <NavbarAdmin handleLogout={handleLogout} user={user} />
 

@@ -195,7 +195,7 @@ FROM encomendas
 JOIN utilizadores ON encomendas.id_utilizador = utilizadores.id
 JOIN items_encomendas ON items_encomendas.id_encomenda = encomendas.id
 JOIN produtos ON produtos.id = items_encomendas.id_produto
-ORDER BY encomendas.data DESC`, 
+ORDER BY encomendas.data DESC`,
     (err, results) => {
       if (err) {
         console.error('Erro ao carregar encomendas:', err);
@@ -204,7 +204,7 @@ ORDER BY encomendas.data DESC`,
 
       res.json(results);
     }
-  )  
+  )
 })
 
 // Listar pagamentos
@@ -283,20 +283,20 @@ routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
       if (err) {
         console.error(err);
         return res.status(500).json({ success: false, message: 'Erro ao atualizar encomenda.' });
-    }
-    
-    db.query(
-      `UPDATE produtos JOIN items_encomendas ON items_encomendas.id_produto = produtos.id
+      }
+
+      db.query(
+        `UPDATE produtos JOIN items_encomendas ON items_encomendas.id_produto = produtos.id
       SET produtos.stock = produtos.stock - items_encomendas.quantidade
       WHERE items_encomendas.id_encomenda = ?`,
-      [id_encomenda],
-      (err) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ success: false, message: 'Erro ao atualizar produtos.' });
-        }
+        [id_encomenda],
+        (err) => {
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ success: false, message: 'Erro ao atualizar produtos.' });
+          }
 
-        db.query(
+          db.query(
             `UPDATE carrinhos SET estado = 'finalizado'
              WHERE id = (SELECT id_carrinho FROM encomendas WHERE id = ?) AND estado = 'ativo'`,
             [id_encomenda],
@@ -306,7 +306,7 @@ routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
                 return res.status(500).json({ success: false, message: 'Erro ao finalizar o carrinho.' });
               }
 
-            db.query(`UPDATE pagamentos SET estado = 'pago' WHERE id = ?`, [id_pagamento], (err) => {
+              db.query(`UPDATE pagamentos SET estado = 'pago' WHERE id = ?`, [id_pagamento], (err) => {
                 if (err) {
                   console.error(err);
                   return res.status(500).json({ success: false, message: 'Erro ao atualizar estado do pagamento.' });
@@ -316,9 +316,9 @@ routerEncomendas.post('/pagar/:id_encomenda', (req, res) => {
               });
             }
           );
-          
+
+        });
     });
-  });
   });
 });
 

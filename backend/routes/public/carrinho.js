@@ -37,7 +37,7 @@ routerCarrinho.get('/:id_utilizador', (req, res) => {
         } else {
             db.query('INSERT INTO carrinhos (id_utilizador, estado) VALUES (?, "ativo")', [id_utilizador], (err, results) => {
                 if (err) return res.status(500).json({ success: false, message: 'Erro no servidor' });
-                res.json({id: results.insertId, id_utilizador, total: 0, items: []});
+                res.json({ id: results.insertId, id_utilizador, total: 0, items: [] });
             })
         }
     });

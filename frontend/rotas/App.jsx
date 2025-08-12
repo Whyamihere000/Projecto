@@ -29,7 +29,7 @@ function App() {
     return (
         <Routes>
             {/* Rotas publicas */}
-            
+
             <Route path="/" element={<Home />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/login" element={<Login />} />
@@ -43,18 +43,18 @@ function App() {
             <Route path="/perfil-encomendas" element={<PerfilEncomendas />} />
             <Route path="/produto/:id" element={<ProdutoDetalhe />} />
             <Route path="/perfil-favoritos" element={<Favoritos />} />
-            <Route path="/perfil-contactos" element={<Contactos/>} />
+            <Route path="/perfil-contactos" element={<Contactos />} />
             <Route path="/contacto-loja" element={<ContactoLoja />} />
 
             {/* Routas admin */}
-            
+
             <Route path="/admin" element={<RotaPrivadaAdmin><AdminHome /></RotaPrivadaAdmin>} />
             <Route path="/admin/categorias" element={<RotaPrivadaAdmin> <AdminCategorias /> </RotaPrivadaAdmin>} />
-            <Route path="/admin/marcas" element={<RotaPrivadaAdmin> <AdminMarcas /> </RotaPrivadaAdmin> } />
-            <Route path="/admin/produtos" element={<RotaPrivadaAdmin><AdminProdutos /> </RotaPrivadaAdmin>}/>
+            <Route path="/admin/marcas" element={<RotaPrivadaAdmin> <AdminMarcas /> </RotaPrivadaAdmin>} />
+            <Route path="/admin/produtos" element={<RotaPrivadaAdmin><AdminProdutos /> </RotaPrivadaAdmin>} />
             <Route path="/admin/utilizadores" element={<RotaPrivadaAdmin><AdminUtilizadores /></RotaPrivadaAdmin>} />
             <Route path="/admin/mostrar-encomendas" element={<RotaPrivadaAdmin><MostrarEncomendas /></RotaPrivadaAdmin>} />
-            <Route path="/admin/mostrar-pagamentos" element={<RotaPrivadaAdmin><MostrarPagamentos /> </RotaPrivadaAdmin>}/>
+            <Route path="/admin/mostrar-pagamentos" element={<RotaPrivadaAdmin><MostrarPagamentos /> </RotaPrivadaAdmin>} />
             <Route path="/admin/mostrar-contactos" element={<RotaPrivadaAdmin><MostrarContactos /></RotaPrivadaAdmin>} />
         </Routes>
     )

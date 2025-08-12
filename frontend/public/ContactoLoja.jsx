@@ -28,7 +28,7 @@ function ContactoLoja({ user, handleLogout }) {
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
-      <SubContactosNav/>
+      <SubContactosNav />
       <main className={styles.contactoContainer}>
         <section className={styles.heroSection}>
           <h1>Fale Connosco</h1>

@@ -20,7 +20,7 @@ function FinalizarEncomenda() {
   const navigate = useNavigate();
   const location = useLocation();
   const idCarrinho = location.state?.idCarrinho;
-  
+
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser && storedUser !== 'undefined') {
@@ -84,7 +84,7 @@ function FinalizarEncomenda() {
 
   return (
     <div className={styles.wrapper}>
-      <Navbar user={user} handleLogout={handleLogout}/>
+      <Navbar user={user} handleLogout={handleLogout} />
 
       <div className={styles.box}>
         <h1>Finalizar Encomenda</h1>

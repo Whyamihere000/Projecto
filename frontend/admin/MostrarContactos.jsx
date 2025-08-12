@@ -52,11 +52,11 @@ function MostrarContactos() {
   ];
 
   useEffect(() => {
-              document.body.className = styles.bodyHomeAdmin;
-              return () => {
-                  document.body.className = '';
-              };
-          }, []);
+    document.body.className = styles.bodyHomeAdmin;
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -75,21 +75,21 @@ function MostrarContactos() {
 
   return (
     <>
-    <NavbarAdmin handleLogout={handleLogout} user={user} />
+      <NavbarAdmin handleLogout={handleLogout} user={user} />
 
-    <div className={stylesEncomendas.container}>
-      {contactos.length === 0 ? (
-        <p>Sem contactos para mostrar.</p>
-      ) : (
-        <DataGrid
-          rows={contactos}
-          columns={colunas}
-          pageSize={10}
-        />
-      )}
-    </div>   
-    
-    {mensagem && <p style={{ marginLeft: "20rem" }}>{mensagem}</p>} 
+      <div className={stylesEncomendas.container}>
+        {contactos.length === 0 ? (
+          <p>Sem contactos para mostrar.</p>
+        ) : (
+          <DataGrid
+            rows={contactos}
+            columns={colunas}
+            pageSize={10}
+          />
+        )}
+      </div>
+
+      {mensagem && <p style={{ marginLeft: "20rem" }}>{mensagem}</p>}
     </>
   );
 }

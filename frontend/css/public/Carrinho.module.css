@@ -4,6 +4,7 @@
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .carrosselContainer {
   width: 60%;
   height: 100%;
@@ -12,6 +13,7 @@
   position: relative;
   border-radius: 0 0 10px 10px;
 }
+
 .Carrinhoh1 {
   color: #ffffff;
   margin-bottom: 20px;
@@ -49,7 +51,7 @@
 
 .itemCarrinho:hover {
   transform: scale(1.03);
-  
+
 }
 
 .itemCarrinho h3 {
@@ -82,7 +84,7 @@
   cursor: pointer;
   border: none;
   transition: background-color 0.3s ease-in-out;
-  
+
 }
 
 /* Botão de remover item */
@@ -102,7 +104,7 @@
 }
 
 .itemCarrinho button:hover {
-  
+
   background-color: #5e0303;
 }
 

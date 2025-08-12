@@ -1,7 +1,7 @@
 .bodyHomePublic {
     background-color: #1A1A1D;
     min-height: 100vh;
-    
+
 }
 
 .container {
@@ -31,13 +31,15 @@
     border-radius: 8px;
     color: white;
 }
+
 .carrosselContainer {
-  width: 100%;
-  margin: 20px auto;
-  overflow: hidden;
-  position: relative;
-  border-radius: 0 0 10px 10px;
+    width: 100%;
+    margin: 20px auto;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0 0 10px 10px;
 }
+
 .produtosPublic {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     flex: 4;
@@ -45,41 +47,44 @@
     flex-wrap: wrap;
     gap: 20px;
     justify-content: flex-start;
-    background-color: #1A1A1D; /* fundo branco */
+    background-color: #1A1A1D;
+    /* fundo branco */
     padding: 20px;
     border-radius: 10px;
 }
+
 .divalink {
     background-color: #ffffff;
     text-decoration: none;
     color: inherit;
 }
 
-.produtosPublic > div {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 15px;
-  width: calc(25% - 20px);
-  box-sizing: border-box;
-  transition: transform 0.2s, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
+.produtosPublic>div {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
-.produtosPublic > div:hover {
+.produtosPublic>div:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .produtosPublic h1 {
-   font-size: 2rem;
-    color: #ffffff; 
+    font-size: 2rem;
+    color: #ffffff;
     margin-bottom: 20px;
     width: 100%;
 }
+
 .produtosPublic h3 {
     font-size: 1.2rem;
     color: #333;
@@ -87,7 +92,7 @@
 }
 
 .produtosPublic button {
-  
+
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -108,7 +113,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -136,7 +141,7 @@
 
 /* Responsivo para tablets e telemóveis */
 @media (max-width: 1200px) {
-    .produtosPublic > div {
+    .produtosPublic>div {
         width: calc(33.33% - 20px);
     }
 }
@@ -150,13 +155,13 @@
         max-width: 100%;
     }
 
-    .produtosPublic > div {
+    .produtosPublic>div {
         width: calc(50% - 20px);
     }
 }
 
 @media (max-width: 480px) {
-    .produtosPublic > div {
+    .produtosPublic>div {
         width: 100%;
     }
 }

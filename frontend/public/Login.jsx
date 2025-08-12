@@ -18,7 +18,7 @@ function Login() {
     number: false,
     specialChar: false,
   })
-  
+
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser && storedUser !== "undefined") {
@@ -93,11 +93,11 @@ function Login() {
   }
 
   useEffect(() => {
-                  document.body.className = Styles.bodyHome;
-                  return () => {
-                      document.body.className = '';
-                  };
-              }, []);
+    document.body.className = Styles.bodyHome;
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
   const closeModal = () => {
     setOpenModal(false);
@@ -106,65 +106,65 @@ function Login() {
   return (
     <>
       <Navbar
-          user={user}
-          handleLogout={handleLogout}
-        />
-    <div style={{
- 
-    }}>
-     
-      <div className={Styles.login}>
-        
-        <h1>Login</h1>
+        user={user}
+        handleLogout={handleLogout}
+      />
+      <div style={{
 
-        <label className={Styles.label}>Introduza o Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={Styles.input}
-          placeholder="Email"
-        />
+      }}>
 
-        <label className={Styles.label}>Coloque a password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-          className={Styles.input}
-          placeholder="Password"
-        />
+        <div className={Styles.login}>
 
-        {/* Checklist de verificação */}
-        <ul className={Styles.checklist}>
-          <li className={passwordValidation.lowercase ? Styles.valid : Styles.invalid}>Letra minúscula</li>
-          <li className={passwordValidation.uppercase ? Styles.valid : Styles.invalid}>Letra maiúscula</li>
-          <li className={passwordValidation.number ? Styles.valid : Styles.invalid}>Número</li>
-          <li className={passwordValidation.specialChar ? Styles.valid : Styles.invalid}>Caractere especial</li>
-        </ul>
+          <h1>Login</h1>
 
-        <label className={Styles.errorMessage}>Problemas ao iniciar login?</label>
+          <label className={Styles.label}>Introduza o Email:</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={Styles.input}
+            placeholder="Email"
+          />
 
-        <div className={Styles.buttonContainer}>
-          <button type="button" onClick={handleLogin} className={Styles.button}>Login</button>
-        </div>
-        <br />
-        <label className={Styles.errorMessage}>Não tem conta criada? Faça já o registo:</label>
+          <label className={Styles.label}>Coloque a password:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+            className={Styles.input}
+            placeholder="Password"
+          />
 
-        <div className={Styles.buttonContainer}>
-          <button type="button" onClick={() => window.location.href = '/registo'} className={Styles.button}>Registo</button>
-        </div>
-        <br />
+          {/* Checklist de verificação */}
+          <ul className={Styles.checklist}>
+            <li className={passwordValidation.lowercase ? Styles.valid : Styles.invalid}>Letra minúscula</li>
+            <li className={passwordValidation.uppercase ? Styles.valid : Styles.invalid}>Letra maiúscula</li>
+            <li className={passwordValidation.number ? Styles.valid : Styles.invalid}>Número</li>
+            <li className={passwordValidation.specialChar ? Styles.valid : Styles.invalid}>Caractere especial</li>
+          </ul>
 
-        <div style={{ textAlign: 'center' }}>
-          <Link to="/" style={{ color: '#007bff' }}>Voltar</Link>
+          <label className={Styles.errorMessage}>Problemas ao iniciar login?</label>
+
+          <div className={Styles.buttonContainer}>
+            <button type="button" onClick={handleLogin} className={Styles.button}>Login</button>
+          </div>
+          <br />
+          <label className={Styles.errorMessage}>Não tem conta criada? Faça já o registo:</label>
+
+          <div className={Styles.buttonContainer}>
+            <button type="button" onClick={() => window.location.href = '/registo'} className={Styles.button}>Registo</button>
+          </div>
+          <br />
+
+          <div style={{ textAlign: 'center' }}>
+            <Link to="/" style={{ color: '#007bff' }}>Voltar</Link>
+          </div>
         </div>
       </div>
-    </div>
-    {openModal && (
-          <ModalErro mensagem={message} onClose={closeModal} />
-        )}
+      {openModal && (
+        <ModalErro mensagem={message} onClose={closeModal} />
+      )}
     </>
   )
 }

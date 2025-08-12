@@ -68,19 +68,19 @@ function MostrarEncomendas() {
 
   return (
     <>
-    <NavbarAdmin handleLogout={handleLogout} user={user} />
+      <NavbarAdmin handleLogout={handleLogout} user={user} />
 
-    <div className={stylesEncomendas.container}>
-      {encomendas.length === 0 ? (
-        <p>Sem encomendas para mostrar.</p>
-      ) : (
-        <DataGrid
-          rows={encomendas}
-          columns={colunas}
-          pageSize={10}
-        />
-      )}
-    </div>    
+      <div className={stylesEncomendas.container}>
+        {encomendas.length === 0 ? (
+          <p>Sem encomendas para mostrar.</p>
+        ) : (
+          <DataGrid
+            rows={encomendas}
+            columns={colunas}
+            pageSize={10}
+          />
+        )}
+      </div>
     </>
   );
 }

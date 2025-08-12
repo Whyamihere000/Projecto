@@ -23,9 +23,9 @@ function Favoritos() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-      localStorage.removeItem('user');
-      navigate('/');
-    };
+    localStorage.removeItem('user');
+    navigate('/');
+  };
 
   useEffect(() => {
     document.body.className = styles.bodyHome;
@@ -33,7 +33,7 @@ function Favoritos() {
       document.body.className = '';
     };
   }, []);
-  
+
   useEffect(() => {
     if (user) {
       axios
@@ -101,7 +101,7 @@ function Favoritos() {
         ...prevCarrinho,
         total: prevCarrinho.total + quantidadeProduto * produto.preco,
       }));
-      
+
     } catch (error) {
       console.error("Erro ao adicionar ao carrinho", error);
       setMensagem("Erro ao adicionar ao carrinho.");
@@ -114,81 +114,83 @@ function Favoritos() {
   };
 
   return (
-  <>
-      	<div>
+    <>
+      <div>
         <Navbar
-         user={user} 
-         handleLogout={handleLogout}
+          user={user}
+          handleLogout={handleLogout}
         />
         <SubNavbar />
-    </div>
-    <div className={styles.container}>
-      <h2 className={styles.titulo}>Meus Favoritos</h2>
+      </div>
+      <div className={styles.container}>
+        <h2 className={styles.titulo}>Meus Favoritos</h2>
         {favoritos.length === 0 ? (
           <p>Não tem produtos favoritos.</p>
         ) : (
-        <div className={styles.grid}>
-      {favoritos.map((produto) => (
-            <Link
-              key={produto.id}
-              to={`/produto/${produto.id}`}
-            >
-            <div key={produto.id} className={styles.card}>
-              <button
-                className={styles.favorito}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleRemoverFavorito(produto.id)}
-                }
+          <div className={styles.grid}>
+            {favoritos.map((produto) => (
+              <Link
+                key={produto.id}
+                to={`/produto/${produto.id}`}
               >
-                X
-              </button>
-              <img src={produto.imagem_url} alt={produto.nome} />
-              <h3>{produto.nome}</h3>
-              <p>€{produto.preco}</p>
-              <div style={{ marginTop: "auto", textAlign: "center" }}>
-                <button onClick={(e) => {
-                  e.preventDefault();
-                  handleAdicionarAoCarrinho(produto)}
-                  }
-                  >                
-                  Adicionar ao carrinho
-                </button>
-              </div>
-            </div>
-            </Link>
-          ))}
-        </div>
+                <div key={produto.id} className={styles.card}>
+                  <button
+                    className={styles.favorito}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleRemoverFavorito(produto.id)
+                    }
+                    }
+                  >
+                    X
+                  </button>
+                  <img src={produto.imagem_url} alt={produto.nome} />
+                  <h3>{produto.nome}</h3>
+                  <p>€{produto.preco}</p>
+                  <div style={{ marginTop: "auto", textAlign: "center" }}>
+                    <button onClick={(e) => {
+                      e.preventDefault();
+                      handleAdicionarAoCarrinho(produto)
+                    }
+                    }
+                    >
+                      Adicionar ao carrinho
+                    </button>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+        <Carousel className={styles.carrosselContainer}
+          autoPlay
+          infiniteLoop
+          showThumbs={false}
+          showStatus={false}
+          interval={5000}
+          dynamicHeight={false}
+        >
+          <div>
+            <img src="https://strapi-sitecms-prod.s3.eu-west-1.amazonaws.com/Dias_Pcdiguianos_D_24_Maio_2_Junho_2025_701833c550.jpg" alt="Promoção 1" />
+          </div>
+          <div>
+            <img src="https://eu2.flavedo.io/citrus/_j2Bcn7g4mWManBpxUGBv3E9MFvFdZaaqooJ9ZZ6rA4=" alt="Promoção 2" />
+          </div>
+          <div>
+            <img src="https://eu2.flavedo.io/citrus/urWjsPy783cgzx0on844zJnzevia2UVGmjx8IeVWG0I=" alt="Promoção 3" />
+          </div>
+          <div>
+            <img src="https://eu2.flavedo.io/citrus/lKM5XqdRD1aS2dgyWf-ye2iAP1koXscrNvFpH7W-VZQ=" alt="Promoção 4" />
+          </div>
+          <div>
+            <img src="https://eu2.flavedo.io/citrus/1kTUcnIW5xROaQINZRDMLLTr8jqX1ZIOkTfTastyI4M=" alt="Promoção 5" />
+          </div>
+        </Carousel>
+      </div>
+      {openModal && (
+        <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
       )}
-       <Carousel className={styles.carrosselContainer}
-                            autoPlay
-                            infiniteLoop
-                            showThumbs={false}
-                            showStatus={false}
-                            interval={5000}
-                            dynamicHeight={false}
-                          >
-                            <div>
-                              <img src="https://strapi-sitecms-prod.s3.eu-west-1.amazonaws.com/Dias_Pcdiguianos_D_24_Maio_2_Junho_2025_701833c550.jpg" alt="Promoção 1" />
-                            </div>
-                            <div>
-                              <img src="https://eu2.flavedo.io/citrus/_j2Bcn7g4mWManBpxUGBv3E9MFvFdZaaqooJ9ZZ6rA4=" alt="Promoção 2" />
-                            </div>
-                            <div>
-                              <img src="https://eu2.flavedo.io/citrus/urWjsPy783cgzx0on844zJnzevia2UVGmjx8IeVWG0I=" alt="Promoção 3" />
-                            </div>
-                              <div>
-                              <img src="https://eu2.flavedo.io/citrus/lKM5XqdRD1aS2dgyWf-ye2iAP1koXscrNvFpH7W-VZQ=" alt="Promoção 4" />
-                            </div>
-                              <div>
-                              <img src="https://eu2.flavedo.io/citrus/1kTUcnIW5xROaQINZRDMLLTr8jqX1ZIOkTfTastyI4M=" alt="Promoção 5" />
-                            </div>
-                          </Carousel>
-    </div>
-    {openModal && (
-          <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
-        )}  
-        <Footer />
+      <Footer />
     </>
   );
 }

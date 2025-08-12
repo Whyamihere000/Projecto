@@ -37,7 +37,7 @@ routerAdminProdutos.post('/nova', upload.single('imagem'), (req, res) => {
   if (!nome) return res.status(400).json({ success: false, message: 'O nome do produto é obrigatório.' });
   if (!preco) return res.status(400).json({ success: false, message: 'O preço do produto é obrigatório.' });
   if (!stock) return res.status(400).json({ success: false, message: 'O stock do produto é obrigatório.' });
-  
+
   db.query('SELECT * FROM produtos WHERE sku = ?', [sku], (err, results) => {
     if (err) {
       console.error(err);
@@ -47,14 +47,14 @@ routerAdminProdutos.post('/nova', upload.single('imagem'), (req, res) => {
       return res.status(400).send({ success: false, message: 'O sku do produto ja existe.' });
     }
 
-  db.query('INSERT INTO produtos (sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, tipo_produto, especificacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-  [sku, nome, descricao || null, preco, stock, id_categoria, id_marca, imagem_url || null, tipo_produto || null, especificacoesFinal], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
-    }
-    return res.status(201).send({ success: true, message: 'Produto adicionado com sucesso.' });
-  })
+    db.query('INSERT INTO produtos (sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, tipo_produto, especificacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [sku, nome, descricao || null, preco, stock, id_categoria, id_marca, imagem_url || null, tipo_produto || null, especificacoesFinal], (err, results) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
+        }
+        return res.status(201).send({ success: true, message: 'Produto adicionado com sucesso.' });
+      })
   })
 });
 
@@ -73,28 +73,29 @@ routerAdminProdutos.put('/atualizar/:id', (req, res) => {
 
   const especificacoesFinal = especificacoes ? JSON.parse(especificacoes) : null;
 
-  db.query('UPDATE produtos SET sku = ?, nome = ?, descricao = ?, preco = ?, stock = ?, id_categoria = ?, id_marca = ?, imagem_url = ?, tipo_produto = ?, especificacoes = ? WHERE id = ?', 
-  [sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, tipo_produto, JSON.stringify(especificacoesFinal), req.params.id], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
-    }
-    return res.status(200).send({ success: true, message: 'Produto atualizado com sucesso.',
-      produto: {
-        id: req.params.id,
-        sku: sku,
-        nome: nome,
-        descricao: descricao,
-        preco: preco,
-        stock: stock,
-        id_categoria: id_categoria,
-        id_marca: id_marca,
-        imagem_url: imagem_url,
-        tipo_produto: tipo_produto,
-        especificacoes: especificacoes
+  db.query('UPDATE produtos SET sku = ?, nome = ?, descricao = ?, preco = ?, stock = ?, id_categoria = ?, id_marca = ?, imagem_url = ?, tipo_produto = ?, especificacoes = ? WHERE id = ?',
+    [sku, nome, descricao, preco, stock, id_categoria, id_marca, imagem_url, tipo_produto, JSON.stringify(especificacoesFinal), req.params.id], (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
       }
-    });
-  })
+      return res.status(200).send({
+        success: true, message: 'Produto atualizado com sucesso.',
+        produto: {
+          id: req.params.id,
+          sku: sku,
+          nome: nome,
+          descricao: descricao,
+          preco: preco,
+          stock: stock,
+          id_categoria: id_categoria,
+          id_marca: id_marca,
+          imagem_url: imagem_url,
+          tipo_produto: tipo_produto,
+          especificacoes: especificacoes
+        }
+      });
+    })
 });
 
 // Elimina um produto
@@ -130,7 +131,7 @@ routerAdminProdutos.delete('/eliminar/:id', (req, res) => {
             console.error(err);
             return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
           }
-          
+
           console.log('Produto eliminado com sucesso');
           return res.status(200).send({ success: true, message: 'Produto eliminado com sucesso.' });
         });

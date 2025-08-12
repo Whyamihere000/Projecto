@@ -32,7 +32,7 @@ function AdminHome() {
     localStorage.removeItem('user');
     navigate('/');
   };
-    
+
   return (
     <>
       <NavbarAdmin user={user} handleLogout={handleLogout} />

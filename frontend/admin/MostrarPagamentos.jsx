@@ -58,11 +58,11 @@ function MostrarPagamentos() {
   ];
 
   useEffect(() => {
-              document.body.className = styles.bodyHomeAdmin;
-              return () => {
-                  document.body.className = '';
-              };
-          }, []);
+    document.body.className = styles.bodyHomeAdmin;
+    return () => {
+      document.body.className = '';
+    };
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -71,19 +71,19 @@ function MostrarPagamentos() {
 
   return (
     <>
-    <NavbarAdmin onLogout={handleLogout} user={user} />
+      <NavbarAdmin onLogout={handleLogout} user={user} />
 
-    <div className={styles.container}>
-      {pagamentos.length === 0 ? (
-        <p>Sem pagamentos para mostrar.</p>
-      ) : (
-        <DataGrid
-          rows={pagamentos}
-          columns={colunas}
-          pageSize={10}
-        />
-      )}
-    </div>
+      <div className={styles.container}>
+        {pagamentos.length === 0 ? (
+          <p>Sem pagamentos para mostrar.</p>
+        ) : (
+          <DataGrid
+            rows={pagamentos}
+            columns={colunas}
+            pageSize={10}
+          />
+        )}
+      </div>
     </>
   );
 }

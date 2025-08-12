@@ -46,10 +46,10 @@ function RevisaoEncomenda() {
       case "mbway":
         return (
           <>
-           <Navbar
+            <Navbar
               user={user}
               handleLogout={handleLogout}
-           />
+            />
             <label className={styles.revisaoLabel}>Telefone MB Way:</label>
             <input
               className={styles.revisaoInput}
