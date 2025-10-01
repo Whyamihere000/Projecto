@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, Link } from "react-router-dom";
 import stylesProdutos from "../css/public/Produtos.module.css";
+import stylesGlobal from "../css/Global.module.css";
 import ModalErro from "../componentes/ModalErro";
 import Navbar from "../componentes/Navbar";
 import Footer from "../componentes/Footer";
@@ -131,7 +132,7 @@ function Produtos() {
     });
 
   return (
-    <>
+    <div className={stylesGlobal.public_background}>
       <div className={stylesProdutos.container}>
         <Navbar
           user={user}
@@ -263,7 +264,7 @@ function Produtos() {
         )}
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

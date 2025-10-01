@@ -1,3 +1,17 @@
+/* html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+} */
+
+.public_background {
+  background-color: #0e0e0e;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar Admin */
 .navegacao_admin {
   display: flex;
   flex-direction: column;
@@ -44,7 +58,9 @@
 .logoutAdmin:hover {
   background-color: #680e04;
 }
+/* Navbar Admin */
 
+/* Navbar Public */
 .nav {
   display: flex;
   position: fixed;
@@ -55,7 +71,7 @@
   background-color: #000000;
   color: #fff;
   padding: 15px 30px;
-  height: 20px;
+  height: 40px;
   justify-content: space-evenly;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -120,6 +136,7 @@
 .navLogout {
   background-color: rgb(196, 96, 4);
 }
+/* Navbar Public */
 
 .modalOverlay {
   position: fixed;

@@ -87,8 +87,8 @@ function Home() {
   );
 
   return (
-    <>
-      <div className={styles.home}>
+    // <>
+      <div className={stylesGlobal.public_background}>
         <Navbar user={user} handleLogout={handleLogout} />
 
         <section>
@@ -116,7 +116,7 @@ function Home() {
           <section className={styles.secaoProdutos}>
             <ComponentesNav />
             <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
-            {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p>Nenhum produto em destaque.</p>}
+            {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p style={{ color: 'white' }}>Nenhum produto em destaque.</p>}
           </section>
 
           <section className={styles.tituloSecao}>
@@ -125,14 +125,14 @@ function Home() {
 
           <section>
             <h2 className={styles.tituloSecao}>Novidades</h2>
-            {novidades.length > 0 ? renderProdutos(novidades) : <p>Sem novidades no momento.</p>}
+            {novidades.length > 0 ? renderProdutos(novidades) : <p style={{ color: 'white' }}>Sem novidades no momento.</p>}
           </section>
 
 
         </main>
-      </div>
       <Footer />
-    </>
+      </div>
+    // </>
   );
 }
 

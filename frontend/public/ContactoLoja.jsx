@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import Navbar from "../componentes/Navbar";
 import SubContactosNav from "../componentes/SubContactosNav";
+import Footer from "../componentes/Footer";
 
 function ContactoLoja({ user, handleLogout }) {
   const [formData, setFormData] = useState({
@@ -26,9 +27,10 @@ function ContactoLoja({ user, handleLogout }) {
   };
 
   return (
-    <>
+    // <>
+    <div className={styles.container}>
       <Navbar user={user} handleLogout={handleLogout} />
-      <SubContactosNav />
+      {/* <SubContactosNav /> */}
       <main className={styles.contactoContainer}>
         <section className={styles.heroSection}>
           <h1>Fale Connosco</h1>
@@ -66,7 +68,9 @@ function ContactoLoja({ user, handleLogout }) {
           ></iframe>
         </section>
       </main>
-    </>
+      <Footer />
+    </div>
+    // {/* </> */ }
   );
 }
 

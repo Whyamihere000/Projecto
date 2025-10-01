@@ -61,7 +61,7 @@ function PerfilEncomendas() {
     }
   };
 
-  if (!user) return <p className={styles.perfilContainer}>Carregando...</p>;
+  // if (!user) return <p className={styles.perfilContainer}>Carregando...</p>;
 
   const colunas = [
     { field: "id", headerName: "ID Encomenda", width: 120, selection: false },
