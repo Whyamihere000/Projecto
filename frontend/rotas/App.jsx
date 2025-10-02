@@ -11,7 +11,7 @@ import RevisaoEncomenda from '../public/RevisaoEncomenda.jsx';
 import SucessoPagamento from '../public/SucessoPagamento.jsx';
 import Encomendas from '../public/Encomendas.jsx';
 import AdminHome from '../admin/AdminHome.jsx';
-import RotaPrivadaAdmin from '../admin/RotaPrivadaAdmin.jsx';
+// import RotaPrivadaAdmin from '../admin/RotaPrivadaAdmin.jsx';
 import AdminCategorias from '../admin/Categorias.jsx';
 import AdminMarcas from '../admin/Marcas.jsx';
 import AdminProdutos from '../admin/AdminProdutos.jsx';
@@ -48,14 +48,23 @@ function App() {
 
             {/* Routas admin */}
 
-            <Route path="/admin" element={<RotaPrivadaAdmin><AdminHome /></RotaPrivadaAdmin>} />
-            <Route path="/admin/categorias" element={<RotaPrivadaAdmin> <AdminCategorias /> </RotaPrivadaAdmin>} />
+            <Route path="/admin" element={<AdminHome />} />
+            <Route path="/admin/categorias" element={ <AdminCategorias /> } />
+            <Route path="/admin/marcas" element={ <AdminMarcas /> } />
+            <Route path="/admin/produtos" element={<AdminProdutos /> } />
+            <Route path="/admin/utilizadores" element={<AdminUtilizadores />} />
+            <Route path="/admin/mostrar-encomendas" element={<MostrarEncomendas />} />
+            <Route path="/admin/mostrar-pagamentos" element={<MostrarPagamentos /> } />
+            <Route path="/admin/mostrar-contactos" element={<MostrarContactos />} />
+            <Route path="/admin" element={<AdminHome />} />
+            
+            {/* <Route path="/admin/categorias" element={<RotaPrivadaAdmin> <AdminCategorias /> </RotaPrivadaAdmin>} />
             <Route path="/admin/marcas" element={<RotaPrivadaAdmin> <AdminMarcas /> </RotaPrivadaAdmin>} />
             <Route path="/admin/produtos" element={<RotaPrivadaAdmin><AdminProdutos /> </RotaPrivadaAdmin>} />
             <Route path="/admin/utilizadores" element={<RotaPrivadaAdmin><AdminUtilizadores /></RotaPrivadaAdmin>} />
             <Route path="/admin/mostrar-encomendas" element={<RotaPrivadaAdmin><MostrarEncomendas /></RotaPrivadaAdmin>} />
             <Route path="/admin/mostrar-pagamentos" element={<RotaPrivadaAdmin><MostrarPagamentos /> </RotaPrivadaAdmin>} />
-            <Route path="/admin/mostrar-contactos" element={<RotaPrivadaAdmin><MostrarContactos /></RotaPrivadaAdmin>} />
+            <Route path="/admin/mostrar-contactos" element={<RotaPrivadaAdmin><MostrarContactos /></RotaPrivadaAdmin>} /> */}
         </Routes>
     )
 }

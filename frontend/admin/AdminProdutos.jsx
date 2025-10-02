@@ -572,103 +572,229 @@ function Produtos() {
 
             <NavbarAdmin handleLogout={handleLogout} user={user} />
 
-            <div className={stylesProdutos.container}>
+            <div className={stylesProdutos.containerForm}>
                 <h1 className={stylesProdutos.titulo}>Adicionar Produto</h1>
-                <input
-                    type="text"
-                    placeholder="SKU do produto"
-                    value={produtoSku}
-                    onChange={(e) => setProdutoSku(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Nome do produto"
-                    value={produtoNome}
-                    onChange={(e) => setProdutoNome(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Descrição do produto"
-                    value={produtoDescricao}
-                    onChange={(e) => setProdutoDescricao(e.target.value)}
-                />
-                <input
-                    type="number"
-                    placeholder="Preço do produto"
-                    value={produtoPreco}
-                    onChange={(e) => setProdutoPreco(e.target.value)}
-                />
-                <input
-                    type="number"
-                    placeholder="Stock do produto"
-                    value={produtoStock}
-                    onChange={(e) => setProdutoStock(e.target.value)}
-                />
-                <select value={produtoCategoria} onChange={(e) => setProdutoCategoria(e.target.value)}>
-                    <option value="">Selecione uma categoria</option>
-                    {categorias.map((categoria) => (
-                        <option key={categoria.id} value={categoria.id}>
-                            {categoria.nome}
-                        </option>
-                    ))}
-                </select>
-                <select value={produtoMarca} onChange={(e) => setProdutoMarca(e.target.value)}>
-                    <option value="">Selecione uma marca</option>
-                    {marcas.map((marca) => (
-                        <option key={marca.id} value={marca.id}>
-                            {marca.nome}
-                        </option>
-                    ))}
-                </select>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setProdutoImagem(e.target.files[0])}
-                />
-                <select value={produtoTipo} onChange={handleTipoProdutoChange}>
-                    <option value="">Selecione um tipo de produto</option>
-                    {tiposProduto.map((tipo) => (
-                        <option key={tipo} value={tipo}>
-                            {tipo}
-                        </option>
-                    ))}
-                </select>
-                {camposEspecificacoes.map((campo, index) => (
-                    <div key={index}>
-                        <label>{campo.nome}</label>
+                <div className={stylesProdutos.formGrid}>
+                    <div className={stylesProdutos.formGroup}>
+                        <label>SKU do produto</label>
                         <input
                             type="text"
-                            value={produtoEspecificacoes[campo.campo] || ''}
-                            onChange={(e) =>
-                                setProdutoEspecificacoes((prev) => ({
-                                    ...prev,
-                                    [campo.campo]: e.target.value
-                                }))
-                            }
+                            value={produtoSku}
+                            onChange={(e) => setProdutoSku(e.target.value)}
+                            className={stylesProdutos.inputField}
                         />
                     </div>
-                ))}
-                <button onClick={adicionarProduto}>Adicionar Produto</button>
-                <br />
-                <br />
-                <br />
-                <br />
-                <h2 className={stylesProdutos.titulo}>Lista Produtos</h2>
-                <div style={{ height: 800, width: '100%' }}>
+                    
+                    <div className={stylesProdutos.formGroup}>
+                        <label>Nome do produto</label>
+                        <input
+                            type="text"
+                            value={produtoNome}
+                            onChange={(e) => setProdutoNome(e.target.value)}
+                            className={stylesProdutos.inputField}
+                        />
+                    </div>
+
+                    <div className={stylesProdutos.formGroup} style={{ gridColumn: '1 / -1' }}>
+                        <label>Descrição do produto</label>
+                        <textarea
+                            value={produtoDescricao}
+                            onChange={(e) => setProdutoDescricao(e.target.value)}
+                            className={stylesProdutos.textareaField}
+                            rows="3"
+                        />
+                    </div>
+
+                    <div className={stylesProdutos.formGroup}>
+                        <label>Preço (€)</label>
+                        <input
+                            type="number"
+                            value={produtoPreco}
+                            onChange={(e) => setProdutoPreco(e.target.value)}
+                            className={stylesProdutos.inputField}
+                            step="0.01"
+                            min="0"
+                        />
+                    </div>
+
+                    <div className={stylesProdutos.formGroup}>
+                        <label>Stock</label>
+                        <input
+                            type="number"
+                            value={produtoStock}
+                            onChange={(e) => setProdutoStock(e.target.value)}
+                            className={stylesProdutos.inputField}
+                            min="0"
+                        />
+                    </div>
+
+                    <div className={stylesProdutos.formGroup}>
+                        <label>Categoria</label>
+                        <select 
+                            value={produtoCategoria} 
+                            onChange={(e) => setProdutoCategoria(e.target.value)}
+                            className={stylesProdutos.selectField}
+                        >
+                            <option value="">Selecione uma categoria</option>
+                            {categorias.map((categoria) => (
+                                <option key={categoria.id} value={categoria.id}>
+                                    {categoria.nome}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className={stylesProdutos.formGroup}>
+                        <label>Marca</label>
+                        <select 
+                            value={produtoMarca} 
+                            onChange={(e) => setProdutoMarca(e.target.value)}
+                            className={stylesProdutos.selectField}
+                        >
+                            <option value="">Selecione uma marca</option>
+                            {marcas.map((marca) => (
+                                <option key={marca.id} value={marca.id}>
+                                    {marca.nome}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className={stylesProdutos.formGroup}>
+                        <label>Tipo de Produto</label>
+                        <select 
+                            value={produtoTipo} 
+                            onChange={handleTipoProdutoChange}
+                            className={stylesProdutos.selectField}
+                        >
+                            <option value="">Selecione um tipo</option>
+                            {tiposProduto.map((tipo) => (
+                                <option key={tipo} value={tipo}>
+                                    {tipo}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className={stylesProdutos.formGroup} style={{ gridColumn: '1 / -1' }}>
+                        <label>Imagem do Produto</label>
+                        <div className={stylesProdutos.fileUpload}>
+                            <input
+                                type="file"
+                                id="imagemProduto"
+                                accept="image/*"
+                                onChange={(e) => setProdutoImagem(e.target.files[0])}
+                                className={stylesProdutos.fileInput}
+                            />
+                            <label htmlFor="imagemProduto" className={stylesProdutos.fileLabel}>
+                                {produtoImagem ? produtoImagem.name : 'Escolher ficheiro...'}
+                            </label>
+                        </div>
+                        {produtoImagem && (
+                            <div className={stylesProdutos.imagePreview}>
+                                <img 
+                                    src={URL.createObjectURL(produtoImagem)} 
+                                    alt="Pré-visualização" 
+                                    className={stylesProdutos.previewImage}
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    {camposEspecificacoes.length > 0 && (
+                        <div className={stylesProdutos.specsSection} style={{ gridColumn: '1 / -1' }}>
+                            <h3>Especificações do Produto</h3>
+                            <div className={stylesProdutos.specsGrid}>
+                                {camposEspecificacoes.map((campo, index) => (
+                                    <div key={index} className={stylesProdutos.formGroup}>
+                                        <label>{campo.nome}</label>
+                                        <input
+                                            type="text"
+                                            value={produtoEspecificacoes[campo.campo] || ''}
+                                            onChange={(e) =>
+                                                setProdutoEspecificacoes((prev) => ({
+                                                    ...prev,
+                                                    [campo.campo]: e.target.value
+                                                }))
+                                            }
+                                            className={stylesProdutos.inputField}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <div className={stylesProdutos.formGroup} style={{ gridColumn: '1 / -1', textAlign: 'right' }}>
+                        <button 
+                            onClick={adicionarProduto} 
+                            className={stylesProdutos.submitButton}
+                        >
+                            Adicionar Produto
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className={stylesProdutos.container}>
+                <div className={stylesProdutos.tableHeader}>
+                    <h2 className={stylesProdutos.titulo}>Lista de Produtos</h2>
+                    <div className={stylesProdutos.tableActions}>
+                        <span className={stylesProdutos.productCount}>
+                            {produtos.length} {produtos.length === 1 ? 'produto' : 'produtos'} encontrados
+                        </span>
+                    </div>
+                </div>
+                <div className={stylesProdutos.tableContainer}>
                     <DataGrid
                         rows={produtos}
                         columns={colunas}
-                        pageSize={5}
+                        pageSize={10}
+                        rowsPerPageOptions={[5, 10, 25, 50]}
                         getRowId={(row) => row.id}
                         getRowHeight={() => 'auto'}
                         rowHeight={null}
+                        disableSelectionOnClick
                         sx={{
                             '& .MuiDataGrid-columnHeaders': {
+                                backgroundColor: '#f5f7fa',
                                 '& .MuiDataGrid-columnHeader': {
-                                    backgroundColor: '#1976d2',
-                                    color: '#ffffff',
-                                    fontWeight: 'bold',
+                                    backgroundColor: '#f5f7fa',
+                                    color: '#2d3748',
+                                    fontWeight: '600',
+                                    fontSize: '0.875rem',
+                                    padding: '12px 16px',
+                                    '&:focus': {
+                                        outline: 'none',
+                                    },
                                 },
+                                '& .MuiDataGrid-columnSeparator': {
+                                    display: 'none',
+                                },
+                            },
+                            '& .MuiDataGrid-cell': {
+                                padding: '12px 16px',
+                                borderBottom: '1px solid #e2e8f0',
+                                '&:focus': {
+                                    outline: 'none',
+                                },
+                            },
+                            '& .MuiDataGrid-row': {
+                                '&:hover': {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.02)',
+                                },
+                                '&.Mui-selected': {
+                                    backgroundColor: 'rgba(66, 153, 225, 0.08)',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(66, 153, 225, 0.12)',
+                                    },
+                                },
+                            },
+                            '& .MuiTablePagination-root': {
+                                marginRight: '16px',
+                            },
+                            '& .MuiDataGrid-footerContainer': {
+                                borderTop: '1px solid #e2e8f0',
                             },
                         }}
                     />

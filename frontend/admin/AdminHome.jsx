@@ -18,13 +18,13 @@ function AdminHome() {
     }
   }, []);
 
-  useEffect(() => {
-    const userAdmin = JSON.parse(localStorage.getItem('user'));
+  // useEffect(() => {
+  //   const userAdmin = JSON.parse(localStorage.getItem('user'));
 
-    if (!userAdmin || userAdmin.tipo_utilizador !== 'admin') {
-      navigate('/');
-    }
-  }, [navigate]);
+  //   if (!userAdmin || userAdmin.tipo_utilizador !== 'admin') {
+  //     navigate('/');
+  //   }
+  // }, [navigate]);
 
   const navigater = useNavigate();
 
