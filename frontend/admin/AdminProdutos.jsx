@@ -280,9 +280,9 @@ function Produtos() {
     };
 
     const colunas = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'sku', headerName: 'SKU', width: 130, editable: true },
-        { field: 'nome', headerName: 'Nome', width: 130, editable: true },
+        { field: 'id', headerName: 'ID', width: 70, flex: 1 },
+        { field: 'sku', headerName: 'SKU', width: 130, editable: true, flex: 1 },
+        { field: 'nome', headerName: 'Nome', width: 130, editable: true, flex: 1 },
         {
             field: 'imagem_url',
             headerName: 'Imagem',
@@ -305,6 +305,7 @@ function Produtos() {
             field: 'editarImagem',
             headerName: 'Editar Imagem',
             width: 130,
+            flex: 1,
             renderCell: (params) => (
                 <button onClick={() => {
                     setProdutoSelecionado(params.row);
@@ -319,6 +320,7 @@ function Produtos() {
             field: 'tipo_produto',
             headerName: 'Tipo de Produto',
             width: 150,
+            flex: 1,
             editable: true,
             renderEditCell: (params) => {
                 const handleChange = (event) => {
@@ -344,6 +346,7 @@ function Produtos() {
             field: 'especificacoes',
             headerName: 'Especificações',
             width: 300,
+            flex: 1,
             editable: false,
             renderCell: (params) => {
                 try {
@@ -364,6 +367,7 @@ function Produtos() {
             field: 'editar',
             headerName: 'Editar',
             width: 100,
+            flex: 1,
             renderCell: (params) => (
                 <button onClick={() => {
                     const atual = typeof params.row.especificacoes === 'object'
@@ -375,13 +379,14 @@ function Produtos() {
                 }}>Editar</button>
             ),
         },
-        { field: 'descricao', headerName: 'Descrição', width: 130, editable: true },
-        { field: 'preco', headerName: 'Preço', width: 130, editable: true },
-        { field: 'stock', headerName: 'Stock', width: 130, editable: true },
+        { field: 'descricao', headerName: 'Descrição', width: 130, flex: 1, editable: true },
+        { field: 'preco', headerName: 'Preço', width: 130, flex: 1, editable: true },
+        { field: 'stock', headerName: 'Stock', width: 130, flex: 1, editable: true },
         {
             field: 'id_categoria',
             headerName: 'Categoria',
             width: 130,
+            flex: 1,
             editable: true,
             renderCell: (params) => {
                 const categoria = categorias.find(cat => cat.id === params.row.id_categoria);
@@ -392,6 +397,7 @@ function Produtos() {
             field: 'id_marca',
             headerName: 'Marca',
             width: 130,
+            flex: 1,
             editable: true,
             renderCell: (params) => {
                 const marca = marcas.find(marca => marca.id === params.row.id_marca);
@@ -402,6 +408,7 @@ function Produtos() {
             field: 'ações',
             headerName: 'Ações',
             width: 250,
+            flex: 1,
             renderCell: (params) => (
                 <>
                     <button style={{ backgroundColor: 'red', color: 'white' }} onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
@@ -750,53 +757,21 @@ function Produtos() {
                         rows={produtos}
                         columns={colunas}
                         pageSize={10}
-                        rowsPerPageOptions={[5, 10, 25, 50]}
                         getRowId={(row) => row.id}
-                        getRowHeight={() => 'auto'}
-                        rowHeight={null}
-                        disableSelectionOnClick
-                        sx={{
-                            '& .MuiDataGrid-columnHeaders': {
-                                backgroundColor: '#f5f7fa',
-                                '& .MuiDataGrid-columnHeader': {
-                                    backgroundColor: '#f5f7fa',
-                                    color: '#2d3748',
-                                    fontWeight: '600',
-                                    fontSize: '0.875rem',
-                                    padding: '12px 16px',
-                                    '&:focus': {
-                                        outline: 'none',
-                                    },
-                                },
-                                '& .MuiDataGrid-columnSeparator': {
-                                    display: 'none',
-                                },
-                            },
-                            '& .MuiDataGrid-cell': {
-                                padding: '12px 16px',
-                                borderBottom: '1px solid #e2e8f0',
-                                '&:focus': {
-                                    outline: 'none',
-                                },
-                            },
-                            '& .MuiDataGrid-row': {
-                                '&:hover': {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.02)',
-                                },
-                                '&.Mui-selected': {
-                                    backgroundColor: 'rgba(66, 153, 225, 0.08)',
-                                    '&:hover': {
-                                        backgroundColor: 'rgba(66, 153, 225, 0.12)',
-                                    },
-                                },
-                            },
-                            '& .MuiTablePagination-root': {
-                                marginRight: '16px',
-                            },
-                            '& .MuiDataGrid-footerContainer': {
-                                borderTop: '1px solid #e2e8f0',
-                            },
-                        }}
+                        // getRowHeight={() => 'auto'}
+                        // rowHeight={null}
+                        // disableSelectionOnClick
+                        // sx={{
+                        //     '& .MuiDataGrid-columnHeaders': {
+                        //         backgroundColor: '#f5f7fa',
+                        //         '& .MuiDataGrid-columnHeader': {
+                        //             backgroundColor: '#f5f7fa',
+                        //             color: '#2d3748',
+                        //             fontWeight: '600',
+                        //             fontSize: '0.875rem'
+                        //         }
+                        //     }
+                        // }}
                     />
                 </div>
             </div>

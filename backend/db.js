@@ -3,7 +3,7 @@ import mysql from 'mysql2';
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root123',
+  password: '12345',
   database: 'SitePAP',
 });
 
@@ -14,5 +14,5 @@ db.connect((err) => {
     console.log('✅ Ligação à base de dados bem-sucedida!');
   }
 });
-
+  
 export default db;

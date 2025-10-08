@@ -315,40 +315,104 @@ function Utilizadores() {
       <NavbarAdmin handleLogout={handleLogout} user={user} />
 
       <div className={stylesUtilizadores.container}>
-        <h1>Registo Colaborador</h1>
-        <input type="text" placeholder="Primeiro Nome" onChange={(e) => setPrimeiroNome(e.target.value)} />
-        {/* {errors.primeiro_nome && <p style={{ color: 'red' }}>{errors.primeiro_nome}</p>} */}
+        <div>
+          <div>
+            <label>Primeiro Nome</label>
+            <input
+              type="text"
+              value={primeiro_nome}
+              placeholder="Primeiro Nome"
+              onChange={(e) => setPrimeiroNome(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <label>Ultimo Nome</label>
+            <input
+              type="text"
+              value={ultimo_nome}
+              placeholder="Ultimo Nome"
+              onChange={(e) => setUltimoNome(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <label>Password</label>
+            <input
+              type="password"
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <label>Telefone</label>
+            <input
+              type="text"
+              value={telefone}
+              placeholder="Telefone"
+              onChange={(e) => setTelefone(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <label>Rua</label>
+            <input
+              type="text"
+              value={rua}
+              placeholder="Rua"
+              onChange={(e) => setRua(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <label>Cidade</label>
+            <input
+              type="text"
+              value={cidade}
+              placeholder="Cidade"
+              onChange={(e) => setCidade(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <label>Codigo Postal</label>
+            <input
+              type="text"
+              value={codigo_postal}
+              placeholder="Codigo Postal"
+              onChange={(e) => setCodigoPostal(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <label>Pais</label>
+            <input
+              type="text"
+              value={pais}
+              placeholder="Pais"
+              onChange={(e) => setPais(e.target.value)}
+              className={stylesUtilizadores.inputField}
+            />
+          </div>
+          <div>
+            <button onClick={handleRegisto}>Registar</button>
+          </div>
+        </div>
+      </div>
 
-        <input type="text" placeholder="Ultimo Nome" onChange={(e) => setUltimoNome(e.target.value)} />
-        {/* {errors.ultimo_nome && <p style={{ color: 'red' }}>{errors.ultimo_nome}</p>} */}
-
-        <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-        {/* {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>} */}
-
-        <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-        {/* {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>} */}
-
-        <input type="password" placeholder="Confirm Password" onChange={(e) => setPasswordConfirmation(e.target.value)} />
-        {/* {errors.password_confirmation && <p style={{ color: 'red' }}>{errors.password_confirmation}</p>} */}
-
-        <input type="text" placeholder="Telefone" onChange={(e) => setTelefone(e.target.value)} />
-        {/* {errors.telefone && <p style={{ color: 'red' }}>{errors.telefone}</p>} */}
-
-        <input type="text" placeholder="Rua" onChange={(e) => setRua(e.target.value)} />
-        {/* {errors.rua && <p style={{ color: 'red' }}>{errors.rua}</p>} */}
-
-        <input type="text" placeholder="Cidade" onChange={(e) => setCidade(e.target.value)} />
-        {/* {errors.cidade && <p style={{ color: 'red' }}>{errors.cidade}</p>} */}
-
-        <input type="text" placeholder="Codigo Postal" onChange={(e) => setCodigoPostal(e.target.value)} />
-        {/* {errors.codigo_postal && <p style={{ color: 'red' }}>{errors.codigo_postal}</p>} */}
-
-        <input type="text" placeholder="Pais" onChange={(e) => setPais(e.target.value)} />
-        {/* {errors.pais && <p style={{ color: 'red' }}>{errors.pais}</p>} */}
-
-        <button onClick={handleRegisto}>Registar</button>
-        <br />
-
+      <div className={stylesUtilizadores.container}>
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
             rows={utilizadores}
