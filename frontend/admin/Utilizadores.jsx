@@ -135,13 +135,13 @@ function Utilizadores() {
   };
 
   const colunas = [
-    { field: "id", headerName: "ID", minWidth: 70 },
-    { field: "primeiro_nome", headerName: "Primeiro Nome", minWidth: 150, editable: true },
-    { field: "ultimo_nome", headerName: "Ultimo Nome", minWidth: 150, editable: true },
-    { field: "email", headerName: "Email", minWidth: 200, editable: true },
+    { field: "id", headerName: "ID", minWidth: 70, flex: 1 },
+    { field: "primeiro_nome", headerName: "Primeiro Nome", minWidth: 150, editable: true, flex: 1 },
+    { field: "ultimo_nome", headerName: "Ultimo Nome", minWidth: 150, editable: true, flex: 1 },
+    { field: "email", headerName: "Email", minWidth: 200, editable: true, flex: 1 },
     { field: "password_hash", headerName: "Password", minWidth: 200, },
     {
-      field: "telefone", headerName: "Telefone", minWidth: 150, editable: true,
+      field: "telefone", headerName: "Telefone", minWidth: 150, editable: true, flex: 1,
       renderEditCell: (params) => (
         <input
           type="text"
@@ -153,13 +153,13 @@ function Utilizadores() {
         />
       ),
     },
-    { field: "data_registo", headerName: "Data Registo", minWidth: 150 },
+    { field: "data_registo", headerName: "Data Registo", minWidth: 150, flex: 1 },
     { field: "data_atualizacao", headerName: "Data Atualizacao", minWidth: 150 },
-    { field: "tipo_utilizador", headerName: "Tipo", minWidth: 100, editable: true },
-    { field: "rua", headerName: "Rua", minWidth: 200, flex: 1, editable: true },
-    { field: "cidade", headerName: "Cidade", minWidth: 150, editable: true },
-    { field: "codigo_postal", headerName: "Codigo Postal", minWidth: 150, editable: true },
-    { field: "pais", headerName: "Pais", minWidth: 150, editable: true },
+    { field: "tipo_utilizador", headerName: "Tipo", minWidth: 100, editable: true, flex: 1 },
+    { field: "rua", headerName: "Rua", minWidth: 200, flex: 1, editable: true, flex: 1 },
+    { field: "cidade", headerName: "Cidade", minWidth: 150, editable: true, flex: 1 },
+    { field: "codigo_postal", headerName: "Codigo Postal", minWidth: 150, editable: true, flex: 1 },
+    { field: "pais", headerName: "Pais", minWidth: 150, editable: true, flex: 1 },
     {
       field: "ações",
       headerName: "Ações",
@@ -392,7 +392,7 @@ function Utilizadores() {
               onChange={(e) => setCidade(e.target.value)}
               className={stylesUtilizadores.inputField}
             />
-          </div>   
+          </div>
 
           <div className={stylesUtilizadores.formGroup}>
             <label>Codigo Postal</label>
@@ -421,10 +421,18 @@ function Utilizadores() {
           </div>
 
         </div>
-      </div>
+      </div>  
 
       <div className={stylesUtilizadores.container}>
-        <div style={{ height: 400, width: "100%" }}>
+        <div className={stylesUtilizadores.tableHeader}>
+          <h2 className={stylesUtilizadores.titulo}>Lista de Produtos</h2>
+          <div className={stylesUtilizadores.tableActions}>
+            <span className={stylesUtilizadores.productCount}>
+              {utilizadores.length} {utilizadores.length === 1 ? 'utilizador' : 'utilizadores'} encontrados
+            </span>
+          </div>
+        </div>
+        <div className={stylesUtilizadores.tableContainer}>
           <DataGrid
             rows={utilizadores}
             columns={colunas}
