@@ -75,7 +75,7 @@ function MostrarPagamentos() {
 
       <div className={styles.container}>
         {pagamentos.length === 0 ? (
-          <p>Sem pagamentos para mostrar.</p>
+          <p className={styles.texto}>Sem pagamentos para mostrar.</p>
         ) : (
           <DataGrid
             rows={pagamentos}

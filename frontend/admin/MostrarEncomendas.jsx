@@ -72,7 +72,7 @@ function MostrarEncomendas() {
 
       <div className={stylesEncomendas.container}>
         {encomendas.length === 0 ? (
-          <p>Sem encomendas para mostrar.</p>
+          <p className={stylesEncomendas.texto}>Sem encomendas para mostrar.</p>
         ) : (
           <DataGrid
             rows={encomendas}
