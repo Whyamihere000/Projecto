@@ -46,7 +46,7 @@ function Contactos() {
   return (
     <>
       <Navbar user={user} handleLogout={handleLogout} />
-      <SubNavbar />
+      {user ? <SubNavbar /> : null}
       <div className={styles.contactContainer}>
         <h2 className={styles.contactTitle}>Contacta-nos</h2>
         <form onSubmit={handleSubmit} className={styles.contactForm}>
