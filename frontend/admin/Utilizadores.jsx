@@ -314,9 +314,10 @@ function Utilizadores() {
 
       <NavbarAdmin handleLogout={handleLogout} user={user} />
 
-      <div className={stylesUtilizadores.container}>
-        <div>
-          <div>
+      <div className={stylesUtilizadores.containerForm}>
+        <h1 className={stylesUtilizadores.titulo}>Adicionar Colaborador</h1>
+        <div className={stylesUtilizadores.formGrid}>
+          <div className={stylesUtilizadores.formGroup}>
             <label>Primeiro Nome</label>
             <input
               type="text"
@@ -326,7 +327,8 @@ function Utilizadores() {
               className={stylesUtilizadores.inputField}
             />
           </div>
-          <div>
+
+          <div className={stylesUtilizadores.formGroup}>
             <label>Ultimo Nome</label>
             <input
               type="text"
@@ -336,7 +338,8 @@ function Utilizadores() {
               className={stylesUtilizadores.inputField}
             />
           </div>
-          <div>
+
+          <div className={stylesUtilizadores.formGroup}>
             <label>Email</label>
             <input
               type="email"
@@ -346,7 +349,8 @@ function Utilizadores() {
               className={stylesUtilizadores.inputField}
             />
           </div>
-          <div>
+
+          <div className={stylesUtilizadores.formGroup}>
             <label>Password</label>
             <input
               type="password"
@@ -356,7 +360,8 @@ function Utilizadores() {
               className={stylesUtilizadores.inputField}
             />
           </div>
-          <div>
+
+          <div className={stylesUtilizadores.formGroup}>
             <label>Telefone</label>
             <input
               type="text"
@@ -366,7 +371,8 @@ function Utilizadores() {
               className={stylesUtilizadores.inputField}
             />
           </div>
-          <div>
+
+          <div className={stylesUtilizadores.formGroup}>
             <label>Rua</label>
             <input
               type="text"
@@ -376,7 +382,8 @@ function Utilizadores() {
               className={stylesUtilizadores.inputField}
             />
           </div>
-          <div>
+
+          <div className={stylesUtilizadores.formGroup}>
             <label>Cidade</label>
             <input
               type="text"
@@ -385,8 +392,9 @@ function Utilizadores() {
               onChange={(e) => setCidade(e.target.value)}
               className={stylesUtilizadores.inputField}
             />
-          </div>
-          <div>
+          </div>   
+
+          <div className={stylesUtilizadores.formGroup}>
             <label>Codigo Postal</label>
             <input
               type="text"
@@ -396,7 +404,8 @@ function Utilizadores() {
               className={stylesUtilizadores.inputField}
             />
           </div>
-          <div>
+
+          <div className={stylesUtilizadores.formGroup}>
             <label>Pais</label>
             <input
               type="text"
@@ -406,9 +415,11 @@ function Utilizadores() {
               className={stylesUtilizadores.inputField}
             />
           </div>
+
           <div>
-            <button onClick={handleRegisto}>Registar</button>
+            <button onClick={handleRegisto} className={stylesUtilizadores.submitButton}>Registar</button>
           </div>
+
         </div>
       </div>
 
