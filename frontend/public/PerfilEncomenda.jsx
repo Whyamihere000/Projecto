@@ -71,36 +71,37 @@ function PerfilEncomendas() {
   ];
 
   return (
-    <>
-      <div>
-        <Navbar user={user} handleLogout={handleLogout} />
-        <SubNavbar />
-        <div className={styles.encomendasContainer}>
-          <h2 className={styles.perfilTitulo}>Encomendas</h2>
-          <DataGrid
-            rows={encomendas}
-            columns={colunas}
-            pageSize={5}
-            getRowId={(row) => row.id}
-            getRowHeight={() => "auto"}
-            rowHeight={null}
-            disableSelectionOnClick
-            disableColumnMenu
-            sx={{
-              '& .MuiDataGrid-columnHeaders': {
-                '& .MuiDataGrid-columnHeader': {
-                  backgroundColor: '#1976d2',
-                  color: '#ffffff',
-                  fontWeight: 'bold',
+    <div>
+      <div className={styles.bodyContainer}>
+        <div>
+          <Navbar user={user} handleLogout={handleLogout} />
+          <SubNavbar />
+          <div className={styles.encomendasContainer}>
+            <h2 className={styles.perfilTitulo}>Encomendas</h2>
+            <DataGrid
+              rows={encomendas}
+              columns={colunas}
+              pageSize={5}
+              getRowId={(row) => row.id}
+              getRowHeight={() => "auto"}
+              rowHeight={null}
+              disableSelectionOnClick
+              disableColumnMenu
+              sx={{
+                '& .MuiDataGrid-columnHeaders': {
+                  '& .MuiDataGrid-columnHeader': {
+                    backgroundColor: '#1976d2',
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                  },
                 },
-              },
-            }}
-          />
-
+              }}
+            />
+          </div>
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

@@ -114,12 +114,10 @@ function Favoritos() {
   };
 
   return (
-    <>
+    <div>
+    <div className={styles.bodyContainer}>
       <div>
-        <Navbar
-          user={user}
-          handleLogout={handleLogout}
-        />
+        <Navbar user={user} handleLogout={handleLogout} />
         <SubNavbar />
       </div>
       <div className={styles.container}>
@@ -190,8 +188,9 @@ function Favoritos() {
       {openModal && (
         <ModalErro mensagem={mensagem} onClose={closeModal} produtos={produtoModal} />
       )}
+    </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

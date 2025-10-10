@@ -44,7 +44,7 @@ function Contactos() {
   };
 
   return (
-    <>
+    <div className={styles.bodyContainer}>
       <Navbar user={user} handleLogout={handleLogout} />
       {user ? <SubNavbar /> : null}
       <div className={styles.contactContainer}>
@@ -99,7 +99,7 @@ function Contactos() {
       </div>
       <Footer />
 
-    </>
+    </div>
   );
 }
 

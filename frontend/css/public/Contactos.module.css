@@ -1,3 +1,7 @@
+.bodyContainer {
+  padding: 2rem;
+}
+
 .contactContainer {
   max-width: 600px;
   margin: 50px auto;
