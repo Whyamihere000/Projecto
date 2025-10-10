@@ -1,5 +1,11 @@
 .container {
   padding-top: 2rem;
+  background-color: #1e1e1e;
+}
+
+.bodyContainer {
+  padding: 2rem;
+  /* background-color: #1e1e1e; */
 }
 
 .contactoContainer {
@@ -9,7 +15,7 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  background: linear-gradient(to bottom right, #1c1c1c, #2b2b2b);
+  /* background: linear-gradient(to bottom right, #1c1c1c, #2b2b2b); */
 }
 
 .heroSection {

@@ -26,6 +26,11 @@
     flex: 1;
     display: flex;
     max-width: 250px;
+    max-height: 500px;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+    z-index: 10;
     background-color: #2D2D30;
     padding: 15px;
     border-radius: 8px;

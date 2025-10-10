@@ -88,50 +88,50 @@ function Home() {
 
   return (
     // <>
-      <div className={stylesGlobal.public_background}>
-        <Navbar user={user} handleLogout={handleLogout} />
+    <div className={stylesGlobal.public_background}>
+      <Navbar user={user} handleLogout={handleLogout} />
 
-        <section>
-          <Carousel className={styles.carrosselContainer}
-            autoPlay
-            infiniteLoop
-            showThumbs={false}
-            showStatus={false}
-            interval={5000}
-            dynamicHeight={false}
-          >
-            <div>
-              <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 1" />
-            </div>
-            <div>
-              <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 2" />
-            </div>
-            <div>
-              <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 3" />
-            </div>
-          </Carousel>
+      <section>
+        <Carousel className={styles.carrosselContainer}
+          autoPlay
+          infiniteLoop
+          showThumbs={false}
+          showStatus={false}
+          interval={5000}
+          dynamicHeight={false}
+        >
+          <div>
+            <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 1" />
+          </div>
+          <div>
+            <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 2" />
+          </div>
+          <div>
+            <img src="https://computerlounge.co.nz/cdn/shop/articles/RX_9070_Blog_main_banner_499f62a7-c08a-4bc8-999e-0a4e1a1459fa.jpg?v=1739147028&width=1600" alt="Promoção 3" />
+          </div>
+        </Carousel>
+      </section>
+
+      <main className={styles.mainHome}>
+        <section className={styles.secaoProdutos}>
+          <ComponentesNav />
+          <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
+          {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p style={{ color: 'white' }}>Nenhum produto em destaque.</p>}
         </section>
 
-        <main className={styles.mainHome}>
-          <section className={styles.secaoProdutos}>
-            <ComponentesNav />
-            <h2 className={styles.tituloSecao}>Produtos em Destaque</h2>
-            {produtosDestaque.length > 0 ? renderProdutos(produtosDestaque) : <p style={{ color: 'white' }}>Nenhum produto em destaque.</p>}
-          </section>
+        <section className={styles.tituloSecao}>
+          <img src="https://img.globaldata.pt/cms/images/block/global-1banner-produtosemana25_1219-desktop.png" alt="imagem promoção" />
+        </section>
 
-          <section className={styles.tituloSecao}>
-            <img src="https://img.globaldata.pt/cms/images/block/global-1banner-produtosemana25_1219-desktop.png" alt="imagem promoção" />
-          </section>
-
-          <section>
-            <h2 className={styles.tituloSecao}>Novidades</h2>
-            {novidades.length > 0 ? renderProdutos(novidades) : <p style={{ color: 'white' }}>Sem novidades no momento.</p>}
-          </section>
+        <section>
+          <h2 className={styles.tituloSecao}>Novidades</h2>
+          {novidades.length > 0 ? renderProdutos(novidades) : <p style={{ color: 'white' }}>Sem novidades no momento.</p>}
+        </section>
 
 
-        </main>
+      </main>
       <Footer />
-      </div>
+    </div>
     // </>
   );
 }

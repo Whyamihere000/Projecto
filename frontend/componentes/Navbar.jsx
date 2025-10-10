@@ -78,7 +78,7 @@ function Navbar({ user, handleLogout, pesquisa }) {
                   <Link to="/perfil-encomendas">Encomendas</Link>
                   <Link to="/perfil-favoritos">Favoritos</Link>
                   <Link to="/perfil-contactos">Contactos</Link>
-                  <button onClick={handleLogout}>Logout</button>
+                  {/* <button onClick={handleLogout}>Logout</button> */}
                 </div>
               </div>
               <button onClick={handleLogout}>Logout</button>
