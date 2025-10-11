@@ -44,61 +44,62 @@ function Contactos() {
   };
 
   return (
-    <div className={styles.bodyContainer}>
-      <Navbar user={user} handleLogout={handleLogout} />
-      {user ? <SubNavbar /> : null}
-      <div className={styles.contactContainer}>
-        <h2 className={styles.contactTitle}>Contacta-nos</h2>
-        <form onSubmit={handleSubmit} className={styles.contactForm}>
-          <div className={styles.formGroup}>
-            <label htmlFor="nome" className={styles.formLabel}>Nome:</label>
-            <input
-              id="nome"
-              name="nome"
-              type="text"
-              className={styles.formInput}
-              value={formData.nome}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="email" className={styles.formLabel}>Email:</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              className={styles.formInput}
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="mensagem" className={styles.formLabel}>Mensagem:</label>
-            <textarea
-              id="mensagem"
-              name="mensagem"
-              rows="5"
-              className={styles.formTextarea}
-              value={formData.mensagem}
-              onChange={handleChange}
-              required
-              style={{ resize: "none" }}
-            ></textarea>
-          </div>
-          <button type="submit" className={styles.submitButton}>Enviar</button>
-          <Link to="/contacto-loja" className={styles.subNavLink}>Informações</Link>
-          {status === "success" && (
-            <p className={styles.successMessage}>Mensagem enviada com sucesso!</p>
-          )}
-          {status === "error" && (
-            <p className={styles.errorMessage}>Erro ao enviar mensagem. Tente novamente.</p>
-          )}
-        </form>
+    <div className={styles.body}>
+      <div className={styles.bodyContainer}>
+        <Navbar user={user} handleLogout={handleLogout} />
+        {user ? <SubNavbar /> : null}
+        <div className={styles.contactContainer}>
+          <h2 className={styles.contactTitle}>Contacta-nos</h2>
+          <form onSubmit={handleSubmit} className={styles.contactForm}>
+            <div className={styles.formGroup}>
+              <label htmlFor="nome" className={styles.formLabel}>Nome:</label>
+              <input
+                id="nome"
+                name="nome"
+                type="text"
+                className={styles.formInput}
+                value={formData.nome}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="email" className={styles.formLabel}>Email:</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                className={styles.formInput}
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="mensagem" className={styles.formLabel}>Mensagem:</label>
+              <textarea
+                id="mensagem"
+                name="mensagem"
+                rows="5"
+                className={styles.formTextarea}
+                value={formData.mensagem}
+                onChange={handleChange}
+                required
+                style={{ resize: "none" }}
+              ></textarea>
+            </div>
+            <button type="submit" className={styles.submitButton}>Enviar</button>
+            <Link to="/contacto-loja" className={styles.subNavLink}>Informações</Link>
+            {status === "success" && (
+              <p className={styles.successMessage}>Mensagem enviada com sucesso!</p>
+            )}
+            {status === "error" && (
+              <p className={styles.errorMessage}>Erro ao enviar mensagem. Tente novamente.</p>
+            )}
+          </form>
+        </div>
       </div>
       <Footer />
-
     </div>
   );
 }

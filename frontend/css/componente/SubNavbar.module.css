@@ -17,6 +17,7 @@
   top: 60px;
   /* Assumindo que a navbar principal tem ~60px */
   z-index: 999;
+  border-radius: 50px;
 }
 
 .subNavLink {

@@ -2,6 +2,13 @@
   padding: 2rem;
 }
 
+.body {
+  background-color: #1e1e1e;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .perfilTitulo {
   font-size: 28px;
   margin-bottom: 20px;
