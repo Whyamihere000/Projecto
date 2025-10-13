@@ -5,6 +5,17 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.bodyContainer {
+  padding: 2rem;
+  background-color: #1A1A1D;
+}
+
+.carrinhoVazio {
+  text-align: center;
+  margin-top: 50px;
+  color: #fff;
+}
+
 .carrosselContainer {
   width: 60%;
   height: 100%;

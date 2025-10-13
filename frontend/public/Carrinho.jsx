@@ -127,7 +127,7 @@ function Carrinho() {
   };
 
   return (
-    <>
+    <div className={stylesCarrinho.bodyContainer}>
       <Navbar user={user} handleLogout={handleLogout} />
       <main className={stylesCarrinho.mainCarrinho}>
         <br />
@@ -200,7 +200,7 @@ function Carrinho() {
                 </Carousel>
               </>
             ) : (
-              <p>O seu carrinho está vazio.</p>
+              <p className={stylesCarrinho.carrinhoVazio}>O seu carrinho está vazio.</p>
             )}
           </div>
         ) : (
@@ -208,7 +208,7 @@ function Carrinho() {
         )}
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
