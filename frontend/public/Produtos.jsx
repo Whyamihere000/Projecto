@@ -179,21 +179,7 @@ function Produtos() {
                 <Link className={stylesProdutos.divalink}
                   key={produto.id}
                   to={`/produto/${produto.id}`}
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    border: "1px solid #ccc",
-                    padding: "10px",
-                    width: "315px",
-                    margin: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    position: "relative",
-                  }}
-                >
-                  <h3>{produto.nome}</h3>
-                  <p>{produto.sku}</p>
-
+                  >
                   {produto.imagem_url && (
                     <img
                       src={
@@ -203,44 +189,35 @@ function Produtos() {
                           : `http://localhost:3001${produto.imagem_url}`
                       }
                       alt={produto.nome}
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        marginBottom: "10px",
-                      }}
+                      className={stylesProdutos.imagem}
                     />
                   )}
+                  <h3>{produto.nome}</h3>
+                  <p>{produto.sku}</p>
+
 
                   <p>{produto.descricao}</p>
-                  <p>
-                    <strong>Preço:</strong> {produto.preco}€
-                  </p>
-                  <p>
-                    <strong>Tipo de Produto:</strong> {produto.tipo_produto}
-                  </p>
-                  <p>
-                    <strong>Marca:</strong> {produto.nome_marca}
-                  </p>
+
+                  {/* <p> {produto.tipo_produto} </p>
+                  <p> {produto.nome_marca} </p> */}
 
                   {produto.especificacoes && (
                     <div>
-                      <h4>Especificações:</h4>
-                      <ul>
-                        {Object.keys(produto.especificacoes).map((key) => (
-                          <li key={key}>
-                            <strong>{key}:</strong> {produto.especificacoes[key]}
-                          </li>
-                        ))}
-                      </ul>
+                      {/* <h4>Especificações:</h4> */}
+                      {/* <ul> */}
+                      {Object.keys(produto.especificacoes).map((key) => {
+                          const keyFormatada = key.replaceAll("_", " ").replace(/^\w/, (c) => c.toUpperCase())
+                          return `${keyFormatada}: ${produto.especificacoes[key]}`
+                        }).join(" | ")}
+                      {/* </ul> */}
                     </div>
                   )}
 
+                  <h2 className={stylesProdutos.preco}> {produto.preco}€ </h2>
+                  {/* <h5>{produto.stock === 0 ? "Sem stock" : produto.stock < 10 ? "Poucas Unidades" : "Em stock"}</h5> */}
                   <div
-                    style={{
-                      marginTop: "auto",
-                      textAlign: "center",
-                    }}
                     onClick={(e) => e.preventDefault()}
+                    className={stylesProdutos.buttonDiv}
                   >
                     <button
                       onClick={(e) => {
