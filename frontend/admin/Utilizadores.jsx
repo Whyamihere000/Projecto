@@ -425,7 +425,7 @@ function Utilizadores() {
 
       <div className={stylesUtilizadores.container}>
         <div className={stylesUtilizadores.tableHeader}>
-          <h2 className={stylesUtilizadores.titulo}>Lista de Produtos</h2>
+          <h2 className={stylesUtilizadores.titulo}>Lista de Utilizadores/Colaboradores</h2>
           <div className={stylesUtilizadores.tableActions}>
             <span className={stylesUtilizadores.productCount}>
               {utilizadores.length} {utilizadores.length === 1 ? 'utilizador' : 'utilizadores'} encontrados
