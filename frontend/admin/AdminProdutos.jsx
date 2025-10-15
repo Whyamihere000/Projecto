@@ -27,7 +27,11 @@ function Produtos() {
     const [produtoImagem, setProdutoImagem] = useState('');
     const [produtoEspecificacoes, setProdutoEspecificacoes] = useState({});
     const [camposEspecificacoes, setCamposEspecificacoes] = useState([]);
-    const [produtos, setProdutos] = useState([]);
+    const [produtos, setProdutos] = useState(
+        Array.isArray(JSON.parse(localStorage.getItem('produtosCache'))) 
+            ? JSON.parse(localStorage.getItem('produtosCache')) 
+            : []
+    );
     const [mensagem, setMensagem] = useState('');
     const [mensagemTipo, setMensagemTipo] = useState('');
 
@@ -207,6 +211,7 @@ function Produtos() {
 
                 const produtosAtualizados = await axios.get('http://localhost:3001/api/produtos/buscar');
                 setProdutos(produtosAtualizados.data);
+                setMostrarModal(true);
             } else {
                 setMensagem(resAdd.data.message);
                 setMensagemTipo('error');
@@ -305,7 +310,7 @@ function Produtos() {
             field: 'editarImagem',
             headerName: 'Editar Imagem',
             width: 130,
-            flex: 1,
+            flex: 2,
             renderCell: (params) => (
                 <button onClick={() => {
                     setProdutoSelecionado(params.row);
@@ -408,7 +413,7 @@ function Produtos() {
             field: 'ações',
             headerName: 'Ações',
             width: 250,
-            flex: 1,
+            flex: 2,
             renderCell: (params) => (
                 <>
                     <button style={{ backgroundColor: 'red', color: 'white' }} onClick={() => eliminarProduto(params.row.id)}>Eliminar</button>
@@ -524,8 +529,8 @@ function Produtos() {
             )}
 
             {editarModal && (
-                <div className={stylesProdutos.modalOverlay}>
-                    <div className={stylesProdutos.modalContent}>
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
                         <h3>Editar Especificações (JSON)</h3>
                         <textarea
                             rows={10}
@@ -533,7 +538,7 @@ function Produtos() {
                             value={jsonEspecificacoesEditado}
                             onChange={(e) => setJsonEspecificacoesEditado(e.target.value)}
                         />
-                        <div className={stylesProdutos.modalButtons}>
+                        <div className={styles.modalButtons}>
                             <button onClick={() => {
                                 try {
                                     const json = JSON.parse(jsonEspecificacoesEditado);
@@ -552,20 +557,44 @@ function Produtos() {
             {mostrarModalImagem && (
                 <div className={stylesProdutos.modalOverlayImagem}>
                     <div className={stylesProdutos.modalContentImagem}>
-                        <h3>Editar URL da Imagem</h3>
-                        <input
-                            type="text"
-                            value={imagemUrlEditada}
-                            onChange={(e) => setImagemUrlEditada(e.target.value)}
-                            style={{ width: '100%' }}
-                        />
+                        <h3>Alterar Imagem do Produto</h3>
+                        <div className={stylesProdutos.fileUpload} style={{ marginBottom: '1.5rem' }}>
+                            <input
+                                type="file"
+                                id="editarImagemProduto"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    if (file) {
+                                        setImagemUrlEditada(URL.createObjectURL(file));
+                                    }
+                                }}
+                                className={stylesProdutos.fileInput}
+                            />
+                            <label htmlFor="editarImagemProduto" className={stylesProdutos.fileLabel}>
+                                {imagemUrlEditada ? 'Alterar ficheiro...' : 'Selecionar ficheiro...'}
+                            </label>
+                        </div>
+                        {imagemUrlEditada && (
+                            <div className={stylesProdutos.imagePreview} style={{ margin: '0 auto' }}>
+                                <img 
+                                    src={imagemUrlEditada} 
+                                    alt="Pré-visualização" 
+                                    className={stylesProdutos.previewImage}
+                                    style={{ maxWidth: '100%', height: 'auto' }}
+                                />
+                            </div>
+                        )}
                         <div className={stylesProdutos.modalButtonsImagem}>
                             <button onClick={() => {
-                                if (!imagemUrlEditada.trim()) {
-                                    alert('URL não pode estar vazio!');
+                                if (!imagemUrlEditada) {
+                                    alert('Por favor, selecione uma imagem!');
                                     return;
                                 }
-                                atualizarProduto({ ...produtoSelecionado, imagem_url: imagemUrlEditada });
+                                atualizarProduto({ 
+                                    ...produtoSelecionado, 
+                                    imagem_url: imagemUrlEditada 
+                                });
                                 setMostrarModalImagem(false);
                             }}>
                                 Guardar
@@ -748,30 +777,34 @@ function Produtos() {
                     <h2 className={stylesProdutos.titulo}>Lista de Produtos</h2>
                     <div className={stylesProdutos.tableActions}>
                         <span className={stylesProdutos.productCount}>
-                            {produtos.length} {produtos.length === 1 ? 'produto' : 'produtos'} encontrados
+                            {Array.isArray(produtos) ? (
+                                <>{produtos.length} {produtos.length === 1 ? 'produto' : 'produtos'} encontrados</>
+                            ) : 'Carregando produtos...'}
                         </span>
                     </div>
                 </div>
                 <div className={stylesProdutos.tableContainer}>
                     <DataGrid
-                        rows={produtos}
+                        rows={Array.isArray(produtos) ? produtos.map((produto, index) => ({
+                            ...produto,
+                            // Ensure every row has a unique ID
+                            id: produto.id || `temp-${index}`
+                        })) : []}
                         columns={colunas}
                         pageSize={10}
                         getRowId={(row) => row.id}
-                        // getRowHeight={() => 'auto'}
-                        // rowHeight={null}
-                        // disableSelectionOnClick
-                        // sx={{
-                        //     '& .MuiDataGrid-columnHeaders': {
-                        //         backgroundColor: '#f5f7fa',
-                        //         '& .MuiDataGrid-columnHeader': {
-                        //             backgroundColor: '#f5f7fa',
-                        //             color: '#2d3748',
-                        //             fontWeight: '600',
-                        //             fontSize: '0.875rem'
-                        //         }
-                        //     }
-                        // }}
+                        disableSelectionOnClick
+                        sx={{
+                            '& .MuiDataGrid-columnHeaders': {
+                                backgroundColor: '#f5f7fa',
+                                '& .MuiDataGrid-columnHeader': {
+                                    backgroundColor: '#f5f7fa',
+                                    color: '#2d3748',
+                                    fontWeight: '600',
+                                    fontSize: '0.875rem'
+                                }
+                            }
+                        }}
                     />
                 </div>
             </div>

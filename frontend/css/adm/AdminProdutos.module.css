@@ -194,7 +194,7 @@
 .specsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
+    gap: 2.5rem;
 }
 
 /* Focus States */
@@ -489,11 +489,75 @@
     border: 1px solid #e2e8f0;
 }
 
+.modalOverlayImagem {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
 
 .modalContentImagem {
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 2rem;
+    border-radius: 12px;
     text-align: center;
-    width: fit-content;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modalContentImagem h3 {
+    margin-top: 0;
+    color: #1a202c;
+    margin-bottom: 1.5rem;
+}
+
+.modalContentImagem input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.modalButtonsImagem {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.modalButtonsImagem button {
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.modalButtonsImagem button:first-child {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+}
+
+.modalButtonsImagem button:first-child:hover {
+    background-color: #4338ca;
+}
+
+.modalButtonsImagem button:last-child {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+}
+
+.modalButtonsImagem button:last-child:hover {
+    background-color: #e2e8f0;
 }
