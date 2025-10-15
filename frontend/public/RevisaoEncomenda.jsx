@@ -46,10 +46,6 @@ function RevisaoEncomenda() {
       case "mbway":
         return (
           <>
-            <Navbar
-              user={user}
-              handleLogout={handleLogout}
-            />
             <label className={styles.revisaoLabel}>Telefone MB Way:</label>
             <input
               className={styles.revisaoInput}
@@ -202,48 +198,52 @@ function RevisaoEncomenda() {
   };
 
   return (
-    <div className={styles.revisaoContainer}>
+    <div className={styles.pageContainer}>
       <Navbar user={user} handleLogout={handleLogout} />
+      <div className={styles.mainContent}>
+        <div className={styles.revisaoContainer}>
 
-      <h1 className={styles.revisaoTitulo}>Rever e Pagar Encomenda</h1>
-      {mensagem && <p className={styles.revisaoMensagem}>{mensagem}</p>}
+        <h1 className={styles.revisaoTitulo}>Rever e Pagar Encomenda</h1>
+        {mensagem && <p className={styles.revisaoMensagem}>{mensagem}</p>}
 
-      {encomenda ? (
-        <div>
-          <p className={styles.revisaoTexto}><strong>Encomenda ID:</strong> {encomenda.id}</p>
-          <p className={styles.revisaoTexto}><strong>Total:</strong> {encomenda.total ? Number(encomenda.total).toFixed(2) + "€" : "Total não disponível"}</p>
+        {encomenda ? (
+          <div>
+            <p className={styles.revisaoTexto}><strong>Encomenda ID:</strong> {encomenda.id}</p>
+            <p className={styles.revisaoTexto}><strong>Total:</strong> {encomenda.total ? Number(encomenda.total).toFixed(2) + "€" : "Total não disponível"}</p>
 
-          <h3 className={styles.revisaoTitulo}>Selecionar Método de Pagamento:</h3>
-          <select
-            className={styles.revisaoSelect}
-            value={metodoPagamento}
-            onChange={e => {
-              setMetodoPagamento(e.target.value);
-              setDetalhesPagamento({});
-            }}
-            disabled={emProcessamento}
-          >
-            <option value="mbway">MB Way</option>
-            <option value="paypal">PayPal</option>
-            <option value="cartao">Cartão de Crédito/Débito</option>
-            <option value="referencia">Referência Multibanco</option>
-            <option value="simulado">Simulado</option>
-          </select>
+            <h3 className={styles.revisaoTitulo}>Selecionar Método de Pagamento:</h3>
+            <select
+              className={styles.revisaoSelect}
+              value={metodoPagamento}
+              onChange={e => {
+                setMetodoPagamento(e.target.value);
+                setDetalhesPagamento({});
+              }}
+              disabled={emProcessamento}
+            >
+              <option value="mbway">MB Way</option>
+              <option value="paypal">PayPal</option>
+              <option value="cartao">Cartão de Crédito/Débito</option>
+              <option value="referencia">Referência Multibanco</option>
+              <option value="simulado">Simulado</option>
+            </select>
 
-          <h3 className={styles.revisaoTitulo}>Detalhes de Pagamento:</h3>
-          {CamposPagamento()}
+            <h3 className={styles.revisaoTitulo}>Detalhes de Pagamento:</h3>
+            {CamposPagamento()}
 
-          <button
-            className={styles.revisaoBotao}
-            onClick={handlePagamento}
-            disabled={emProcessamento}
-          >
-            Confirmar Pagamento
-          </button>
-        </div>
-      ) : (
-        <p className={styles.revisaoTexto}>A carregar encomenda...</p>
-      )}
+            <button
+              className={styles.revisaoBotao}
+              onClick={handlePagamento}
+              disabled={emProcessamento}
+            >
+              Confirmar Pagamento
+            </button>
+          </div>
+        ) : (
+          <p className={styles.revisaoTexto}>A carregar encomenda...</p>
+        )}
+      </div>
+      </div>
     </div>
   );
 }

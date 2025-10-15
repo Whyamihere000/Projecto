@@ -131,7 +131,7 @@ function Perfil() {
   };
 
   return (
-    <div>
+    <div className={styles.body}>
       <div className={styles.bodyContainer}>
         <div>
           <Navbar

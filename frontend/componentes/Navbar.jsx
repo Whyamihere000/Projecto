@@ -70,18 +70,18 @@ function Navbar({ user, handleLogout, pesquisa }) {
         <div className={styles.navRight}>
           {user ? (
             <>
-              <Link to="/perfil-favoritos" className={styles.navCarrinho}>♥️</Link>
+              <Link to="/perfil-favoritos" className={styles.navFavoritos}>♥️</Link>
               <div className={styles.dropdown}>
-                <Link to="/perfil"><button className={styles.dropbtn}>👤▾</button></Link>
+                <Link to="/perfil"><button className={styles.dropbtn}>👤 {user.primeiro_nome} ▾</button></Link>
                 <div className={styles.dropdownContent}>
-                  <Link to="/perfil">Bem Vindo!: {user.primeiro_nome}</Link>
+                  <Link to="/perfil">Perfil</Link>
                   <Link to="/perfil-encomendas">Encomendas</Link>
                   <Link to="/perfil-favoritos">Favoritos</Link>
                   <Link to="/perfil-contactos">Contactos</Link>
                   {/* <button onClick={handleLogout}>Logout</button> */}
                 </div>
               </div>
-              <button onClick={handleLogout}>Logout</button>
+              <button className={styles.navLogout} onClick={handleLogout}>Logout</button>
               <Link to="/carrinho" className={styles.navCarrinho}>🛒</Link>
             </>
           ) : (
