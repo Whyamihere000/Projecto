@@ -45,3 +45,7 @@
 .container a:hover {
     text-decoration: underline;
 }
+
+.itemMarca {
+    padding: 16px;
+}

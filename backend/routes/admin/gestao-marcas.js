@@ -6,14 +6,14 @@ const routerAdminMarcas = express.Router();
 routerAdminMarcas.post('/nova', (req, res) => {
   console.log('Marca POST /nova foi chamada');
   const { nome } = req.body;
-  if (!nome) return res.status(400).json({ success: false, message: 'O nome da categoria é obrigatório.' });
+  if (!nome) return res.status(400).json({ success: false, message: 'O nome da marca é obrigatório.' });
 
   db.query('INSERT INTO marcas (nome) VALUES (?)', [nome], (err, results) => {
     if (err) {
       console.error(err);
       return res.status(500).send({ success: false, message: 'Erro interno do servidor' });
     }
-    return res.status(201).send({ success: true, message: 'Categoria adicionada com sucesso.' });
+    return res.status(201).send({ success: true, message: 'Marca adicionada com sucesso.' });
   })
 })
 
@@ -43,6 +43,23 @@ routerAdminMarcas.put('/atualizar/:id', (req, res) => {
     }
 
     return res.json({ success: true, message: 'Marca atualizada com sucesso.' });
+  });
+});
+
+routerAdminMarcas.delete('/eliminar/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query('DELETE FROM marcas WHERE id = ?', [id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ success: false, message: 'Erro ao excluir a marca.' });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Marca não encontrada.' });
+    }
+
+    return res.json({ success: true, message: 'Marca excluída com sucesso.' });
   });
 });
 

@@ -108,6 +108,24 @@ function Categorias() {
     }
   };
 
+  const eliminarCategoria = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3001/api/categorias/eliminar/${id}`);
+      
+      if (res.data.success) {
+        setMensagem('Categoria excluída com sucesso.');
+        setMensagemTipo('success');
+        setCategorias(categorias.filter(cat => cat.id !== id));
+      } else {
+        setMensagem(res.data.message || 'Erro ao excluir a categoria.');
+        setMensagemTipo('error');
+      }
+    } catch (error) {
+      console.error(error);
+      setMensagem('Erro ao comunicar com o servidor.');
+      setMensagemTipo('error');
+    }
+  };
 
   useEffect(() => {
     document.body.className = styles.bodyHomeAdmin;
@@ -141,7 +159,7 @@ function Categorias() {
             className={stylesCategorias.button}
           >
             Adicionar
-          </button>
+          </button>          
         </div>
 
         <h2>Categorias Existentes</h2>
@@ -166,6 +184,12 @@ function Categorias() {
                 className={stylesCategorias.buttonEditar}
               >
                 Guardar
+              </button>
+              <button
+                onClick={() => eliminarCategoria(cat.id)}
+                className={stylesCategorias.button}
+              >
+                Excluir
               </button>
             </li>
           ))}

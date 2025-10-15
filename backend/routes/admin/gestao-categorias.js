@@ -46,4 +46,21 @@ routerAdminCategorias.put('/atualizar/:id', (req, res) => {
   });
 });
 
+routerAdminCategorias.delete('/eliminar/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.query('DELETE FROM categorias WHERE id = ?', [id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ success: false, message: 'Erro ao excluir a categoria.' });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Categoria não encontrada.' });
+    }
+
+    return res.json({ success: true, message: 'Categoria excluída com sucesso.' });
+  });
+});
+
 export default routerAdminCategorias;

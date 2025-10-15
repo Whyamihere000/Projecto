@@ -107,6 +107,25 @@ function Marcas() {
     }
   };
 
+  const eliminarMarca = async (id) => {
+    try {
+      const res = await axios.delete(`http://localhost:3001/api/marcas/eliminar/${id}`);
+      
+      if (res.data.success) {
+        setMensagem('Marca excluída com sucesso.');
+        setMensagemTipo('success');
+        setMarcas(marcas.filter(marca => marca.id !== id));
+      } else {
+        setMensagem(res.data.message || 'Erro ao excluir a marca.');
+        setMensagemTipo('error');
+      }
+    } catch (error) {
+      console.error(error);
+      setMensagem('Erro ao comunicar com o servidor.');
+      setMensagemTipo('error');
+    }
+  };
+
   useEffect(() => {
     document.body.className = styles.bodyHomeAdmin;
     return () => {
@@ -166,6 +185,12 @@ function Marcas() {
                 className={stylesMarcas.buttonEditar}
               >
                 Guardar
+              </button>
+              <button
+                onClick={() => eliminarMarca(m.id)}
+                className={stylesMarcas.button}
+              >
+                Eliminar
               </button>
             </li>
           ))}
